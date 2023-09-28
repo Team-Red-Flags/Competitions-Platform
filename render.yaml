@@ -1,35 +1,35 @@
 
 services:
 - type: web
-  name: flask-postgres-api
+  name: Competitions-Platform.Red-Flags
   env: python
-  repo: https://github.com/uwidcit/flaskmvc.git
+  repo: https://github.com/MadMoose02/Competitions-Platform
   plan: free
   branch: main
   healthCheckPath: /healthcheck
   buildCommand: "pip install -r requirements.txt"
   startCommand: "gunicorn wsgi:app"
   envVars:
-  - fromGroup: flask-postgres-api-settings
+  - fromGroup: Competitions-Platform-Settings
   - key: POSTGRES_URL
     fromDatabase:
-      name: flask-postgres-api-db
+      name: Competitions-Platform-DB.Red-Flags
       property: host
   - key: POSTGRES_USER
     fromDatabase:
-      name: flask-postgres-api-db
+      name: Competitions-Platform-DB.Red-Flags
       property: user
   - key: POSTGRES_PASSWORD
     fromDatabase:
-      name: flask-postgres-api-db
+      name:Competitions-Platform-DB.Red-Flags
       property: password
   - key: POSTGRES_DB
     fromDatabase:
-      name: flask-postgres-api-db
+      name: Competitions-Platform-DB.Red-Flags
       property: database 
 
 envVarGroups:
-- name: flask-postgres-api-settings
+- name: Competitions-Platform-Settings
   envVars:
   - key: ENV
     value: production
@@ -38,6 +38,6 @@ envVarGroups:
     
 
 databases:
-- name: flask-postgres-api-db
+- name: Competitions-Platform-DB.Red-Flags
   plan: free
-  databaseName: mydb
+  databaseName: rfcp-db
