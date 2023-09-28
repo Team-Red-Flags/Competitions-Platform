@@ -10,7 +10,7 @@ This is a web application to manage user submissions for coding competitions. As
 
 # Dependencies
 * Python3/pip3
-* Packages listed in [requirements.txt](https://github.com/MadMoose02/Power-House-Fitness-Club/blob/master/requirements.txt)
+* Packages listed in [requirements.txt](https://github.com/MadMoose02/Competitions-Platform/blob/master/requirements.txt)
 
 ## Installing Dependencies from Requirements File
 ```bash
