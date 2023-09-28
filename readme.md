@@ -5,9 +5,7 @@
 
 
 # Project Overview
-This is a web application to manage user submissions for coding competitions. Assignment solution by the
-<span style="color: red; font-weight: bold; font-family: 'sans-serif'"> RED FLAGS</span>.
-team for the COMP 3613 Software Engineering II Assignment 1. Based on the Flask MVC template found [here](https://github.com/uwidcit/flaskmvc).
+This is a web application to manage user submissions for coding competitions. Assignment solution by the RED FLAGS team for the COMP 3613 Software Engineering II Assignment 1. Based on the Flask MVC template found [here](https://github.com/uwidcit/flaskmvc).
 
 
 # Dependencies
