@@ -23,10 +23,7 @@ def add_views(app):
 
 def configure_app(app, config, overrides):
     for key, value in config.items():
-        if key in overrides:
-            app.config[key] = overrides[key]
-        else:
-            app.config[key] = config[key]
+        app.config[key] = overrides[key] if key in overrides else config[key]
 
 def create_app(config_overrides={}):
     app = Flask(__name__, static_url_path='/static')
