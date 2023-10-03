@@ -7,27 +7,24 @@ def create_user(username, password):
     db.session.commit()
     return newuser
 
-def get_user_by_username(username):
+def get_user_by_username(username) -> User:
     return User.query.filter_by(username=username).first()
 
-def get_user(id):
+def get_user(id) -> User:
     return User.query.get(id)
 
 def get_all_users():
     return User.query.all()
 
-def get_all_users_json():
+def get_all_users_json() -> list:
     users = User.query.all()
-    if not users:
-        return []
-    users = [user.get_json() for user in users]
-    return users
+    if not users: return []
+    return [user.get_json() for user in users]
 
 def update_user(id, username):
     user = get_user(id)
-    if user:
-        user.username = username
-        db.session.add(user)
-        return db.session.commit()
-    return None
+    if not user: return None
+    user.username = username
+    db.session.add(user)
+    return db.session.commit()
     
