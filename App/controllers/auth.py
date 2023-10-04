@@ -2,7 +2,6 @@ from flask_login import login_user, login_manager, logout_user, LoginManager
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 
 from App.models import User, Admin
-from App.controllers import get_admin_by_username, get_user_by_username
 
 def jwt_authenticate(username, password):
     user = User.query.filter_by(username=username).first()
@@ -10,12 +9,12 @@ def jwt_authenticate(username, password):
     return create_access_token(identity=username)
 
 def login_user(username, password):
-    user = get_user_by_username(username)
+    user = User.query.filter_by(username=username).first()
     if not user or not user.check_password(password): return None
     return user
 
 def login_admin(username, password):
-    admin = get_admin_by_username(username)
+    admin = Admin.query.filter_by(username=username).first()
     if not admin or not admin.check_password(password): return None
     return admin
 
