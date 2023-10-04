@@ -17,7 +17,7 @@ def get_all_users():
     return User.query.all()
 
 def get_all_users_json() -> list:
-    users = User.query.all()
+    users = get_all_users()
     if not users: return []
     return [user.get_json() for user in users]
 
