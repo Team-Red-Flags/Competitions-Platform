@@ -13,21 +13,25 @@ from App.controllers import (
     jwt_required
 )
 
-competition_views = Blueprint('user_views', __name__, template_folder='../templates') #unsure of use& relevance
+competition_views = Blueprint('competition_views', __name__, template_folder='../templates') #unsure of use& relevance
 
-#create compet
-@competition_views.route('/user', methods=['POST'])
+
+@competition_views.route('/competition/create')
 @login_required
-def join_compet():
+def create_competition(): pass
+
+
+@competition_views.route('/competition/update')
+@login_required
+def update_competition(): pass
+
+
+@competition_views.route('/competition/view/<int:id>', methods=['POST'])
+@login_required
+def view_competition(id: int):
     return 'Competition Joined'
 
-#delete compet
-@competition_views.route('/user', methods=['POST'])
-@login_required
-def leave_compet():
-    return 'Competition Left'
 
-#view competition
-@competition_views.route('/user', methods=['GET'])
-def view_profile():
-    return #showProfile()
+@competition_views.route('/competition/')
+@login_required
+def view_compeition_results(): pass
