@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, jsonify, request, send_from_direct
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import current_user, login_required
 
+
 from.index import index_views
 
 from App.controllers import (
@@ -12,21 +13,21 @@ from App.controllers import (
     jwt_required
 )
 
-user_views = Blueprint('user_views', __name__, template_folder='../templates') #unsure of use& relevance
+competition_views = Blueprint('user_views', __name__, template_folder='../templates') #unsure of use& relevance
 
-#join compet
-@user_views.route('/user', methods=['POST'])
+#create compet
+@competition_views.route('/user', methods=['POST'])
 @login_required
 def join_compet():
     return 'Competition Joined'
 
-#leave compet
-@user_views.route('/user', methods=['POST'])
+#delete compet
+@competition_views.route('/user', methods=['POST'])
 @login_required
 def leave_compet():
     return 'Competition Left'
 
-#view profile
-@user_views.route('/user', methods=['GET'])
+#view competition
+@competition_views.route('/user', methods=['GET'])
 def view_profile():
     return #showProfile()
