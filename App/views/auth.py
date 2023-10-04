@@ -7,7 +7,8 @@ from.index import index_views
 from App.controllers import (
     create_user,
     jwt_authenticate,
-    login,
+    login_admin,
+    login_user,
     get_all_users,
     get_all_users_json
 )
@@ -29,43 +30,44 @@ def get_user_page():
 def identify_page():
     return jsonify({'message': f"username: {current_user.username}, id : {current_user.id}"})
 
+'''
+Admin Routes
+'''
 
-@auth_views.route('/login', methods=['POST'])
+@auth_views.route('/admin/login', methods=['POST'])
 def login_action():
     data = request.form
-    user = login(data['username'], data['password'])
+    user = login_admin(data['username'], data['password'])
     if not user: return 'bad username or password given', 401
     login_user(user)
     return 'user logged in!'
 
-@auth_views.route('/logout', methods=['GET'])
+@auth_views.route('/admin/logout', methods=['GET'])
 def logout_action():
+    logout_user()
+    return 'logged out!'
+
+
+'''
+User Routes
+'''
+
+@auth_views.route('/user/login', methods=['POST'])
+def login_action():
     data = request.form
-    user = login(data['username'], data['password'])
+    user = login_user(data['username'], data['password'])
+    if not user: return 'bad username or password given', 401
+    login_user(user)
+    return 'user logged in!'
+
+@auth_views.route('/user/logout', methods=['GET'])
+def logout_action():
+    logout_user()
     return 'logged out!'
 
 '''
 API Routes
 '''
-
-@auth_views.route('/api/users', methods=['GET'])
-def get_users_action():
-    return jsonify(get_all_users_json())
-
-@auth_views.route('/api/users', methods=['POST'])
-def create_user_endpoint():
-    data = request.json
-    if not create_user(data['username'], data['password']):
-        return jsonify(message="unable to create user"), 500
-    return jsonify({'message': f"user {data['username']} created"})
-
-@auth_views.route('/api/login', methods=['POST'])
-def user_login_api():
-  data = request.json
-  token = jwt_authenticate(data['username'], data['password'])
-  if not token:
-    return jsonify(message='bad username or password given'), 401
-  return jsonify(access_token=token)
 
 @auth_views.route('/api/identify', methods=['GET'])
 @jwt_required()
