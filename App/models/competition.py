@@ -7,7 +7,7 @@ class Competition(db.Model):
     id          = Column(Integer, primary_key=True)
     name        = Column(String(80), nullable=False)
     description = Column(String(200), nullable=False)
-    start_date  = Column(Date, nullable=False, default=now())
+    start_date  = Column(Date, nullable=True)
     end_date    = Column(Date, nullable=True)
 
 
