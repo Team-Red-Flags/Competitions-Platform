@@ -38,14 +38,12 @@ def create_competition_action():
 
 @competition_views.route('/competition/update')
 @login_required
-def update_competition_action(): pass
+def create_compet():
 
-
-@competition_views.route('/competition/view/<int:id>', methods=['POST'])
-def view_competition_action(id: int):
-    return 'Competition Joined'
+    return 'Competition Created'
 
 
 @competition_views.route('/competition/')
 @login_required
-def view_compeition_results(): pass
+def leave_compet():
+    return 'Competition Left'
