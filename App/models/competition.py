@@ -22,5 +22,7 @@ class Competition(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'description': self.description
+            'description': self.description,
+            'start_date': self.start_date,
+            'end_date': self.end_date
         }
