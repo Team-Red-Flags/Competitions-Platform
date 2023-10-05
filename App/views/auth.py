@@ -30,22 +30,26 @@ def get_user_page():
 def identify_page():
     return jsonify({'message': f"username: {current_user.username}, id : {current_user.id}"})
 
+
+@auth_views.route('/logout', methods=['GET'])
+@login_required
+def logout_action():
+    curr_user = current_user
+    logout_user()
+    return jsonify(f'{curr_user.username} logged out!')
+
+
 '''
 Admin Routes
 '''
 
 @auth_views.route('/admin/login', methods=['POST'])
-def login_action():
+def admin_login_action():
     data = request.form
-    user = login_admin(data['username'], data['password'])
-    if not user: return 'bad username or password given', 401
-    login_user(user)
-    return 'user logged in!'
-
-@auth_views.route('/admin/logout', methods=['GET'])
-def logout_action():
-    logout_user()
-    return 'logged out!'
+    admin = login_admin(data['username'], data['password'])
+    if not admin: return 'bad username or password given', 401
+    login_user(admin)
+    return jsonify(f'{admin.username} logged in!')
 
 
 '''
@@ -53,23 +57,17 @@ User Routes
 '''
 
 @auth_views.route('/user/login', methods=['POST'])
-def login_action():
+def user_login_action():
     data = request.form
     user = login_user(data['username'], data['password'])
     if not user: return 'bad username or password given', 401
     login_user(user)
-    return 'user logged in!'
+    return jsonify(f'{user.username} logged in!')
 
-@auth_views.route('/user/logout', methods=['GET'])
-def logout_action():
-    logout_user()
-    return 'logged out!'
 
 '''
-API Routes
+Redirects
 '''
-
-@auth_views.route('/api/identify', methods=['GET'])
-@jwt_required()
-def identify_user_action():
-    return jsonify({'message': f"username: {jwt_current_user.username}, id : {jwt_current_user.id}"})
+@auth_views.route('/login', methods=['GET'])
+def default_login_action():
+    return redirect(url_for('auth_views.user_login_action'))
