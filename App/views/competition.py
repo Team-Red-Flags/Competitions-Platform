@@ -10,7 +10,8 @@ from App.controllers import (
     get_all_users,
     get_all_users_json,
     jwt_required,
-    create_competition
+    create_competition,
+    get_all_competitions
 )
 
 competition_views = Blueprint('competition_views', __name__, template_folder='../templates') #unsure of use& relevance
@@ -25,6 +26,12 @@ def create_competition_action():
     name, desc = data['name'], data['description']
     start_date = data['start_date'] if data.__contains__('start_date') else None
     end_date = data['end_date'] if data.__contains__('end_date') else None
+    
+    # Check that competition name does not already exist
+    for comp in get_all_competitions():
+        if comp.name == name: 
+            return jsonify(message='Competition name already exists'), 400
+    
     new_competition = create_competition(name, desc, start_date)
     return jsonify(new_competition.get_json()), 200
     
