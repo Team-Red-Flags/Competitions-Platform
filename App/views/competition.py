@@ -22,7 +22,9 @@ def create_competition_action():
     if not current_user.is_admin(): return jsonify(message='Not an admin'), 403
     data = request.form if request.form else None
     if not data: return jsonify(message='No competition data given'), 400
-    name, desc, start_date = data['name'], data['description'], data['start_date']
+    name, desc = data['name'], data['description']
+    start_date = data['start_date'] if data.__contains__('start_date') else None
+    end_date = data['end_date'] if data.__contains__('end_date') else None
     new_competition = create_competition(name, desc, start_date)
     return jsonify(new_competition.get_json()), 200
     
