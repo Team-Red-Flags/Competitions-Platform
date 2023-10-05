@@ -11,8 +11,6 @@ class Participant(db.Model):
     competition    = relationship('Competition')
     participant_id = Column(Integer, db.ForeignKey('user.id'))
     competition_id = Column(Integer, db.ForeignKey('competition.id'))
-    start_date     = Column(Date, nullable=False, default=now())
-    end_date       = Column(Date, nullable=True)
     
     
     def __init__(self, participant: User, competition: Competition):
