@@ -5,6 +5,7 @@ def create_admin(username, password) -> Admin:
     newadmin = Admin(username=username, password=password)
     db.session.add(newadmin)
     db.session.commit()
+    print("Created admin: " + f"[{username}, {password}]")
     return newadmin
 
 def get_admin_by_username(username) -> Admin:
