@@ -55,7 +55,7 @@ class User(db.Model, UserMixin):
         Returns:
             str: A prettified string representation of the user
         """
-        return f"<User {self.id}: {self.username}>"
+        return f"<{self.type.capitalize()} {self.id}: {self.username}>"
     
     def __repr__(self):
         """Calls the __str__ method to represent the user
