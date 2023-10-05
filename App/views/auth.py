@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
+from flask import Blueprint, render_template, jsonify, request, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import login_required, login_user, current_user, logout_user
 
@@ -7,8 +7,9 @@ from.index import index_views
 from App.controllers import (
     create_user,
     jwt_authenticate,
-    login_admin,
-    login_user,
+    authenticate_admin,
+    authenticate_user,
+    get_user,
     get_all_users,
     get_all_users_json
 )
@@ -28,15 +29,18 @@ def get_user_page():
 @auth_views.route('/identify', methods=['GET'])
 @login_required
 def identify_page():
-    return jsonify({'message': f"username: {current_user.username}, id : {current_user.id}"})
+    return jsonify({
+        'message': f"username: {current_user.username}", 
+        'id' : f"{current_user.id}"
+        }), 200
 
 
 @auth_views.route('/logout', methods=['GET'])
 @login_required
 def logout_action():
-    curr_user = current_user
+    curr_user = get_user(current_user.id)
     logout_user()
-    return jsonify(f'{curr_user.username} logged out!')
+    return jsonify(f'{curr_user.username} logged out!'), 200
 
 
 '''
@@ -45,29 +49,29 @@ Admin Routes
 
 @auth_views.route('/admin/login', methods=['POST'])
 def admin_login_action():
-    data = request.form
-    admin = login_admin(data['username'], data['password'])
-    if not admin: return 'bad username or password given', 401
+    form_data = request.form if request.form else None
+    data = request.json if request.json else form_data
+    if not data: return jsonify(message='no login data given'), 400
+    print("Admin login received: " + f"[{data['username']}, {data['password']}]")
+    admin = authenticate_admin(data['username'], data['password'])    
+    if not admin: return jsonify(message='bad username or password given'), 401
     login_user(admin)
-    return jsonify(f'{admin.username} logged in!')
+    return jsonify(f'Admin {admin.username} logged in!'), 200
 
 
 '''
 User Routes
 '''
 
+@auth_views.route('/login', methods=['POST'])
 @auth_views.route('/user/login', methods=['POST'])
 def user_login_action():
-    data = request.form
-    user = login_user(data['username'], data['password'])
-    if not user: return 'bad username or password given', 401
+    data = request.form if request.form else None
+    form_data = request.form if request.form else None
+    data = request.json if request.json else form_data
+    if not data: return jsonify(message='no login data given'), 400
+    print("User login received: " + f"[{data['username']}, {data['password']}]")
+    user = authenticate_user(data['username'], data['password'])
+    if not user: return jsonify(message='bad username or password given'), 401
     login_user(user)
-    return jsonify(f'{user.username} logged in!')
-
-
-'''
-Redirects
-'''
-@auth_views.route('/login', methods=['GET'])
-def default_login_action():
-    return redirect(url_for('auth_views.user_login_action'))
+    return jsonify(f'User {user.username} logged in!'), 200
