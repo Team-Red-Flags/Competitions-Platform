@@ -8,14 +8,15 @@ def jwt_authenticate(username, password):
     if not user or not user.check_password(password): return None 
     return create_access_token(identity=username)
 
-def login_user(username, password) -> User:
+def authenticate_user(username, password) -> User:
     user: User = User.query.filter_by(username=username).first()
     if not user or not user.check_password(password): return None
     return user
 
-def login_admin(username, password) -> Admin:
+def authenticate_admin(username, password) -> Admin:
     admin: Admin = Admin.query.filter_by(username=username).first()
     if not admin or not admin.check_password(password): return None
+    if not admin.is_admin(): return None
     return admin
 
 def setup_flask_login(app):
