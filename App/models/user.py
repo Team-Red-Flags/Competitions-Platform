@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     def __init__(self, username, password, type='user'):
         self.username = username
         self.set_password(password, 'scrypt')
-        self.type = type if type in ['user', 'admin'] else 'user'
+        self.type = type
 
 
     def get_json(self) -> dict[str]:
