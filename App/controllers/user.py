@@ -21,3 +21,10 @@ def get_all_users_json() -> list:
     users = get_all_users()
     if not users: return []
     return [user.get_json() for user in users]
+
+def update_user(id, username) -> User:
+    user = get_user(id)
+    user.username = username
+    db.session.add(user)
+    db.session.commit()
+    return user
