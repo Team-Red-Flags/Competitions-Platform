@@ -22,7 +22,14 @@ class Competition(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'description': self.description,
             'start_date': self.start_date,
             'end_date': self.end_date
         }
+        
+    
+    def __str__(self):
+        return f"<{self.type.capitalize()} {self.id}: {self.name}>"
+
+
+    def __repr__(self):
+        return self.__str__()
