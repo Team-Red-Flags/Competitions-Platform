@@ -20,8 +20,7 @@ class User(db.Model, UserMixin):
     def get_json(self) -> dict[str]:
         return {
             'id': self.id,
-            'username': self.username,
-            'type': self.type
+            'username': self.username
         }
         
         
