@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
         self.type = type
 
 
-    def get_json(self) -> dict[]:
+    def get_json(self) -> dict[str]:
         return {
             'id': self.id,
             'username': self.username
