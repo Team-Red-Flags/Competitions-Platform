@@ -8,13 +8,13 @@ def jwt_authenticate(username, password):
     if not user or not user.check_password(password): return None 
     return create_access_token(identity=username)
 
-def login_user(username, password):
-    user = User.query.filter_by(username=username).first()
+def login_user(username, password) -> User:
+    user: User = User.query.filter_by(username=username).first()
     if not user or not user.check_password(password): return None
     return user
 
-def login_admin(username, password):
-    admin = Admin.query.filter_by(username=username).first()
+def login_admin(username, password) -> Admin:
+    admin: Admin = Admin.query.filter_by(username=username).first()
     if not admin or not admin.check_password(password): return None
     return admin
 
