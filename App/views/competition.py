@@ -38,7 +38,7 @@ def create_competition_action():
 
 @competition_views.route('/competition/update')
 @login_required
-def create_compet():
+def update_competition_results():
 
     return 'Competition Created'
 

@@ -14,6 +14,6 @@ def create_competition(name: str, description: str, start_date: str = None, end_
 def get_competition(id) -> Competition:
     return Competition.query.get(id)
 
-def get_all_competitions() -> list[Competition]:
+def get_all_competitions() -> list:
     return Competition.query.all()
 

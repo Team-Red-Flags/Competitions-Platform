@@ -17,7 +17,7 @@ def get_all_participants():
 def get_competition_participants(competition_id):
     return Participant.query.get(competition_id)
 
-def get_all_participants_json() -> list[dict]:
+def get_all_participants_json() -> list:
     participants = get_all_participants()
     if not participants: return []
     return [participant.get_json() for participant in participants]
