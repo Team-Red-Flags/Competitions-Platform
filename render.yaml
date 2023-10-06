@@ -40,4 +40,3 @@ envVarGroups:
 databases:
 - name: Competitions-Platform-DB.Red-Flags
   plan: free
-  database: rfcp-db
