@@ -36,11 +36,12 @@ def identify_page():
 
 
 @auth_views.route('/logout', methods=['GET'])
-@login_required
 def logout_action():
+    print("JWT User: " + current_user)
+    if not jwt_current_user: return jsonify(error='Not logged in'), 401
     curr_user = get_user(current_user.id)
     logout_user()
-    return jsonify(f'{curr_user.username} logged out!'), 200
+    return jsonify(message=f'{curr_user.username} logged out!'), 200
 
 
 '''
@@ -51,12 +52,11 @@ Admin Routes
 def admin_login_action():
     form_data = request.form if request.form else None
     data = request.json if request.json else form_data
-    if not data: return jsonify(message='no login data given'), 400
     print("Admin login received: " + f"[{data['username']}, {data['password']}]")
     admin = authenticate_admin(data['username'], data['password'])    
-    if not admin: return jsonify(message='bad username or password given'), 401
+    if not admin: return jsonify(error='bad username or password given'), 401
     login_user(admin)
-    return jsonify(f'Admin {admin.username} logged in!'), 200
+    return jsonify(message=f'Admin {admin.username} logged in!'), 200
 
 
 '''
@@ -69,9 +69,8 @@ def user_login_action():
     data = request.form if request.form else None
     form_data = request.form if request.form else None
     data = request.json if request.json else form_data
-    if not data: return jsonify(message='no login data given'), 400
     print("User login received: " + f"[{data['username']}, {data['password']}]")
     user = authenticate_user(data['username'], data['password'])
-    if not user: return jsonify(message='bad username or password given'), 401
+    if not user: return jsonify(error='bad username or password given'), 401
     login_user(user)
-    return jsonify(f'User {user.username} logged in!'), 200
+    return jsonify(message=f'User {user.username} logged in!'), 200
