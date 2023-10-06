@@ -3,7 +3,7 @@ services:
 - type: web
   name: Competitions-Platform.Red-Flags
   env: python
-  repo: https://github.com/MadMoose02/Competitions-Platform
+  repo: https://github.com/MadMoose02/Competitions-Platform.git
   plan: free
   branch: main
   healthCheckPath: /health
@@ -13,19 +13,19 @@ services:
   - fromGroup: Competitions-Platform-Settings
   - key: POSTGRES_URL
     fromDatabase:
-      name: Competitions-Platform-DB.Red-Flags
+      name: Competitions-Platform-DB-Red-Flags
       property: host
   - key: POSTGRES_USER
     fromDatabase:
-      name: Competitions-Platform-DB.Red-Flags
+      name: Competitions-Platform-DB-Red-Flags
       property: user
   - key: POSTGRES_PASSWORD
     fromDatabase:
-      name: Competitions-Platform-DB.Red-Flags
+      name: Competitions-Platform-DB-Red-Flags
       property: password
   - key: POSTGRES_DB
     fromDatabase:
-      name: Competitions-Platform-DB.Red-Flags
+      name: Competitions-Platform-DB-Red-Flags
       property: database 
 
 envVarGroups:
@@ -38,6 +38,6 @@ envVarGroups:
     
 
 databases:
-- name: Competitions-Platform-DB.Red-Flags
+- name: Competitions-Platform-DB-Red-Flags
   plan: free
   databaseName: rfcp-db
