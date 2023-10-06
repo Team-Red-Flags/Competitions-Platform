@@ -36,8 +36,6 @@ envVarGroups:
   - key: FLASK_APP
     value: wsgi.py
     
-
 databases:
 - name: Competitions-Platform-DB.Red-Flags
   plan: free
-  database: competitions-platform-db
