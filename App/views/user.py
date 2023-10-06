@@ -12,21 +12,12 @@ from App.controllers import (
     jwt_required
 )
 
-user_views = Blueprint('user_views', __name__, template_folder='../templates') #unsure of use& relevance
-
-#join compet
-@user_views.route('/user', methods=['POST'])
-@login_required
-def join_compet():
-    return 'Competition Joined'
-
-#leave compet
-@user_views.route('/user', methods=['POST'])
-@login_required
-def leave_compet():
-    return 'Competition Left'
+user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
 #view profile
 @user_views.route('/user', methods=['GET'])
+@login_required
 def view_profile():
-    return #showProfile()
+    # Details about user
+    # Competitions enrolled in
+    return jsonify('This is your profile'), 200
