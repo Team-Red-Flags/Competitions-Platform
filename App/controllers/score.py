@@ -1,12 +1,13 @@
 from App.database import db
 from App.models import Score
 
-def create_rank(rank: int, participant_id: int) -> Score:
-    new_rank = Score(rank, participant_id)
-    db.session.add(new_rank)
+def create_score(participant_id: int, competition_id: int, score: int) -> Score:
+    new_score = Score(participant_id, competition_id, score)
+    db.session.add(new_score)
     db.session.commit()
-    print("Created new rank:", new_rank)
-    return new_rank
+    print("Created new score:", new_score)
+    return new_score
 
-def update_rankings(rank):
-    return None
+def ranking_participants(competition_id):
+    all_scores = Score.query.filter_by(competition_id=competition_id)
+    return all_scores.sort(key=lambda x: x.score, reverse = True)
