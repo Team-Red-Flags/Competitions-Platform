@@ -15,7 +15,7 @@ def get_all_participants():
     return Participant.query.all()
 
 def get_competition_participants(competition_id):
-    return Participant.query.get(competition_id)
+    return Participant.query.filter_by(competition_id=competition_id)
 
 def get_all_participants_json() -> list:
     participants = get_all_participants()
