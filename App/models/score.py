@@ -4,7 +4,7 @@ from sqlalchemy.sql.functions import now
 from App.models import Participant
 from sqlalchemy.orm import relationship
 
-class Ranking(db.Model):
+class Score (db.Model):
     __tablename__ = "ranking"
     rank        = Column(Integer, primary_key=True, nullable=False)
     participant    = relationship('Participant')
