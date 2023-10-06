@@ -14,15 +14,15 @@ from App.controllers import (
     get_all_competitions
 )
 
-competition_views = Blueprint('competition_views', __name__, template_folder='../templates') #unsure of use& relevance
-
+competition_views = Blueprint('competition_views', __name__, template_folder='../templates')
 
 @competition_views.route('/competition/create', methods=['POST'])
 @login_required
 def create_competition_action():
-    if not current_user.is_admin(): return jsonify(message='Not an admin'), 403
-    data = request.form if request.form else None
-    if not data: return jsonify(message='No competition data given'), 400
+    if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
+    form_data = request.form if request.form else None
+    data = request.json if request.json else form_data
+    if not data: return jsonify(error='No competition data given'), 400
     name, desc = data['name'], data['description']
     start_date = data['start_date'] if data.__contains__('start_date') else None
     end_date = data['end_date'] if data.__contains__('end_date') else None
@@ -30,20 +30,21 @@ def create_competition_action():
     # Check that competition name does not already exist
     for comp in get_all_competitions():
         if comp.name == name: 
-            return jsonify(message='Competition name already exists'), 400
+            return jsonify(error='Competition name already exists'), 400
     
     new_competition = create_competition(name, desc, start_date)
-    return jsonify(new_competition.get_json()), 200
+    return jsonify(message='Competition created'), 200
     
 
 @competition_views.route('/competition/update')
 @login_required
 def update_competition_results():
+    
+    # Authenticate admin to proceed
+    
+    # Fetch data to update competition scores (competition id, participant id, score)
+    
+    # Update the rankings
 
-    return 'Competition Created'
+    return jsonify(message='Competition results updated'), 200
 
-
-@competition_views.route('/competition/')
-@login_required
-def leave_compet():
-    return 'Competition Left'

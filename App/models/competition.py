@@ -28,7 +28,7 @@ class Competition(db.Model):
         
     
     def __str__(self):
-        return f"<{self.type.capitalize()} {self.id}: {self.name}>"
+        return f"<Competition {self.id}: {self.name}>"
 
 
     def __repr__(self):
