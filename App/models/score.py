@@ -5,7 +5,7 @@ from App.models import Participant
 from sqlalchemy.orm import relationship
 
 class Score (db.Model):
-    __tablename__ = "ranking"
+    __tablename__ = "score"
     rank        = Column(Integer, primary_key=True, nullable=False)
     participant    = relationship('Participant')
     participant_id = Column(Integer, db.ForeignKey('participant.id'))
