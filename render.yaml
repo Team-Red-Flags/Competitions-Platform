@@ -6,7 +6,7 @@ services:
   repo: https://github.com/MadMoose02/Competitions-Platform
   plan: free
   branch: main
-  healthCheckPath: /healthcheck
+  healthCheckPath: /health
   buildCommand: "pip install -r requirements.txt"
   startCommand: "gunicorn wsgi:app"
   envVars:
@@ -21,7 +21,7 @@ services:
       property: user
   - key: POSTGRES_PASSWORD
     fromDatabase:
-      name:Competitions-Platform-DB.Red-Flags
+      name: Competitions-Platform-DB.Red-Flags
       property: password
   - key: POSTGRES_DB
     fromDatabase:
