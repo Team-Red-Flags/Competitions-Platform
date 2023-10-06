@@ -14,8 +14,7 @@ from App.controllers import (
     get_all_competitions
 )
 
-competition_views = Blueprint('competition_views', __name__, template_folder='../templates') #unsure of use& relevance
-
+competition_views = Blueprint('competition_views', __name__, template_folder='../templates')
 
 @competition_views.route('/competition/create', methods=['POST'])
 @login_required
@@ -39,11 +38,12 @@ def create_competition_action():
 @competition_views.route('/competition/update')
 @login_required
 def update_competition_results():
+    
+    # Authenticate admin to proceed
+    
+    # Fetch data to update competition scores (competition id, participant id, score)
+    
+    # Update the rankings
 
-    return 'Competition Created'
+    return jsonify(message='Competition results updated'), 200
 
-
-@competition_views.route('/competition/')
-@login_required
-def leave_compet():
-    return 'Competition Left'
