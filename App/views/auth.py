@@ -37,11 +37,8 @@ def identify_page():
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
-    print("JWT User: " + current_user)
-    if not jwt_current_user: return jsonify(error='Not logged in'), 401
-    curr_user = get_user(current_user.id)
     logout_user()
-    return jsonify(message=f'{curr_user.username} logged out!'), 200
+    return jsonify(message=f'User logged out!'), 200
 
 
 '''
