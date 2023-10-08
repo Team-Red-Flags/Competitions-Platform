@@ -10,6 +10,7 @@ from App.controllers import (
     get_all_users,
     get_all_users_json,
     jwt_required,
+    get_user,
     create_competition,
     get_all_competitions
 )
@@ -48,3 +49,11 @@ def update_competition_results():
 
     return jsonify(message='Competition results updated'), 200
 
+
+@competition_views.route('/competition/<int:competition_id>/view-rankings', methods=['GET'])
+@login_required
+def view_rankings(competition_id):
+    rankings = Score.ranking_participants(competition_id)
+    rankings_json = [rank.get_json() for rank in rankings]
+    
+    return jsonify(rankings_json), 200
