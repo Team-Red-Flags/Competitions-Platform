@@ -63,7 +63,6 @@ User Routes
 @auth_views.route('/login', methods=['POST'])
 @auth_views.route('/user/login', methods=['POST'])
 def user_login_action():
-    data = request.form if request.form else None
     form_data = request.form if request.form else None
     data = request.json if request.json else form_data
     print("User login received: " + f"[{data['username']}, {data['password']}]")
