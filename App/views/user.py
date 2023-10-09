@@ -23,7 +23,7 @@ def view_profile():
     # Competitions enrolled in
     return jsonify('This is your profile'), 200
 
-@user_views.route('/user/view-competitions', methods=['GET'])
+@user_views.route('/user/competitions', methods=['GET'])
 @login_required
 def view_competitions():
     competitions = [comp.get_json() for comp in get_participant_competitions(current_user.id)]
