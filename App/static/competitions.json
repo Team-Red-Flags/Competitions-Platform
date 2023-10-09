@@ -2,12 +2,14 @@
     {
         "name" : "DCIT Programming Competition",
         "description" : "A competition for students to showcase their skills in programming. Open to students in any faculties of the University",
-        "start_date" : "1 November, 2023"
+        "start_date" : "1 November, 2023",
+        "end_date" : ""
     },
     {
         "name" : "FST Hackathon '23",
         "description" : "FST's first hackathan event. Open to all students to show off their programming prowess and knowledge",
-        "start_date" : "23rd October, 2023"
+        "start_date" : "23rd October, 2023",
+        "end_date" : ""
     },
     {
         "name" : "Software Development Competition 2023",
