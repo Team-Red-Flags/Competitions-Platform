@@ -45,3 +45,6 @@ def get_competition_rankings(competition_id) -> list:
     
     # Sort results_json object by score key in descending order
     return sorted(results_json, key = lambda x: x['score'], reverse = True)
+
+def get_top_20_participants(competition_id) -> list:
+    return get_competition_rankings(competition_id)[:20]
