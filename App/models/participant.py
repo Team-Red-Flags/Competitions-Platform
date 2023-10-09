@@ -1,6 +1,5 @@
 from App.database import db
 from App.models import User, Competition
-from App.controllers import get_user, get_competition
 from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.sql.functions import now
 from sqlalchemy.orm import relationship
@@ -28,7 +27,7 @@ class Participant(db.Model):
         
     
     def __str__(self):
-        return f"<Participant {self.id}: {get_user(self.participant_id).username}, {get_competition(self.competition_id).name}>"
+        return f"<Participant {self.id}: {User.query.get(self.participant_id).username}, {Competition.query.get(self.competition_id).name}>"
     
     
     def __repr__(self):
