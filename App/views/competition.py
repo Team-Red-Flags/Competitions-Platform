@@ -40,7 +40,7 @@ def create_competition_action():
     return jsonify(message='Competition created'), 200
     
 
-@competition_views.route('/competition/add-results', methods=['POST'])
+@competition_views.route('/competition/add-result', methods=['POST'])
 @login_required
 def create_results_action():
     if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
@@ -54,7 +54,7 @@ def create_results_action():
     return jsonify(message='New result added'), 200
 
 
-@competition_views.route('/competition/<int:competition_id>/view-rankings', methods=['GET'])
+@competition_views.route('/competition/<int:competition_id>/rankings', methods=['GET'])
 @login_required
 def view_rankings(competition_id):
     if not get_competition(competition_id):
@@ -63,7 +63,7 @@ def view_rankings(competition_id):
     return jsonify(rankings_json), 200
 
 
-@competition_views.route('/competition/<int:competition_id>/view-details', methods=['GET'])
+@competition_views.route('/competition/<int:competition_id>/details', methods=['GET'])
 @login_required
 def view_details(competition_id):
     if not get_competition(competition_id):
