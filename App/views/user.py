@@ -26,5 +26,5 @@ def view_profile():
 @user_views.route('/user/view-competitions', methods=['GET'])
 @login_required
 def view_competitions():
-    competitions = get_participant_competitions(current_user.id)
+    competitions = [comp.get_json() for comp in get_participant_competitions(current_user.id)]
     return jsonify(competitions), 200

@@ -14,7 +14,7 @@ def get_all_participants():
 def get_participant_competitions(participant_id) -> list:
     results = Participant.query.filter_by(participant_id=participant_id).all()
     if not results: return []
-    return [Competition.query.get(result.competition_id).get_json() for result in results]
+    return [Competition.query.get(result.competition_id) for result in results]
 
 def get_all_participants_json() -> list:
     participants = get_all_participants()
