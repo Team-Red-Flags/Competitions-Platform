@@ -1,6 +1,13 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
+from json import load
 from App.models import db
-from App.controllers import create_user, create_admin
+from App.controllers import (
+    create_user, 
+    create_admin,
+    create_competition,
+    create_participant,
+    get_competition
+)
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
@@ -17,9 +24,20 @@ def init():
     """
     db.drop_all()
     db.create_all()
+    
+    # Create users
     create_user('bob', 'bobpass')
+    rob = create_user('rob', 'robpass')
     create_admin('lily', 'lilypass')
-    print('Database intialised to default state')
+    
+    # Create competitions
+    with open('App/static/competitions.json', 'r') as f:
+        competitions = load(f)
+        for comp in competitions:
+            create_competition(comp['name'], comp['description'], comp['start_date'], comp['end_date'])
+            
+    # Create participants
+    create_participant(rob, get_competition(1))
     return jsonify(message='db initialised!')
 
 
