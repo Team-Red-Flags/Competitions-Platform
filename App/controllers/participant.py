@@ -8,8 +8,11 @@ def create_participant(user_id: int, competition_id: int) -> Participant:
     print("Added new participant:", new_participant)
     return new_participant
 
-def is_participant(user_id) -> bool:
-    return Participant.query.filter_by(user_id=user_id).first() != None
+def is_participant(user_id, competition_id) -> bool:
+    return Participant.query.filter_by(
+        user_id = user_id,
+        competition_id = competition_id
+    ).first() != None
 
 def update_participant_score(user_id, competition_id, score) -> bool:
     participant = Participant.query.filter_by(
@@ -41,6 +44,4 @@ def get_competition_rankings(competition_id) -> list:
     results_json = [record.get_json() for record in records]
     
     # Sort results_json object by score key in descending order
-    results_json = sorted(results_json, key=lambda x: x['score'], reverse=True)
-    print(results_json)
-    return results_json
+    return sorted(results_json, key = lambda x: x['score'], reverse = True)

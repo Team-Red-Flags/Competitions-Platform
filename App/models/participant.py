@@ -1,15 +1,16 @@
 from App.database import db
-from sqlalchemy import Column, Integer
+from App.models import User, Competition
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 class Participant(db.Model):
     __tablename__ = "participant"
-    id             = Column(Integer, primary_key=True)
-    participant    = relationship('User')
-    competition    = relationship('Competition')
-    user_id        = Column(Integer, db.ForeignKey('user.id'))
-    competition_id = Column(Integer, db.ForeignKey('competition.id'))
-    score          = Column(Integer, default=0)
+    id               = Column(Integer, primary_key=True)
+    user             = relationship('User')
+    competition      = relationship('Competition')
+    user_id          = Column(Integer, ForeignKey('user.id'))
+    competition_id   = Column(Integer, ForeignKey('competition.id'))
+    score            = Column(Integer, default=0)
     
     
     def __init__(self, user_id: int, competition_id: int, score: int = 0):
@@ -20,9 +21,10 @@ class Participant(db.Model):
 
     def get_json(self):
         return {
-            'id': self.id,
             'user_id': self.user_id,
+            'username':  User.query.get(self.user_id).username,
             'competition_id': self.competition_id,
+            'competition_name': Competition.query.get(self.competition_id).name,
             'score': self.score
         }
         
