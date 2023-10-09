@@ -25,5 +25,5 @@ def enroll_participant(user_id, competition_id):
             return jsonify(error=f'{get_user(user_id).username} enrolled in this competition'), 400
     user, competition = get_user(user_id), get_competition(competition_id)
     if create_participant(user, competition):
-        return jsonify(f"Enrolled {user.username} to {competition.name}"), 200
-    return jsonify(f"Failed to enroll {user.username} to {competition.name}"), 400
+        return jsonify(message=f"Enrolled {user.username} to {competition.name}"), 200
+    return jsonify(error=f"Failed to enroll {user.username} to {competition.name}"), 400
