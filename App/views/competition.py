@@ -11,6 +11,7 @@ from App.controllers import (
     get_all_users_json,
     jwt_required,
     get_user,
+    get_competition,
     ranking_participants,
     create_competition,
     get_all_competitions
@@ -54,7 +55,7 @@ def update_competition_results():
 @competition_views.route('/competition/<int:competition_id>/view-rankings', methods=['GET'])
 @login_required
 def view_rankings(competition_id):
-    rankings = ranking_participants(competition_id)
-    rankings_json = [rank.get_json() for rank in rankings]
-    
+    if not get_competition(competition_id):
+        return jsonify(error=f'Competition with id {competition_id} not found'), 404
+    rankings_json = [rank.get_json() for rank in ranking_participants(competition_id)]
     return jsonify(rankings_json), 200
