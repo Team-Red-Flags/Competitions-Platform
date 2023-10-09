@@ -3,7 +3,7 @@ services:
 - type: web
   name: Competitions-Platform.Red-Flags
   env: python
-  repo: https://github.com/MadMoose02/Competitions-Platform.git
+  repo: https://github.com/Team-Red-Flags/Competitions-Platform.git
   plan: free
   branch: main
   healthCheckPath: /health
