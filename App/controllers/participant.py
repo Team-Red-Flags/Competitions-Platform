@@ -8,16 +8,13 @@ def create_participant(participant: User, competition: Competition):
     print("Added new participant:", new_participant)
     return participant
 
-def get_participant(participant_id) -> Participant:
-    return Participant.query.get(participant_id)
-
 def get_all_participants():
     return Participant.query.all()
 
 def get_participant_competitions(participant_id) -> list:
     results = Participant.query.filter_by(participant_id=participant_id).all()
     if not results: return []
-    return [Competition.query.get(result.competition_id) for result in results]
+    return [Competition.query.get(result.competition_id).get_json() for result in results]
 
 def get_all_participants_json() -> list:
     participants = get_all_participants()
