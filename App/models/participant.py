@@ -1,7 +1,5 @@
 from App.database import db
-from App.models import User, Competition
-from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy.sql.functions import now
+from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 
 class Participant(db.Model):
@@ -9,25 +7,28 @@ class Participant(db.Model):
     id             = Column(Integer, primary_key=True)
     participant    = relationship('User')
     competition    = relationship('Competition')
-    participant_id = Column(Integer, db.ForeignKey('user.id'))
+    user_id        = Column(Integer, db.ForeignKey('user.id'))
     competition_id = Column(Integer, db.ForeignKey('competition.id'))
+    score          = Column(Integer, default=0)
     
     
-    def __init__(self, participant: User, competition: Competition):
-        self.participant_id = participant.id
-        self.competition_id = competition.id
+    def __init__(self, user_id: int, competition_id: int, score: int = 0):
+        self.user_id = user_id
+        self.competition_id = competition_id
+        self.score = score
 
 
     def get_json(self):
         return {
             'id': self.id,
-            'participant_id': self.participant_id,
-            'competition_id': self.competition_id
+            'user_id': self.user_id,
+            'competition_id': self.competition_id,
+            'score': self.score
         }
         
     
     def __str__(self):
-        return f"<Participant {self.id}: {User.query.get(self.participant_id).username}, {Competition.query.get(self.competition_id).name}>"
+        return f"<Participant {self.id}: {self.user_id}, {self.competition_id}, {self.score}>"
     
     
     def __repr__(self):
