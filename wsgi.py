@@ -29,16 +29,23 @@ def initialize():
     # Create users
     create_user('bob', 'bobpass')
     rob = create_user('rob', 'robpass')
+    ben = create_user('ben', 'benpass')
     create_admin('lily', 'lilypass')
     
     # Create competitions
     with open('App/static/competitions.json', 'r') as f:
         competitions = load(f)
         for comp in competitions:
-            create_competition(comp['name'], comp['description'], comp['start_date'], comp['end_date'])
+            create_competition(
+                comp['name'], 
+                comp['description'], 
+                comp['start_date'], 
+                comp['end_date']
+            )
             
     # Create participants
-    create_participant(rob, get_competition(1))
+    create_participant(rob.id, 1)
+    create_participant(ben.id, 3)
     
     print('Database intialised')
 
