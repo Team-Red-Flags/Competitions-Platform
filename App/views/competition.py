@@ -69,4 +69,4 @@ def view_details(competition_id):
     if not get_competition(competition_id):
         return jsonify(error=f'Competition with id {competition_id} not found'), 404
 
-    return jsonify(get_competition(competition_id).get_json), 200
+    return jsonify(get_competition(competition_id).get_json()), 200
