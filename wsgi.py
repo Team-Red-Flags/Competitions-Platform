@@ -1,4 +1,5 @@
 import click, pytest, sys
+from json import load
 from flask import Flask
 from flask.cli import with_appcontext, AppGroup
 
@@ -6,7 +7,10 @@ from App.database import db, get_migrate
 from App.main import create_app
 from App.controllers import ( 
     create_admin,
-    create_user, 
+    create_user,
+    create_competition,
+    create_participant,
+    get_competition,
     get_all_users_json, 
     get_all_users
 )
@@ -21,9 +25,22 @@ migrate = get_migrate(app)
 def initialize():
     db.drop_all()
     db.create_all()
+    
+    # Create users
     create_user('bob', 'bobpass')
+    rob = create_user('rob', 'robpass')
     create_admin('lily', 'lilypass')
-    print('database intialized')
+    
+    # Create competitions
+    with open('App/static/competitions.json', 'r') as f:
+        competitions = load(f)
+        for comp in competitions:
+            create_competition(comp['name'], comp['description'], comp['start_date'], comp['end_date'])
+            
+    # Create participants
+    create_participant(rob, get_competition(1))
+    
+    print('Database intialised')
 
 '''
 User Commands
