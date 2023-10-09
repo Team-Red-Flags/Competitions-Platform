@@ -16,15 +16,7 @@ from App.controllers import (
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
 #view profile
-@user_views.route('/user', methods=['GET'])
+@user_views.route('/profile', methods=['GET'])
 @login_required
 def view_profile():
-    # Details about user
-    # Competitions enrolled in
-    return jsonify('This is your profile'), 200
-
-@user_views.route('/user/competitions', methods=['GET'])
-@login_required
-def view_competitions():
-    competitions = [comp.get_json() for comp in get_participant_competitions(current_user.id)]
-    return jsonify(competitions), 200
+    return
