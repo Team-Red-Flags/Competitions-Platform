@@ -5,7 +5,7 @@ def create_participant(participant: User, competition: Competition):
     new_participant = Participant(participant, competition)
     db.session.add(new_participant)
     db.session.commit()
-    print("Added new participant: " + f"[{participant.username}, {competition.name}]")
+    print("Added new participant:", new_participant)
     return participant
 
 def get_participant(participant_id) -> Participant:
