@@ -14,7 +14,8 @@ from App.controllers import (
     get_competition,
     ranking_participants,
     create_competition,
-    get_all_competitions
+    get_all_competitions,
+    create_score
 )
 
 competition_views = Blueprint('competition_views', __name__, template_folder='../templates')
@@ -39,17 +40,18 @@ def create_competition_action():
     return jsonify(message='Competition created'), 200
     
 
-@competition_views.route('/competition/update')
+@competition_views.route('/competition/add-results', methods=['POST'])
 @login_required
-def update_competition_results():
+def create_results_action():
+    if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
     
-    # Authenticate admin to proceed
+    form_data = request.form if request.form else None
+    data = request.json if request.json else form_data
+    if not data: return jsonify(error='No results data given'), 400
+    competition_id, participant_id, score =  data['competition_id'], data['participant_id'], data['score']
     
-    # Fetch data to update competition scores (competition id, participant id, score)
-    
-    # Update the rankings
-
-    return jsonify(message='Competition results updated'), 200
+    new_score_result = create_score(participant_id,competition_id,score)
+    return jsonify(message='New result added'), 200
 
 
 @competition_views.route('/competition/<int:competition_id>/view-rankings', methods=['GET'])
@@ -59,3 +61,12 @@ def view_rankings(competition_id):
         return jsonify(error=f'Competition with id {competition_id} not found'), 404
     rankings_json = [rank.get_json() for rank in ranking_participants(competition_id)]
     return jsonify(rankings_json), 200
+
+
+@competition_views.route('/competition/<int:competition_id>/view-details', methods=['GET'])
+@login_required
+def view_details(competition_id):
+    if not get_competition(competition_id):
+        return jsonify(error=f'Competition with id {competition_id} not found'), 404
+
+    return jsonify(get_competition(competition_id).get_json), 200
