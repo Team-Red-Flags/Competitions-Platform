@@ -8,13 +8,13 @@
     {
         "name" : "FST Hackathon '23",
         "description" : "FST's first hackathan event. Open to all students to show off their programming prowess and knowledge",
-        "start_date" : "23rd October, 2023",
+        "start_date" : "23 October, 2023",
         "end_date" : ""
     },
     {
         "name" : "Software Development Competition 2023",
         "description" : "Get your team ready for the Software Developemnt Competition 2023. This is a week-long event where a team of students will create an app to solve real-world problems",
         "start_date" : "30th October, 2023",
-        "end_date" : "3rd November, 2023"
+        "end_date" : "3 November, 2023"
     }
 ]
