@@ -9,7 +9,8 @@ from App.controllers import (
     jwt_authenticate, 
     get_all_users,
     get_all_users_json,
-    jwt_required
+    jwt_required,
+    get_participant_competitions
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
@@ -25,6 +26,5 @@ def view_profile():
 @user_views.route('/user/view-competitions', methods=['GET'])
 @login_required
 def view_competitions():
-    competition = get_participant(current_user.id)
-    
-    return jsonify(competition.get_json()), 200
+    competitions = get_participant_competitions(current_user.id)
+    return jsonify(competitions), 200
