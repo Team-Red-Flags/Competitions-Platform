@@ -6,12 +6,11 @@ from .index import index_views
 
 from App.controllers import (
     get_competition,
-    ranking_participants,
+    get_competition_rankings,
     create_competition,
     get_all_competitions,
-    create_score,
-    get_score,
-    update_score,
+    get_user,
+    update_participant_score,
     is_participant
 )
 
@@ -38,33 +37,38 @@ def create_competition_action():
     
 
 @competition_views.route('/competition/add-result', methods=['POST'])
-@login_required
-def create_results_action():
-    if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
+# @login_required
+def add_results_action():
+    # if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
     
     # Get data from the request
     form_data = request.form if request.form else None
     data = request.json if request.json else form_data
     if not data: return jsonify(error='No results data given'), 400
-    competition_id, participant_id, score =  data['competition_id'], data['participant_id'], data['score']
+    competition_id, user_id, score =  data['competition_id'], data['user_id'], data['score']
+    print(f"Adding result for user {user_id} in competition {competition_id}: {score}")
+    
+    # Verify user id
+    if not get_user(user_id):
+        return jsonify(error=f'User id {user_id} does not exist'), 400
+    
+    # Verify existing competition
+    if not get_competition(competition_id):
+        return jsonify(error=f'Competition id {competition_id} does not exist'), 400
     
     # Find the participant
-    if not is_participant(participant_id):
-        return jsonify(error=f'Participant id {participant_id} does not exist'), 400
+    if not is_participant(user_id, competition_id):
+        return jsonify(error=f'User id {user_id} not a participant of competition {competition_id}'), 400
     
-    # Check if existing score already exists. Create if not else update
-    score = get_score(participant_id, competition_id)
-    if not score:
-        create_score(participant_id, competition_id, score)
-        return jsonify(message='Added new result'), 200
-    
-    if update_score(participant_id, competition_id, score):
+    # Update participant score
+    if update_participant_score(user_id, competition_id, score):
+        print("Record updated")
         return jsonify(message='Successfully updated result'), 200
     
+    print("Could not add result")
     return jsonify(error='Could not add result'), 400
 
 @competition_views.route('/competition/<int:competition_id>', methods=['GET'])
-@login_required
 def view_details(competition_id):
     if not get_competition(competition_id):
         return jsonify(error=f'Competition with id {competition_id} not found'), 404
@@ -73,9 +77,7 @@ def view_details(competition_id):
 
 
 @competition_views.route('/competition/<int:competition_id>/rankings', methods=['GET'])
-@login_required
 def view_rankings(competition_id):
     if not get_competition(competition_id):
         return jsonify(error=f'Competition with id {competition_id} not found'), 404
-    rankings_json = [rank.get_json() for rank in ranking_participants(competition_id)]
-    return jsonify(rankings_json), 200
+    return jsonify(get_competition_rankings(competition_id)), 200
