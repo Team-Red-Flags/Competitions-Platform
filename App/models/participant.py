@@ -1,6 +1,6 @@
 from App.database import db
 from App.models import User, Competition
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 class Participant(db.Model):

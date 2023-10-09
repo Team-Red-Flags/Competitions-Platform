@@ -19,7 +19,11 @@ competition_views = Blueprint('competition_views', __name__, template_folder='..
 @competition_views.route('/competition/create', methods=['POST'])
 @login_required
 def create_competition_action():
+    
+    # Authenticate admin
     if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
+    
+    # Get data from the request
     form_data = request.form if request.form else None
     data = request.json if request.json else form_data
     if not data: return jsonify(error='No competition data given'), 400
@@ -32,14 +36,16 @@ def create_competition_action():
         if comp.name == name: 
             return jsonify(error='Competition name already exists'), 400
     
-    new_competition = create_competition(name, desc, start_date)
+    create_competition(name, desc, start_date)
     return jsonify(message='Competition created'), 200
     
 
 @competition_views.route('/competition/add-result', methods=['POST'])
-# @login_required
+@login_required
 def add_results_action():
-    # if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
+    
+    # Authenticate admin
+    if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
     
     # Get data from the request
     form_data = request.form if request.form else None

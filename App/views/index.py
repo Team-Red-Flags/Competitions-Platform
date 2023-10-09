@@ -5,8 +5,7 @@ from App.controllers import (
     create_user, 
     create_admin,
     create_competition,
-    create_participant,
-    get_competition
+    create_participant
 )
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
