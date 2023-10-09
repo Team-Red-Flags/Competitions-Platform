@@ -5,8 +5,7 @@ from App.controllers import (
     create_user, 
     create_admin,
     create_competition,
-    create_participant,
-    get_competition
+    create_participant
 )
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
@@ -28,16 +27,23 @@ def init():
     # Create users
     create_user('bob', 'bobpass')
     rob = create_user('rob', 'robpass')
+    ben = create_user('ben', 'benpass')
     create_admin('lily', 'lilypass')
     
     # Create competitions
     with open('App/static/competitions.json', 'r') as f:
         competitions = load(f)
         for comp in competitions:
-            create_competition(comp['name'], comp['description'], comp['start_date'], comp['end_date'])
+            create_competition(
+                comp['name'], 
+                comp['description'], 
+                comp['start_date'], 
+                comp['end_date']
+            )
             
     # Create participants
-    create_participant(rob, get_competition(1))
+    create_participant(rob.id, 1)
+    create_participant(ben.id, 3)
     return jsonify(message='db initialised!')
 
 
