@@ -8,8 +8,23 @@ def create_score(participant_id: int, competition_id: int, score: int) -> Score:
     print("Created new score:", new_score)
     return new_score
 
+def get_score(participant_id, competition_id):
+    return Score.query.filter_by(participant_id=participant_id, competition_id=competition_id).first()
+
+def update_score(participant_id: int, competition_id: int, score: int) -> Score:
+    score_record = get_score(participant_id, competition_id)
+    score_record.score = score
+    db.session.add(score_record)
+    db.session.commit()
+    print("Updated score:", score_record)
+    return score_record
+
 def get_all_scores():
     return Score.query.all()
+
+def is_participant(participant_id):
+    all_scores = Score.query.filter_by(participant_id=participant_id)
+    return len(all_scores) > 0
 
 #ranks all participants for a particular competition
 def ranking_participants(competition_id):
