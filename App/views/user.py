@@ -9,7 +9,8 @@ from App.controllers import (
     jwt_authenticate, 
     get_all_users,
     get_all_users_json,
-    jwt_required
+    jwt_required,
+    get_participant_competitions
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
