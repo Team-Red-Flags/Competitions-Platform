@@ -24,6 +24,12 @@ class UserUnitTests(unittest.TestCase):
     def test_new_user(self):
         user = User("bob", "bobpass")
         assert user.username == "bob"
+    
+    def test_user_login(self):
+        user=User("bob", "bobpass")
+        logged_in = authenticate_user("bob", "bobpass")
+        assert logged_in.username == user.username
+        
 
     # pure function no side effects or integrations called
     def test_get_json(self):
