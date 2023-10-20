@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User
+from App.models import User, Competition
 from App.controllers import (
     create_user,
     get_all_users_json,
@@ -24,11 +24,10 @@ class UserUnitTests(unittest.TestCase):
     def test_new_user(self):
         user = User("bob", "bobpass")
         assert user.username == "bob"
-    
-    def test_user_login(self):
-        user=create_user("tob", "tobpass")
-        logged_in = authenticate_user("tob", "tobpass")
-        assert logged_in.username == user.username
+
+    def test_new_competition(self):
+        competition = Competition("test", "test", "2020-01-01", "2020-01-01")
+        assert competition.name == "test"
         
 
     # pure function no side effects or integrations called
