@@ -26,8 +26,8 @@ class UserUnitTests(unittest.TestCase):
         assert user.username == "bob"
     
     def test_user_login(self):
-        user=create_user("bob", "bobpass")
-        logged_in = authenticate_user("bob", "bobpass")
+        user=create_user("tob", "tobpass")
+        logged_in = authenticate_user("tob", "tobpass")
         assert logged_in.username == user.username
         
 
