@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User, Competition
+from App.models import User, Competition, Participant
 from App.controllers import (
     create_user,
     get_all_users_json,
@@ -20,17 +20,8 @@ LOGGER = logging.getLogger(__name__)
    Unit Tests
 '''
 class UserUnitTests(unittest.TestCase):
-
-    def test_new_user(self):
-        user = User("bob", "bobpass")
-        assert user.username == "bob"
-
-    def test_new_competition(self):
-        competition = Competition("test", "test", "2020-01-01", "2020-01-01")
-        assert competition.name == "test"
-        
-
     # pure function no side effects or integrations called
+    #User Unit Tests
     def test_get_json(self):
         user = User("bob", "bobpass")
         user_json = user.get_json()
@@ -46,6 +37,33 @@ class UserUnitTests(unittest.TestCase):
         password = "mypass"
         user = User("bob", password)
         assert user.check_password(password)
+
+    def test_new_user(self):
+        user = User("bob", "bobpass")
+        assert user.username == "bob"
+
+    def test_is_admin(self):
+        user = User("jane", "janepass", "admin")
+        assert user.type == "admin"
+
+    #competition unit tests
+    def test_new_competition(self):
+        competition = Competition("test", "test", "2020-01-01", "2020-01-01")
+        assert competition.name == "test"
+
+    def test_competition_description(self):
+        competition = Competition("test", "2020-01-01", "2020-01-01")
+        assert competition.description == "A new competition!"    
+
+    def test_get_json_competition(self):
+        competition = Competition("test", "test", "2020-01-01", "2020-01-01")
+        competition_json = competition.get_json()
+        self.assertDictEqual(competition_json, {"id":None, "name":"test", "description":"test", "start_date":"2020-01-01", "end_date":"2020-01-01"})
+
+    #participant unit tests    
+    def test_new_participant(self):
+        participant = Participant (1, 1)
+        assert participant.score == 0
 
 '''
     Integration Tests
