@@ -107,7 +107,7 @@ class UsersIntegrationTests(unittest.TestCase):
         assert user.username == "rick"
     
     def test_create_competition(self):
-        competition = create_competition("test", "test", "1 January 2020", "10 January 2020")
+        competition = create_competition("test", "test", "1 January, 2020", "10 January, 2020")
         assert competition.name == "test"
         
     def test_get_all_users_json(self):
