@@ -12,6 +12,7 @@ class Competition(db.Model):
 
 
     def __init__(self, name, description, start_date, end_date = None):
+        self.id          = None
         self.name        = name
         self.description = description if description else "A new competition!"
         self.start_date  = start_date
