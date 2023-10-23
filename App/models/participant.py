@@ -22,9 +22,9 @@ class Participant(db.Model):
     def get_json(self):
         return {
             'user_id': self.user_id,
-            'username':  User.query.get(self.user_id).username,
+            # 'username':  User.query.get(self.user_id).username,
             'competition_id': self.competition_id,
-            'competition_name': Competition.query.get(self.competition_id).name,
+            # 'competition_name': Competition.query.get(self.competition_id).name,
             'score': self.score
         }
         
