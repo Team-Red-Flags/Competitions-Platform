@@ -103,7 +103,7 @@ def test_authenticate():
 class UsersIntegrationTests(unittest.TestCase):
 
     def test_create_user(self):
-        user = create_user("rick", "bobpass")
+        user = create_user("rick", "rickpass")
         assert user.username == "rick"
     
     def test_create_competition(self):
