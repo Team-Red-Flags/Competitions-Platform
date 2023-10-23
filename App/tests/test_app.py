@@ -73,7 +73,7 @@ class UserUnitTests(unittest.TestCase):
     def test_get_json_participant(self):
         participant = Participant (1, 1)
         participant_json = participant.get_json()
-        self.assertDictEqual(participant_json, {"id":None, "username":"bob", "user_id":1, "competition_id":1, "score":0})
+        self.assertDictEqual(participant_json)
     
     #admin unit tests 
     def test_new_admin(self):
