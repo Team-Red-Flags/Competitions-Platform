@@ -121,8 +121,8 @@ class UsersIntegrationTests(unittest.TestCase):
         assert user.username == "ronnie"
 
     def test_get_competition(self):
-        competition = get_competition(1)
-        assert competition.name == "test"
+        competition = get_competition()
+        assert competition.id == 1
 
     def test_get_all_competitions(self):
         competitions = get_all_competitions()
