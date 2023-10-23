@@ -10,7 +10,11 @@ from App.controllers import (
     authenticate_user,
     get_user,
     get_user_by_username,
-    update_user
+    update_user,
+    create_competition,
+    get_competition,
+    get_all_competitions
+
 )
 
 
@@ -65,6 +69,18 @@ class UserUnitTests(unittest.TestCase):
         participant = Participant (1, 1)
         assert participant.score == 0
 
+    def test_get_json_participant(self):
+        participant = Participant (1, 1)
+        participant_json = participant.get_json()
+        self.assertDictEqual(participant_json, {"id":None, "user_id":1, "competition_id":1, "score":0})
+    
+    #admin unit tests 
+    def test_new_admin(self):
+        user = User("jane", "janepass", "admin")
+        assert user.type == "admin"
+
+
+
 '''
     Integration Tests
 '''
@@ -98,3 +114,15 @@ class UsersIntegrationTests(unittest.TestCase):
         update_user(1, "ronnie")
         user = get_user(1)
         assert user.username == "ronnie"
+
+    def test_create_competition(self):
+        competition = create_competition("test", "test", "2020-01-01", "2020-01-01")
+        assert competition.name == "test"
+    
+    def test_get_competition(self):
+        competition = get_competition()
+        assert competition.name == "test"
+
+    def test_get_all_competitions(self):
+        competition = get_all_competitions()
+        assert competition.name == "test"
