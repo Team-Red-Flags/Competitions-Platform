@@ -20,6 +20,7 @@ class Competition(db.Model):
         
     def get_json(self):
         return {
+            'id': self.id,
             'name': self.name,
             'description' : self.description,
             'start_date': self.start_date,
