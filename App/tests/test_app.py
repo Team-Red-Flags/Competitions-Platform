@@ -57,6 +57,7 @@ class UserUnitTests(unittest.TestCase):
 
     def test_competition_description(self):
         competition = Competition("test", "2020-01-01", "2020-01-01")
+        competition.description = "A new competition!"
         assert competition.description == "A new competition!"    
 
     def test_get_json_competition(self):
