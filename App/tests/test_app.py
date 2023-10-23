@@ -120,9 +120,8 @@ class UsersIntegrationTests(unittest.TestCase):
         user = get_user(1)
         assert user.username == "ronnie"
 
-    
     def test_get_competition(self):
-        competition = get_competition()
+        competition = get_competition(1)
         assert competition.name == "test"
 
     def test_get_all_competitions(self):
