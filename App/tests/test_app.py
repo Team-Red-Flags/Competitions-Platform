@@ -105,7 +105,11 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_create_user(self):
         user = create_user("rick", "bobpass")
         assert user.username == "rick"
-
+    
+    def test_create_competition(self):
+        competition = create_competition("test", "test", "01-01-2020", "01-01-2020")
+        assert competition.name == "test"
+        
     def test_get_all_users_json(self):
         users_json = get_all_users_json()
         self.assertListEqual([{"id":1, "username":"bob"}, {"id":2, "username":"rick"}], users_json)
@@ -116,9 +120,6 @@ class UsersIntegrationTests(unittest.TestCase):
         user = get_user(1)
         assert user.username == "ronnie"
 
-    def test_create_competition(self):
-        competition = create_competition("test", "test", "2020-01-01", "2020-01-01")
-        assert competition.name == "test"
     
     def test_get_competition(self):
         competition = get_competition()
