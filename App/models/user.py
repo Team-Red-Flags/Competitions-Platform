@@ -45,7 +45,10 @@ class User(db.Model, UserMixin):
         Args:
             type (str): Type of user (student or admin)
         """
-        self.type = type.lower()
+        if type.lower() in ['student', 'admin']:
+            self.type = type.lower()
+        else:
+            raise ValueError(f"{type} is not a valid user type")
     
 
     def set_password(self, password: str, _method: str = 'sha256'):
