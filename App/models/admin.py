@@ -1,7 +1,10 @@
 from App.database import db
 from App.models import User
+from sqlalchemy import Column, Integer
 
 class Admin(User):
+    __tablename__ = 'admin'
+    id = Column(Integer, primary_key=True, autoincrement=True)
     
     def __init__(self, username: str, password: str):
         """Constructor for an admin type user. Inherits from base class User
