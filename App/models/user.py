@@ -11,16 +11,22 @@ class User(db.Model, UserMixin):
     type     = Column(String, nullable=False, default='user')
     
 
-    def __init__(self, username, password, type='user'):
+    def __init__(self, username: str, password: str):
+        """Constructor for a user object
+
+        Args:
+            username (str): The username of the user
+            password (str): The plaintext password of the user. Will be hashed 
+        """
         self.username = username
         self.set_password(password)
-        self.type = type
 
 
     def get_json(self) -> dict:
         return {
             'id': self.id,
-            'username': self.username
+            'username': self.username,
+            'type': self.type
         }
         
         
@@ -31,6 +37,15 @@ class User(db.Model, UserMixin):
             bool: True if the user is an admin. False otherwise
         """
         return self.type == 'admin'
+    
+    
+    def set_user_type(self, type: str):
+        """Sets the user type when inherited by a subclass
+
+        Args:
+            type (str): Type of user (student or admin)
+        """
+        self.type = type.lower()
     
 
     def set_password(self, password: str, _method: str = 'sha256'):
