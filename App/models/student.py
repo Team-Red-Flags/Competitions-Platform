@@ -11,4 +11,4 @@ class Student(User):
             password (str): The plaintext password of the user. Will be hashed
         """
         super().__init__(username, password)
-        super().set_user_type('admin')
+        super().set_user_type('student')
