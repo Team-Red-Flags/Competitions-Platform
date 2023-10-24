@@ -18,13 +18,13 @@ def get_all_students() -> list:
     return Student.query.all()
 
 def get_all_students_json() -> list:
-    users = get_all_students()
-    if not users: return []
-    return [user.get_json() for user in users]
+    students = get_all_students()
+    if not students: return []
+    return [student.get_json() for student in students]
 
 def update_student(id, username) -> Student:
-    user = get_student(id)
-    user.username = username
-    db.session.add(user)
+    student = get_student(id)
+    student.username = username
+    db.session.add(student)
     db.session.commit()
-    return user
+    return student
