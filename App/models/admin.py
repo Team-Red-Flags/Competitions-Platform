@@ -1,10 +1,12 @@
 from App.database import db
 from App.models import User
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, ForeignKey, Integer
+from sqlalchemy.orm import relationship
 
 class Admin(User):
     __tablename__ = 'admin'
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    user = relationship('User')
+    id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     
     def __init__(self, username: str, password: str):
         """Constructor for an admin type user. Inherits from base class User

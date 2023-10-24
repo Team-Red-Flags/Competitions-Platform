@@ -1,10 +1,12 @@
 from App.database import db
 from App.models import User
-from sqlalchemy import Column, Integer, String, Date, LargeBinary
+from sqlalchemy import Column, ForeignKey, Integer, String, Date, LargeBinary
+from sqlalchemy.orm import relationship
 
 class Student(User):
     __tablename__ = 'student'
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    user = relationship('User')
+    id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     fname = Column(String(80), nullable=False)
     lname = Column(String(80), nullable=False)
     student_id = Column(Integer)
