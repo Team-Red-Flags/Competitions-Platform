@@ -13,3 +13,18 @@ def get_admin_by_username(username) -> Admin:
 
 def get_admin(id) -> Admin:
     return Admin.query.get(id)
+
+def get_all_admins() -> list:
+    return Admin.query.all()
+
+def get_all_admins_json() -> list:
+    admins = get_all_admins()
+    if not admins: return []
+    return [admin.get_json() for admin in admins]
+
+def update_admin(id, username) -> Admin:
+    admin = get_admin(id)
+    admin.username = username
+    db.session.add(admin)
+    db.session.commit()
+    return admin
