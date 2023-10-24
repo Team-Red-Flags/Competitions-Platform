@@ -4,11 +4,10 @@ from App.database import db
 from sqlalchemy import Column, Integer, String
 
 class User(db.Model, UserMixin):
-    __tablename__ = "user"
-    id       = Column(Integer, primary_key=True, autoincrement=True)
+    __abstract__ = True
     username = Column(String, nullable=False, unique=True)
     password = Column(String(120), nullable=False)
-    type     = Column(String, nullable=False, default='user')
+    type     = Column(String, nullable=False)
     
 
     def __init__(self, username: str, password: str):
