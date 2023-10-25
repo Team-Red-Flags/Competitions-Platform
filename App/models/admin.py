@@ -1,15 +1,18 @@
 from App.database import db
 from App.models import User
-from sqlalchemy import Column, ForeignKey, Integer
+from sqlalchemy import Column, ForeignKey, Integer, String, LargeBinary
 from sqlalchemy.orm import relationship
 
 class Admin(User):
     __tablename__ = 'admin'
     user = relationship('User')
     id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    fname = Column(String(80), nullable=False)
+    lname = Column(String(80), nullable=False)
+    image = Column(LargeBinary, unique=False)
     
     
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str, fname: str, lname: str, image: bytes = None):
         """Constructor for an admin type user. Inherits from base class User
 
         Args:
@@ -18,6 +21,9 @@ class Admin(User):
         """
         super().__init__(username, password)
         super().set_user_type('admin')
+        self.fname = fname
+        self.lname = lname
+        self.image = image
 
 
     def is_admin(self) -> bool:
