@@ -3,11 +3,6 @@ from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 
 from App.models import User, Admin, Student
 
-def jwt_authenticate(username, password):
-    user = User.query.filter_by(username=username).first()
-    if not user or not user.check_password(password): return None 
-    return create_access_token(identity=username)
-
 def authenticate_student(username, password) -> Student:
     student: Student = Student.query.filter_by(username=username).first()
     if not student or not student.check_password(password): return None
@@ -25,6 +20,11 @@ def authenticate_user(username, password) -> User:
         user = authenticate_student(username, password)
         if not user or not user.check_password(password): return None
     return user
+
+def jwt_authenticate(username, password):
+    user = authenticate_user(username, password)
+    if not user: return None 
+    return create_access_token(identity=username)
 
 def setup_flask_login(app):
     login_manager = LoginManager()
