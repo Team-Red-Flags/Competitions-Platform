@@ -24,6 +24,15 @@ class Admin(User):
         self.fname = fname
         self.lname = lname
         self.image = image
+        
+        
+    def get_json(self) -> dict:
+        return {
+            'id': self.id,
+            'username': self.username,
+            'fname' : self.fname,
+            'lname' : self.lname        
+        }
 
 
     def is_admin(self) -> bool:
