@@ -1,11 +1,30 @@
 from App.models import Student
 from App.database import db
 
-def create_student(username, password) -> Student:
-    new_student = Student(username=username, password=password)
+def create_student(
+        username: str, 
+        password: str, 
+        fname: str, 
+        lname: str, 
+        student_id: int, 
+        student_email: str, 
+        dob, 
+        image: bytes = None
+        ) -> Student:
+    
+    new_student = Student(
+        username=username, 
+        password=password,
+        fname=fname,
+        lname=lname,
+        student_id=student_id,
+        student_email=student_email,
+        dob=dob,
+        image=image
+    )
     db.session.add(new_student)
     db.session.commit()
-    print("Created user:", new_student)
+    print("Created student:", new_student)
     return new_student
 
 def get_student_by_username(username) -> Student:
