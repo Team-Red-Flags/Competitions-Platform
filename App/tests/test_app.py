@@ -68,7 +68,7 @@ class StudentUnitTests(unittest.TestCase):
             username=self.test_username,
             password=self.test_password,
             fname=self.test_fname,
-            lname=self.test_fname,
+            lname=self.test_lname,
             student_id=self.test_student_id,
             student_email=self.test_student_email,
             dob = self.test_dob
@@ -80,7 +80,7 @@ class StudentUnitTests(unittest.TestCase):
             username=self.test_username,
             password=self.test_password,
             fname=self.test_fname,
-            lname=self.test_fname,
+            lname=self.test_lname,
             student_id=self.test_student_id,
             student_email=self.test_student_email,
             dob = self.test_dob
@@ -101,7 +101,7 @@ class StudentUnitTests(unittest.TestCase):
             username=self.test_username,
             password=self.test_password,
             fname=self.test_fname,
-            lname=self.test_fname,
+            lname=self.test_lname,
             student_id=self.test_student_id,
             student_email=self.test_student_email,
             dob = self.test_dob
