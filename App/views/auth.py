@@ -7,9 +7,7 @@ from.index import index_views
 from App.controllers import (
     jwt_authenticate,
     authenticate_admin,
-    authenticate_user,
-    get_all_students,
-    get_all_students_json
+    authenticate_student,
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -53,12 +51,12 @@ User Routes
 '''
 
 @auth_views.route('/login', methods=['POST'])
-@auth_views.route('/user/login', methods=['POST'])
+@auth_views.route('/student/login', methods=['POST'])
 def user_login_action():
     form_data = request.form if request.form else None
     data = request.json if request.json else form_data
-    print("User login received: " + f"[{data['username']}, {data['password']}]")
-    user = authenticate_user(data['username'], data['password'])
-    if not user: return jsonify(error='bad username or password given'), 401
-    login_user(user)
-    return jsonify(message=f'User {user.username} logged in!'), 200
+    print("Student login received: " + f"[{data['username']}, {data['password']}]")
+    student = authenticate_student(data['username'], data['password'])
+    if not student: return jsonify(error='bad username or password given'), 401
+    login_user(student)
+    return jsonify(message=f'Student {student.fname} {student.lname} logged in!'), 200
