@@ -1,5 +1,4 @@
 from App.database import db
-from App.models import Student, Competition
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -22,9 +21,7 @@ class Participant(db.Model):
     def get_json(self):
         return {
             'student_id': self.student_id,
-            # 'username':  User.query.get(self.student_id).username,
             'competition_id': self.competition_id,
-            # 'competition_name': Competition.query.get(self.competition_id).name,
             'score': self.score
         }
         
