@@ -46,9 +46,7 @@ def update_student(
     username, 
     password = None, 
     fname = None, 
-    lname = None, 
-    student_id = None, 
-    student_email = None, 
+    lname = None,
     dob = None,
     image = None
     ) -> Student:
@@ -57,8 +55,6 @@ def update_student(
     student.username = username
     student.fname = fname if fname else student.fname
     student.lname = lname if lname else student.lname
-    student.student_id = student_id if student_id else student.student_id
-    student.student_email = student_email if student_email else student.student_email
     student.dob = dob if dob else student.dob
     student.image = image if image else student.image
     if password: student.set_password(password)
