@@ -5,7 +5,7 @@ from sqlalchemy.sql.functions import now
 class Competition(db.Model):
     __tablename__ = "competition"
     id          = Column(Integer, primary_key=True)
-    name        = Column(String(80), nullable=False)
+    name        = Column(String(80), nullable=False, unique=True)
     description = Column(String(200), nullable=False)
     start_date  = Column(Date, nullable=True)
     end_date    = Column(Date, nullable=True)
