@@ -6,6 +6,9 @@ from App.database import db, create_db
 from App.models import User, Student, Admin, Competition, Participant
 from App.controllers import (
     get_all_students_json,
+    authenticate_user,
+    get_user,
+    create_user,
     authenticate_admin,
     authenticate_student,
     get_admin,
@@ -235,3 +238,18 @@ class UsersIntegrationTests(unittest.TestCase):
         competitions = get_all_competitions()
         for competition in competitions:
             assert competition.name == "test"
+
+class StudentIntegrationTests(unittest.TestCase):
+    def test_create_student(self):
+        pass
+class AdminIntegrationTests(unittest.TestCase):
+    def test_create_admin(self):
+        pass
+    
+class CompetitionIntegrationTests(unittest.TestCase):
+    def test_create_competition(self):
+        pass
+
+class ParticipantIntegrationTests(unittest.TestCase):
+    def test_create_participant(self):        
+        pass
