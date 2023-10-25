@@ -1,4 +1,4 @@
-from App.models import User
+from App.models import User, Student, Admin
 from App.database import db
 
 def create_user(username, password) -> User:
@@ -12,7 +12,10 @@ def get_user_by_username(username) -> User:
     return User.query.filter_by(username=username).first()
 
 def get_user(id) -> User:
-    return User.query.get(id)
+    user = Student.query.filter_by(id=id).first()
+    if user: return user
+    user = Admin.query.filter_by(id=id).first()
+    return user if user else None
 
 def get_all_users():
     return User.query.all()
