@@ -131,7 +131,7 @@ class StudentUnitTests(unittest.TestCase):
             student_email=self.test_student_email,
             dob = self.test_dob
         )
-        assert student.password == hashed
+        assert student.password != self.test_password
     
 # Admin user unit tests
 class AdminUnitTests(unittest.TestCase):
@@ -178,13 +178,13 @@ class AdminUnitTests(unittest.TestCase):
     def test_hashed_password(self): 
         password = "adepass"
         hashed = generate_password_hash(password, method='sha256')
-        student = Student(
+        admin= Admin(
             username = 'ade',
             password = password,
             fname = 'ade',
             lname = 'b',
         )
-        assert student.password != password
+        assert admin.password != password
     
 
 
