@@ -162,7 +162,7 @@ class AdminUnitTests(unittest.TestCase):
             fname = 'ade',
             lname = 'b',
         )
-        assert admin.is_admin() != True
+        assert admin.is_admin() == True
     
     def test_check_password(self): 
         password = "adepass"
