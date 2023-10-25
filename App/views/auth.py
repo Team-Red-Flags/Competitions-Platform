@@ -1,3 +1,5 @@
+from os import path
+from base64 import b64encode
 from datetime import date
 from flask import Blueprint, render_template, jsonify, request, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
@@ -30,8 +32,10 @@ def identify_page():
 @auth_views.route('/register', methods=['POST'])
 def register_action():
     form_data = request.form if request.form else None
-    data = request.json if request.json else form_data
+    data = request.json if not form_data else form_data
     print("Registration received")
+    img =  b64encode(request.files['image'].read()) if request.files['image'] else None
+    if not img: img = b64encode(open(path.join(path.dirname(__file__).split('App')[0] + 'images/user.png'), 'rb').read())
     if create_student(
         username=data['username'],
         password=data['password'],
@@ -44,7 +48,7 @@ def register_action():
             month=int(data['dob'].split('-')[1]), 
             day=int(data['dob'].split('-')[2])
         ),
-        image=data['image']
+        image=img
     ): return jsonify(message=f'Student account for {data["fname"]} {data["lname"]} created'), 200
     return jsonify(message='Failed to register student account'), 400
 
@@ -62,7 +66,7 @@ Admin Routes
 @auth_views.route('/admin/login', methods=['POST'])
 def admin_login_action():
     form_data = request.form if request.form else None
-    data = request.json if request.json else form_data
+    data = request.json if not form_data else form_data
     print("Admin login received: " + f"[{data['username']}, {data['password']}]")
     admin = authenticate_admin(data['username'], data['password'])    
     if not admin: return jsonify(error='bad username or password given'), 401
@@ -78,7 +82,7 @@ User Routes
 @auth_views.route('/student/login', methods=['POST'])
 def user_login_action():
     form_data = request.form if request.form else None
-    data = request.json if request.json else form_data
+    data = request.json if not form_data else form_data
     print("Student login received: " + f"[{data['username']}, {data['password']}]")
     student = authenticate_student(data['username'], data['password'])
     if not student: return jsonify(error='bad username or password given'), 401
