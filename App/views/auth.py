@@ -27,11 +27,11 @@ def identify_page():
     }), 200
     
     
-@auth_views.route('/signup', methods=['POST'])
-def signup_action():
+@auth_views.route('/register', methods=['POST'])
+def register_action():
     form_data = request.form if request.form else None
     data = request.json if request.json else form_data
-    print("Signup received")
+    print("Registration received")
     if create_student(
         username=data['username'],
         password=data['password'],
@@ -45,8 +45,8 @@ def signup_action():
             day=int(data['dob'].split('-')[2])
         ),
         image=data['image']
-    ): return jsonify(message=f'Student {data["fname"]} {data["lname"]} created'), 200
-    return jsonify(message='Failed to create student'), 400
+    ): return jsonify(message=f'Student account for {data["fname"]} {data["lname"]} created'), 200
+    return jsonify(message='Failed to register student account'), 400
 
 
 @auth_views.route('/logout', methods=['GET'])
