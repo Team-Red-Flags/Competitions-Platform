@@ -5,7 +5,8 @@ from flask_login import current_user, login_required
 from .index import index_views
 
 from App.controllers import (
-    get_participant_competitions
+    get_participant_competitions,
+    update_student
 )
 
 profile_views = Blueprint('profile_views', __name__, template_folder='../templates')
@@ -18,3 +19,20 @@ def view_profile():
     profile_data['user'] = current_user.get_json()
     profile_data['competitions'] =  [comp.get_json() for comp in get_participant_competitions(current_user.id)]
     return jsonify(profile_data), 200
+
+
+@profile_views.route('/profile', methods=['POST'])
+@login_required
+def edit_profile():
+    form_data = request.form if request.form else None
+    data  = request.json if request.json else form_data
+    if update_student(
+        id=current_user.id,
+        username=data['username'],
+        password=data['password'],
+        fname=data['fname'],
+        lname=data['lname'],
+        dob=data['dob'],
+        image=data['image']
+    ): return jsonify(message='Profile updated'), 200
+    return jsonify(message='Failed to update profile'), 400
