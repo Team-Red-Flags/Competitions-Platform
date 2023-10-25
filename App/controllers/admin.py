@@ -31,10 +31,10 @@ def get_all_admins_json() -> list:
 def update_admin(id, username, password = None, fname = None, lname = None, image = None) -> Admin:
     admin = get_admin(id)
     admin.username = username
-    admin.password = password if password else admin.password
     admin.fname = fname if fname else admin.fname
     admin.lname = lname if lname else admin.lname
     admin.image = image if image else admin.image
+    if password: admin.set_password(password) 
     db.session.add(admin)
     db.session.commit()
     return admin
