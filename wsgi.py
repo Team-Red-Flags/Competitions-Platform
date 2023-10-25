@@ -1,4 +1,4 @@
-import click, pytest, sys
+from datetime import date
 from json import load
 from flask import Flask
 from flask.cli import with_appcontext, AppGroup
@@ -7,12 +7,9 @@ from App.database import db, get_migrate
 from App.main import create_app
 from App.controllers import ( 
     create_admin,
-    create_user,
+    create_student,
     create_competition,
-    create_participant,
-    get_competition,
-    get_all_users_json, 
-    get_all_users
+    create_participant
 )
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -27,10 +24,38 @@ def initialize():
     db.create_all()
     
     # Create users
-    create_user('bob', 'bobpass')
-    rob = create_user('rob', 'robpass')
-    ben = create_user('ben', 'benpass')
-    create_admin('lily', 'lilypass')
+    bob = create_student(
+        username='bob', 
+        password='bobpass', 
+        fname='Bob', 
+        lname='the Builder', 
+        student_id=80012345, 
+        student_email='bob.thebuilder@my.uwi.edu',
+        dob = date(2000, 1, 1)
+    )
+    
+    rob = create_student(
+        username='rob',
+        password='robpass',
+        fname='Rob',
+        lname='Robinson',
+        student_id=80012346,
+        student_email='rob.robinson@my.uwi.edu',
+        dob = date(1998, 1, 4)
+    )
+    
+    ben = create_student(
+        username='ben',
+        password='benpass',
+        fname='Ben',
+        lname='Simpson',
+        student_id=80012347,
+        student_email='ben.simpson@my.uwi.edu',
+        dob = date(1999, 5, 11)
+    )
+    
+    # Create admin
+    lily = create_admin(username='lily', password='lilypass')
     
     # Create competitions
     with open('App/static/competitions.json', 'r') as f:
@@ -48,52 +73,3 @@ def initialize():
     create_participant(ben.id, 3)
     
     print('Database intialised')
-
-'''
-User Commands
-'''
-
-# Commands can be organized using groups
-
-# create a group, it would be the first argument of the comand
-# eg : flask user <command>
-user_cli = AppGroup('user', help='User object commands') 
-
-# Then define the command and any parameters and annotate it with the group (@)
-@user_cli.command("create", help="Creates a user")
-@click.argument("username", default="rob")
-@click.argument("password", default="robpass")
-def create_user_command(username, password):
-    create_user(username, password)
-    print(f'{username} created!')
-
-# this command will be : flask user create bob bobpass
-
-@user_cli.command("list", help="Lists users in the database")
-@click.argument("format", default="string")
-def list_user_command(format):
-    if format == 'string':
-        print(get_all_users())
-    else:
-        print(get_all_users_json())
-
-app.cli.add_command(user_cli) # add the group to the cli
-
-'''
-Test Commands
-'''
-
-test = AppGroup('test', help='Testing commands') 
-
-@test.command("user", help="Run User tests")
-@click.argument("type", default="all")
-def user_tests_command(type):
-    if type == "unit":
-        sys.exit(pytest.main(["-k", "UserUnitTests"]))
-    elif type == "int":
-        sys.exit(pytest.main(["-k", "UserIntegrationTests"]))
-    else:
-        sys.exit(pytest.main(["-k", "App"]))
-    
-
-app.cli.add_command(test)

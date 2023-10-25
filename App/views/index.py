@@ -1,8 +1,9 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from json import load
+from datetime import date
 from App.models import db
 from App.controllers import (
-    create_user, 
+    create_student, 
     create_admin,
     create_competition,
     create_participant
@@ -25,10 +26,38 @@ def init():
     db.create_all()
     
     # Create users
-    create_user('bob', 'bobpass')
-    rob = create_user('rob', 'robpass')
-    ben = create_user('ben', 'benpass')
-    create_admin('lily', 'lilypass')
+    bob = create_student(
+        username='bob', 
+        password='bobpass', 
+        fname='Bob', 
+        lname='the Builder', 
+        student_id=80012345, 
+        student_email='bob.thebuilder@my.uwi.edu',
+        dob = date(2000, 1, 1)
+    )
+    
+    rob = create_student(
+        username='rob',
+        password='robpass',
+        fname='Rob',
+        lname='Robinson',
+        student_id=80012346,
+        student_email='rob.robinson@my.uwi.edu',
+        dob = date(1998, 1, 4)
+    )
+    
+    ben = create_student(
+        username='ben',
+        password='benpass',
+        fname='Ben',
+        lname='Simpson',
+        student_id=80012347,
+        student_email='ben.simpson@my.uwi.edu',
+        dob = date(1999, 5, 11)
+    )
+    
+    # Create admin
+    lily = create_admin(username='lily', password='lilypass')
     
     # Create competitions
     with open('App/static/competitions.json', 'r') as f:
