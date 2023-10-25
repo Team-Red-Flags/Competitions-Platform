@@ -153,14 +153,15 @@ class AdminUnitTests(unittest.TestCase):
             lname = 'b'   
         )
         admin_json= admin.get_json()
-        self.assertDictEqual(admin_json, {"id":None, "username":"ade"})
+        self.assertDictEqual(admin_json, {"id":None, "username":"ade", "fname":"ade", "lname":"b"})
 
     def test_is_admin(self):
         admin= Admin(
             username = 'ade',
             password = 'adepass',
             fname = 'ade',
-            lname = 'b',
+            lname = 'b'
+            
         )
         assert admin.is_admin() == True
     
