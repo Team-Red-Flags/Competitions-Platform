@@ -6,7 +6,9 @@ from .index import index_views
 
 from App.controllers import (
     get_participant_competitions,
-    update_student
+    get_user,
+    update_student,
+    update_admin
 )
 
 profile_views = Blueprint('profile_views', __name__, template_folder='../templates')
@@ -26,13 +28,23 @@ def view_profile():
 def edit_profile():
     form_data = request.form if request.form else None
     data  = request.json if request.json else form_data
-    if update_student(
-        id=current_user.id,
-        username=data['username'],
-        password=data['password'],
-        fname=data['fname'],
-        lname=data['lname'],
-        dob=data['dob'],
-        image=data['image']
-    ): return jsonify(message='Profile updated'), 200
-    return jsonify(message='Failed to update profile'), 400
+    if get_user(current_user.id).is_admin():
+        update_admin(
+            id=current_user.id,
+            username=data['username'],
+            password=data['password'],
+            fname=data['fname'],
+            lname=data['lname'],
+            image=data['image']
+        )
+    else: 
+        update_student(
+            id=current_user.id,
+            username=data['username'],
+            password=data['password'],
+            fname=data['fname'],
+            lname=data['lname'],
+            dob=data['dob'],
+            image=data['image']
+        )
+    return jsonify(message='Profile updated'), 200
