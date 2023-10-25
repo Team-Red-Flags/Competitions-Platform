@@ -8,7 +8,7 @@ def create_competition(name: str, description: str, start_date: str = None, end_
     new_competition = Competition(name, description, start_date, end_date)
     db.session.add(new_competition)
     db.session.commit()
-    print("Created new competition:", new_competition)
+    print("Created competition:", new_competition)
     return new_competition
 
 def get_competition(id) -> Competition:

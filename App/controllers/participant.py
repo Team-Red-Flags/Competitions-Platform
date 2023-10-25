@@ -5,7 +5,7 @@ def create_participant(student_id: int, competition_id: int) -> Participant:
     new_participant = Participant(student_id, competition_id)
     db.session.add(new_participant)
     db.session.commit()
-    print("Added new participant:", new_participant)
+    print("Added participant:", new_participant)
     return new_participant
 
 def is_participant(student_id, competition_id) -> bool:
