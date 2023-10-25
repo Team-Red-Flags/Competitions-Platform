@@ -27,7 +27,7 @@ def view_profile():
 @login_required
 def edit_profile():
     form_data = request.form if request.form else None
-    data  = request.json if request.json else form_data
+    data  = request.json if not form_data else form_data
     if get_user(current_user.id).is_admin():
         update_admin(
             id=current_user.id,
