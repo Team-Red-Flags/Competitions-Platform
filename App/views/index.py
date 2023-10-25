@@ -1,5 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from json import load
+from os import path
+from base64 import b64encode
 from datetime import date
 from App.models import db
 from App.controllers import (
@@ -24,6 +26,7 @@ def init():
     """
     db.drop_all()
     db.create_all()
+    img = b64encode(open(path.join(path.dirname(__file__).split('App')[0] + 'images/user.png'), 'rb').read())
     
     # Create users
     bob = create_student(
@@ -33,7 +36,8 @@ def init():
         lname='the Builder', 
         student_id=80012345, 
         student_email='bob.thebuilder@my.uwi.edu',
-        dob = date(2000, 1, 1)
+        dob = date(2000, 1, 1),
+        image=img
     )
     
     rob = create_student(
@@ -43,7 +47,8 @@ def init():
         lname='Robinson',
         student_id=80012346,
         student_email='rob.robinson@my.uwi.edu',
-        dob = date(1998, 1, 4)
+        dob = date(1998, 1, 4),
+        image=img
     )
     
     ben = create_student(
@@ -53,11 +58,18 @@ def init():
         lname='Simpson',
         student_id=80012347,
         student_email='ben.simpson@my.uwi.edu',
-        dob = date(1999, 5, 11)
+        dob = date(1999, 5, 11),
+        image=img
     )
     
     # Create admin
-    lily = create_admin(username='lily', password='lilypass')
+    lily = create_admin(
+        username='lily', 
+        password='lilypass',
+        fname='Lily',
+        lname='Potter',
+        image=img
+    )
     
     # Create competitions
     with open('App/static/competitions.json', 'r') as f:
