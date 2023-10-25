@@ -71,7 +71,7 @@ def admin_login_action():
     admin = authenticate_admin(data['username'], data['password'])    
     if not admin: return jsonify(error='bad username or password given'), 401
     login_user(admin)
-    return jsonify(message=f'Admin {admin.username} logged in!'), 200
+    return jsonify(message=f'Admin {admin.fname} {admin.lname} logged in!'), 200
 
 
 '''
