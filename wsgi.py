@@ -59,7 +59,13 @@ def initialize():
     )
     
     # Create admin
-    lily = create_admin(username='lily', password='lilypass')
+    lily = create_admin(
+        username='lily', 
+        password='lilypass',
+        fname='Lily',
+        lname='Potter',
+        image=img
+    )
     
     # Create competitions
     with open('App/static/competitions.json', 'r') as f:
