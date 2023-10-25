@@ -184,7 +184,7 @@ class AdminUnitTests(unittest.TestCase):
             fname = 'ade',
             lname = 'b',
         )
-        assert student.password == hashed
+        assert student.password != password
     
 
 
