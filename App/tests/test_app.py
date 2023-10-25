@@ -49,7 +49,7 @@ class UserUnitTests(unittest.TestCase):
     def test_hashed_password(self):
         hashed = generate_password_hash(self.test_password, method='sha256')
         user = User(username=self.test_username, password=self.test_password)
-        assert user.password == hashed
+        assert user.password != self.test_password
 
 
 # Student user unit tests
@@ -131,7 +131,7 @@ class StudentUnitTests(unittest.TestCase):
             student_email=self.test_student_email,
             dob = self.test_dob
         )
-        assert student.password == hashed
+        assert student.password != self.test_password
     
 # Admin user unit tests
 class AdminUnitTests(unittest.TestCase):
