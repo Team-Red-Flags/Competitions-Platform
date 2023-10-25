@@ -56,12 +56,12 @@ class StudentUnitTests(unittest.TestCase):
 
     def test_new_student(self):
         student = Student(
-            username='rob',
-            password='robpass',
-            fname='Rob',
-            lname='Robinson',
-            student_id=80012346,
-            student_email='rob.robinson@my.uwi.edu',
+            username ='rob',
+            password ='robpass',
+            fname ='Rob',
+            lname ='Robinson',
+            student_id = 80012346,
+            student_email = 'rob.robinson@my.uwi.edu',
             dob = date(1998, 1, 4)
         )
         assert student.username == 'rob'
@@ -121,15 +121,54 @@ class StudentUnitTests(unittest.TestCase):
 # Admin user unit tests
 class AdminUnitTests(unittest.TestCase):
     
-    def test_new_student(self): pass
+    def test_new_admin(self):
+        admin= Admin(
+            username = 'ade',
+            password = 'adepass',
+            fname = 'ade',
+            lname = 'b' 
+        )
+        assert admin.username == 'ade'
+
+    def test_get_json(self):
+        admin = Admin(
+            username = 'ade',
+            password = 'adepass',
+            fname = 'ade',
+            lname = 'b'   
+        )
+        admin_json= admin.get_json()
+        self.assertDictEqual(admin_json, {"id":None, "username":"ade"})
+
+    def test_is_admin(self):
+        admin= Admin(
+            username = 'ade',
+            password = 'adepass',
+            fname = 'ade',
+            lname = 'b',
+        )
+        assert admin.is_admin() != True
     
-    def test_get_json(self): pass
+    def test_check_password(self): 
+        password = "adepass"
+        admin= Admin(
+            username = 'ade',
+            password = 'adepass',
+            fname = 'ade',
+            lname = 'b'
+        )
+        assert admin.check_password(password)
     
-    def test_is_admin(self): pass
-    
-    def test_check_password(self): pass
-    
-    def test_hashed_password(self): pass
+    def test_hashed_password(self): 
+        password = "adepass"
+        hashed = generate_password_hash(password, method='sha256')
+        student = Student(
+            username = 'ade',
+            password = password,
+            fname = 'ade',
+            lname = 'b',
+        )
+        assert student.password == hashed
     
 
 
