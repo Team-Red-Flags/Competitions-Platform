@@ -131,7 +131,7 @@ class StudentUnitTests(unittest.TestCase):
             student_email=self.test_student_email,
             dob = self.test_dob
         )
-        assert student.password != self.test_password
+        assert student.password == hashed
     
 # Admin user unit tests
 class AdminUnitTests(unittest.TestCase):
