@@ -9,7 +9,7 @@ class Admin(User):
     id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     fname = Column(String(80), nullable=False)
     lname = Column(String(80), nullable=False)
-    image = Column(LargeBinary, unique=False)
+    image = Column(LargeBinary, nullable=True, unique=False)
     
     
     def __init__(self, username: str, password: str, fname: str, lname: str, image: bytes = None):

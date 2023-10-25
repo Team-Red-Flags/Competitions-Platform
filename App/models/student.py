@@ -13,7 +13,7 @@ class Student(User):
     student_id = Column(Integer, nullable=False, unique=True)
     student_email = Column(String(80), nullable=False, unique=False)
     dob =  Column(Date, nullable=False)
-    image = Column(LargeBinary, unique=False)
+    image = Column(LargeBinary, nullable=True, unique=False)
     
     
     def __init__(self, 
