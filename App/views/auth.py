@@ -5,13 +5,11 @@ from flask_login import login_required, login_user, current_user, logout_user
 from.index import index_views
 
 from App.controllers import (
-    create_user,
     jwt_authenticate,
     authenticate_admin,
     authenticate_user,
-    get_user,
-    get_all_users,
-    get_all_users_json
+    get_all_students,
+    get_all_students_json
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -20,19 +18,13 @@ auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
 Page/Action Routes
 '''
 
-@auth_views.route('/users', methods=['GET'])
-def get_user_page():
-    users = get_all_users()
-    return render_template('users.html', users=users)
-
-
 @auth_views.route('/identify', methods=['GET'])
 @login_required
 def identify_page():
     return jsonify({
         'message': f"username: {current_user.username}", 
         'id' : f"{current_user.id}"
-        }), 200
+    }), 200
 
 
 @auth_views.route('/logout', methods=['GET'])

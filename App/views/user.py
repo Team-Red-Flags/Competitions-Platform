@@ -7,8 +7,6 @@ from.index import index_views
 from App.controllers import (
     create_user,
     jwt_authenticate, 
-    get_all_users,
-    get_all_users_json,
     jwt_required,
     get_participant_competitions
 )
