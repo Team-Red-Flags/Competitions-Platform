@@ -1,3 +1,4 @@
+from datetime import date
 from flask import Blueprint, render_template, jsonify, request, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import login_required, login_user, current_user, logout_user
@@ -8,6 +9,7 @@ from App.controllers import (
     jwt_authenticate,
     authenticate_admin,
     authenticate_student,
+    create_student
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -23,6 +25,28 @@ def identify_page():
         'message': f"username: {current_user.username}", 
         'id' : f"{current_user.id}"
     }), 200
+    
+    
+@auth_views.route('/signup', methods=['POST'])
+def signup_action():
+    form_data = request.form if request.form else None
+    data = request.json if request.json else form_data
+    print("Signup received")
+    if create_student(
+        username=data['username'],
+        password=data['password'],
+        fname=data['fname'],
+        lname=data['lname'],
+        student_id=data['student_id'],
+        student_email=data['student_email'],
+        dob=date(
+            year=int(data['dob'].split('-')[0]), 
+            month=int(data['dob'].split('-')[1]), 
+            day=int(data['dob'].split('-')[2])
+        ),
+        image=data['image']
+    ): return jsonify(message=f'Student {data["fname"]} {data["lname"]} created'), 200
+    return jsonify(message='Failed to create student'), 400
 
 
 @auth_views.route('/logout', methods=['GET'])
