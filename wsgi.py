@@ -22,6 +22,7 @@ migrate = get_migrate(app)
 def initialize():
     db.drop_all()
     db.create_all()
+    img = b64encode(open('App/static/iamges/user.png', 'rb').read())
     
     # Create users
     bob = create_student(
@@ -31,7 +32,8 @@ def initialize():
         lname='the Builder', 
         student_id=80012345, 
         student_email='bob.thebuilder@my.uwi.edu',
-        dob = date(2000, 1, 1)
+        dob = date(2000, 1, 1),
+        image=img
     )
     
     rob = create_student(
@@ -41,7 +43,8 @@ def initialize():
         lname='Robinson',
         student_id=80012346,
         student_email='rob.robinson@my.uwi.edu',
-        dob = date(1998, 1, 4)
+        dob = date(1998, 1, 4),
+        image=img
     )
     
     ben = create_student(
@@ -51,7 +54,8 @@ def initialize():
         lname='Simpson',
         student_id=80012347,
         student_email='ben.simpson@my.uwi.edu',
-        dob = date(1999, 5, 11)
+        dob = date(1999, 5, 11),
+        image=img
     )
     
     # Create admin
