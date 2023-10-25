@@ -8,7 +8,6 @@ class User(db.Model, UserMixin):
     id       = Column(Integer, primary_key=True)
     username = Column(String, nullable=False, unique=True)
     password = Column(String(120), nullable=False)
-    type     = Column(String, nullable=False)
     
 
     def __init__(self, username: str, password: str):
@@ -25,18 +24,17 @@ class User(db.Model, UserMixin):
     def get_json(self) -> dict:
         return {
             'id': self.id,
-            'username': self.username,
-            'type': self.type
+            'username': self.username
         }
         
         
     def is_admin(self) -> bool:
-        """Checks if the user is an admin.
+        """Checks if the user is an admin. Must be overridden by admin subclass instances
 
         Returns:
             bool: True if the user is an admin. False otherwise
         """
-        return self.type == 'admin'
+        return False
     
     
     def set_user_type(self, type: str):
@@ -79,7 +77,7 @@ class User(db.Model, UserMixin):
         Returns:
             str: A prettified string representation of the user
         """
-        return f"<{self.type.capitalize()} {self.id}: {self.username}>"
+        return f"<User {self.id}: {self.username}>"
     
     
     def __repr__(self):
