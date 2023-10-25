@@ -26,102 +26,124 @@ LOGGER = logging.getLogger(__name__)
 # Base user unit tests
 class UserUnitTests(unittest.TestCase):
     
+    test_username = 'bob'
+    test_password = 'bobpass'
+    
     def test_new_user(self):
-        user = User("bob", "bobpass")
-        assert user.username == "bob"
+        user = User(username=self.test_username, password=self.test_password)
+        assert user.username == self.test_username
         
     def test_get_json(self):
-        user = User("bob", "bobpass")
+        user = User(username=self.test_username, password=self.test_password)
         user_json = user.get_json()
-        self.assertDictEqual(user_json, {"id":None, "username":"bob"})
+        self.assertDictEqual(user_json, {"id":None, "username":self.test_username})
 
     def test_is_admin(self):
-        user = Admin("jane", "janepass")
-        assert user.is_admin()
+        user = User(username=self.test_username, password=self.test_password)
+        assert user.is_admin() != True
 
     def test_check_password(self):
-        password = "mypass"
-        user = User("bob", password)
-        assert user.check_password(password)
+        user = User(username=self.test_username, password=self.test_password)
+        assert user.check_password(self.test_password)
     
     def test_hashed_password(self):
-        password = "mypass"
-        hashed = generate_password_hash(password, method='sha256')
-        user = User("bob", password)
+        hashed = generate_password_hash(self.test_password, method='sha256')
+        user = User(username=self.test_username, password=self.test_password)
         assert user.password == hashed
 
 
 # Student user unit tests
 class StudentUnitTests(unittest.TestCase):
+    
+    test_username = 'rob'
+    test_password = 'robpass'
+    test_fname = 'Rob'
+    test_lname = 'Robinson'
+    test_student_id = 80012346
+    test_student_email = 'rob.robinson@my.uwi.edu'
+    test_dob = date(1998, 1, 4)
 
     def test_new_student(self):
         student = Student(
-            username='rob',
-            password='robpass',
-            fname='Rob',
-            lname='Robinson',
-            student_id=80012346,
-            student_email='rob.robinson@my.uwi.edu',
-            dob = date(1998, 1, 4)
+            username=self.test_username,
+            password=self.test_password,
+            fname=self.test_fname,
+            lname=self.test_fname,
+            student_id=self.test_student_id,
+            student_email=self.test_student_email,
+            dob = self.test_dob
         )
-        assert student.username == 'rob'
+        assert student.username == self.test_username
     
     def test_get_json(self):
         student = Student(
-            username='rob',
-            password='robpass',
-            fname='Rob',
-            lname='Robinson',
-            student_id=80012346,
-            student_email='rob.robinson@my.uwi.edu',
-            dob = date(1998, 1, 4)
+            username=self.test_username,
+            password=self.test_password,
+            fname=self.test_fname,
+            lname=self.test_fname,
+            student_id=self.test_student_id,
+            student_email=self.test_student_email,
+            dob = self.test_dob
         )
         student_json = student.get_json()
-        self.assertDictEqual(student_json, {"id":None, "username":"rob"})
+        self.assertDictEqual(student_json, {
+            "id": None,
+            "username": self.test_username,
+            "student_id": self.test_student_id,
+            "fname" : self.test_fname,
+            "lname" : self.test_lname,
+            "student_email" : self.test_student_email,
+            "dob" : self.test_dob
+        })
 
     def test_is_admin(self):
         student = Student(
-            username='rob',
-            password='robpass',
-            fname='Rob',
-            lname='Robinson',
-            student_id=80012346,
-            student_email='rob.robinson@my.uwi.edu',
-            dob = date(1998, 1, 4)
+            username=self.test_username,
+            password=self.test_password,
+            fname=self.test_fname,
+            lname=self.test_fname,
+            student_id=self.test_student_id,
+            student_email=self.test_student_email,
+            dob = self.test_dob
         )
         assert student.is_admin() != True
 
     def test_check_password(self):
-        password = "mypass"
         student = Student(
-            username='rob',
-            password=password,
-            fname='Rob',
-            lname='Robinson',
-            student_id=80012346,
-            student_email='rob.robinson@my.uwi.edu',
-            dob = date(1998, 1, 4)
+            username=self.test_username,
+            password=self.test_password,
+            fname=self.test_fname,
+            lname=self.test_fname,
+            student_id=self.test_student_id,
+            student_email=self.test_student_email,
+            dob = self.test_dob
         )
-        assert student.check_password(password)
+        assert student.check_password(self.test_password)
     
     def test_hashed_password(self):
-        password = "mypass"
-        hashed = generate_password_hash(password, method='sha256')
+        hashed = generate_password_hash(self.test_password, method='sha256')
         student = Student(
-            username='rob',
-            password=password,
-            fname='Rob',
-            lname='Robinson',
-            student_id=80012346,
-            student_email='rob.robinson@my.uwi.edu',
-            dob = date(1998, 1, 4)
+            username=self.test_username,
+            password=self.test_password,
+            fname=self.test_fname,
+            lname=self.test_fname,
+            student_id=self.test_student_id,
+            student_email=self.test_student_email,
+            dob = self.test_dob
         )
         assert student.password == hashed
     
 # Admin user unit tests
 class AdminUnitTests(unittest.TestCase):
     
-    def test_new_student(self): pass
+    def test_new_student(self): 
+        admin = Admin(
+            username='jane',
+            password='janepass',
+            fname='Jane',
+            lname='Johnson',
+        )
+        assert admin.username == 'jane'
     
     def test_get_json(self): pass
     
