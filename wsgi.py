@@ -1,4 +1,5 @@
 from datetime import date
+from base64 import b64encode
 from json import load
 from flask import Flask
 from flask.cli import with_appcontext, AppGroup
