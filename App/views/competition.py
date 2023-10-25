@@ -25,7 +25,7 @@ def create_competition_action():
     
     # Get data from the request
     form_data = request.form if request.form else None
-    data = request.json if request.json else form_data
+    data = request.json if not form_data else form_data
     if not data: return jsonify(error='No competition data given'), 400
     name, desc = data['name'], data['description']
     start_date = data['start_date'] if data.__contains__('start_date') else None
@@ -49,7 +49,7 @@ def add_results_action():
     
     # Get data from the request
     form_data = request.form if request.form else None
-    data = request.json if request.json else form_data
+    data = request.json if not form_data else form_data
     if not data: return jsonify(error='No results data given'), 400
     competition_id, user_id, score =  data['competition_id'], data['user_id'], data['score']
     print(f"Adding result for user {user_id} in competition {competition_id}: {score}")
