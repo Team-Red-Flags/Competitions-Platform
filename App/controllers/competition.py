@@ -73,3 +73,20 @@ def get_competition(id) -> Competition:
 def get_all_competitions() -> list:
     return Competition.query.all()
 
+def get_all_competitions_json() -> list:
+    return [competition.get_json() for competition in get_all_competitions()]
+
+def update_competition(
+        id: int,
+        name: str = None, 
+        description: str = None, 
+        start_date: str = None, 
+        end_date: str = None
+    ) -> Competition:
+    competition = get_competition(id)
+    if name: competition.name = name
+    if description: competition.description = description
+    if start_date: competition.start_date = get_date_from_string(start_date)
+    if end_date: competition.end_date = get_date_from_string(end_date)
+    db.session.commit()
+    return competition
