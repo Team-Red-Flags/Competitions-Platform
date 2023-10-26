@@ -326,12 +326,6 @@ class ParticipantIntegrationTests(unittest.TestCase):
     test_competition_id = 1
     
     def test_create_participant(self):
-        create_competition(
-            name='Test Competition',
-            description='',
-            start_date='1 January, 2020',
-            end_date='10 January, 2020'
-        )
         participant = create_participant(
             user_id=self.test_user_id,
             competition_id=self.test_competition_id
