@@ -1,4 +1,3 @@
-from datetime import date
 from App.models import Competition
 from App.database import db
 from App.controllers import get_date_from_string

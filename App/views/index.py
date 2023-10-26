@@ -2,7 +2,6 @@ from flask import Blueprint, redirect, render_template, request, send_from_direc
 from json import load
 from os import path
 from base64 import b64encode
-from datetime import date
 from App.models import db
 from App.controllers import (
     create_student, 
