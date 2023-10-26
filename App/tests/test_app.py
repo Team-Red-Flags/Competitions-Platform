@@ -181,11 +181,11 @@ class CompetitionUnitTests(unittest.TestCase):
     def test_new_competition(self):
         competition = Competition(
             name=self.test_name,
-            description=self.test_description,
+            description="",
             start_date=self.test_start_date,
             end_date=self.test_end_date
         )
-        assert competition.name == self.test_name
+        assert competition.description == "A new competition!"
         
     def test_get_json(self):
         competition = Competition(
@@ -197,7 +197,7 @@ class CompetitionUnitTests(unittest.TestCase):
         self.assertDictEqual(competition.get_json(), {
             "id": None,
             "name": self.test_name,
-            "description": self.test_description,
+            "description": "A new competition!",
             "start_date": self.test_start_date,
             "end_date": self.test_end_date
         })
