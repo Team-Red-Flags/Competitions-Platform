@@ -175,7 +175,6 @@ class AdminUnitTests(unittest.TestCase):
 class CompetitionUnitTests(unittest.TestCase):
     
     test_name = "Test Competition"
-    test_description = "This is a test competition"
     test_start_date = "10-03-2024"
     test_end_date = "12-03-2024"
     
@@ -327,17 +326,34 @@ class ParticipantIntegrationTests(unittest.TestCase):
     test_competition_id = 1
     
     def test_create_participant(self):        
-        pass
-    
+        participant = create_participant(
+            user_id=self.test_user_id,
+            competition_id=self.test_competition_id
+        )
+        user = get_user(participant.user_id)
+        assert user.username == "ronnie"
+        
     def test_get_participant(self):
         participant = get_participant(self.test_user_id, self.test_competition_id)
         assert participant.id == self.test_user_id
     
-    def test_get_participant_json(self):
-        pass
+    def test_get_participant_competitions(self):
+        participant = get_participant_competitions(self.test_user_id)
+        assert participant != None
+        assert type(participant) == list
+        assert type(participant[0]) == Competition
+        self.assertDictEqual(participant[0].get_json(), {
+            "id": 1, 
+            "user_id": 1, 
+            "competition_id": 1
+        })
     
     def test_get_all_participants_json(self):
-        pass
+        participant_json = get_participant(self.test_user_id, self.test_competition_id)
+        all_participants_json = get_all_participants_json()
+        assert type(all_participants_json) == list
+        assert type(all_participants_json[0]) == dict
+        self.assertDictContainsSubset(participant_json, dict(all_participants_json[0]))
     
     def test_get_top_20_participants(self):
         pass
