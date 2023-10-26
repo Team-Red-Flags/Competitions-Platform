@@ -2,10 +2,10 @@ import os, tempfile, pytest, logging, unittest
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
 from App.main import create_app
+from App.utils import get_date_from_string
 from App.database import db, create_db
 from App.models import User, Student, Admin, Competition
 from App.controllers import (
-    get_date_from_string,
     authenticate_user,
     get_user,
     create_user,
@@ -325,7 +325,13 @@ class ParticipantIntegrationTests(unittest.TestCase):
     test_user_id = 1
     test_competition_id = 1
     
-    def test_create_participant(self):        
+    def test_create_participant(self):
+        create_competition(
+            name='Test Competition',
+            description='',
+            start_date='1 January, 2020',
+            end_date='10 January, 2020'
+        )
         participant = create_participant(
             user_id=self.test_user_id,
             competition_id=self.test_competition_id
@@ -338,18 +344,15 @@ class ParticipantIntegrationTests(unittest.TestCase):
         assert participant.id == self.test_user_id
     
     def test_get_participant_competitions(self):
-        participant = get_participant_competitions(self.test_user_id)
-        assert participant != None
-        assert type(participant) == list
-        assert type(participant[0]) == Competition
-        self.assertDictEqual(participant[0].get_json(), {
-            "id": 1, 
-            "user_id": self.test_user_id, 
-            "competition_id": self.test_competition_id
-        })
+        competitions = get_participant_competitions(self.test_user_id)
+        competition = get_competition(self.test_competition_id)
+        assert competitions != None
+        assert type(competitions) == list
+        assert type(competitions[0]) == Competition
+        self.assertDictEqual(competitions[0].get_json(), competition.get_json())
     
     def test_get_all_participants_json(self):
-        participant_json = get_participant(self.test_user_id, self.test_competition_id)
+        participant_json = get_participant(self.test_user_id, self.test_competition_id).get_json()
         all_participants_json = get_all_participants_json()
         assert type(all_participants_json) == list
         assert type(all_participants_json[0]) == dict
@@ -367,7 +370,7 @@ class ParticipantIntegrationTests(unittest.TestCase):
         dave: Student = create_student(
             username="dave",
             password="davepass",
-            first_name="David",
+            fname="David",
             lname="George",
             student_id=80012349,
             student_email="david.george@my.uwi.edu",
