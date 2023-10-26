@@ -283,8 +283,8 @@ class CompetitionIntegrationTests(unittest.TestCase):
             "id": 1, 
             "name": "Test Competition", 
             "description": "This is a test competition", 
-            "start_date": f"{get_date_from_string('1 January, 2020')}", 
-            "end_date": f"{get_date_from_string('10 January, 2020')}"
+            "start_date": f"{get_date_from_string('1 January, 2020').strftime('%Y-%m-%d')}", 
+            "end_date": f"{get_date_from_string('10 January, 2020').strftime('%Y-%m-%d')}"
         })
     
     def test_get_all_competitions_json(self):
