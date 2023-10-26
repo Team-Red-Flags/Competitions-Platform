@@ -170,6 +170,39 @@ class AdminUnitTests(unittest.TestCase):
         assert admin.is_admin() == True
 
 
+# Competition unit tests
+class CompetitionUnitTests(unittest.TestCase):
+    
+    test_name = "Test Competition"
+    test_description = "This is a test competition"
+    test_start_date = "10-03-2024"
+    test_end_date = "12-03-2024"
+    
+    def test_new_competition(self):
+        competition = Competition(
+            name=self.test_name,
+            description=self.test_description,
+            start_date=self.test_start_date,
+            end_date=self.test_end_date
+        )
+        assert competition.name == self.test_name
+        
+    def test_get_json(self):
+        competition = Competition(
+            name=self.test_name,
+            description=self.test_description,
+            start_date=self.test_start_date,
+            end_date=self.test_end_date
+        )
+        self.assertDictEqual(competition.get_json(), {
+            "id": None,
+            "name": self.test_name,
+            "description": self.test_description,
+            "start_date": self.test_start_date,
+            "end_date": self.test_end_date
+        })
+
+
 
 '''
     Integration Tests
