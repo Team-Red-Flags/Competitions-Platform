@@ -328,7 +328,7 @@ class ParticipantIntegrationTests(unittest.TestCase):
     
     def test_create_participant(self):
         participant = create_participant(
-            user_id=self.test_user_id,
+            user_id=self.test_user_id1,
             competition_id=self.test_competition_id
         )
         user = get_user(participant.user_id)
@@ -350,11 +350,11 @@ class ParticipantIntegrationTests(unittest.TestCase):
         
             
     def test_get_participant(self):
-        participant = get_participant(self.test_user_id, self.test_competition_id)
-        assert participant.id == self.test_user_id
+        participant = get_participant(self.test_user_id1, self.test_competition_id)
+        assert participant.id == self.test_user_id1
     
     def test_get_participant_competitions(self):
-        competitions = get_participant_competitions(self.test_user_id)
+        competitions = get_participant_competitions(self.test_user_id1)
         competition = get_competition(self.test_competition_id)
         assert competitions != None
         assert type(competitions) == list
@@ -362,7 +362,7 @@ class ParticipantIntegrationTests(unittest.TestCase):
         self.assertDictEqual(competitions[0].get_json(), competition.get_json())
     
     def test_get_all_participants_json(self):
-        participant_json = get_participant(self.test_user_id, self.test_competition_id).get_json()
+        participant_json = get_participant(self.test_user_id1, self.test_competition_id).get_json()
         all_participants_json = get_all_participants_json()
         assert type(all_participants_json) == list
         assert type(all_participants_json[0]) == dict
