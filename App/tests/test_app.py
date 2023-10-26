@@ -323,6 +323,9 @@ class CompetitionIntegrationTests(unittest.TestCase):
 
 class ParticipantIntegrationTests(unittest.TestCase):
     
+    test_user_id = 1
+    test_competition_id = 1
+    
     def test_create_participant(self):        
         pass
     
