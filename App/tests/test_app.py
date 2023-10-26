@@ -5,6 +5,7 @@ from App.main import create_app
 from App.database import db, create_db
 from App.models import User, Student, Admin, Competition, Participant
 from App.controllers import (
+    get_date_from_string,
     authenticate_user,
     get_user,
     create_user,
@@ -282,8 +283,8 @@ class CompetitionIntegrationTests(unittest.TestCase):
             "id": 1, 
             "name": "Test Competition", 
             "description": "This is a test competition", 
-            "start_date": "1 January, 2020", 
-            "end_date": "10 January, 2020"
+            "start_date": f"{get_date_from_string('1 January, 2020')}", 
+            "end_date": f"{get_date_from_string('10 January, 2020')}"
         })
     
     def test_get_all_competitions_json(self):
@@ -291,6 +292,7 @@ class CompetitionIntegrationTests(unittest.TestCase):
     
     def test_update_competition(self):
         pass
+
 
 class ParticipantIntegrationTests(unittest.TestCase):
     
