@@ -42,11 +42,7 @@ def register_action():
         lname=data['lname'],
         student_id=data['student_id'],
         student_email=data['student_email'],
-        dob=date(
-            year=int(data['dob'].split('-')[0]), 
-            month=int(data['dob'].split('-')[1]), 
-            day=int(data['dob'].split('-')[2])
-        ),
+        dob=data['dob'],
         image=img
     ): return jsonify(message=f'Student account for {data["fname"]} {data["lname"]} created'), 200
     return jsonify(message='Failed to register student account'), 400

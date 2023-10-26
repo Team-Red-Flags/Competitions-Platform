@@ -36,7 +36,7 @@ def init():
         lname='the Builder', 
         student_id=80012345, 
         student_email='bob.thebuilder@my.uwi.edu',
-        dob = date(2000, 1, 1),
+        dob = '2/8/2001',
         image=img
     )
     
@@ -47,7 +47,7 @@ def init():
         lname='Robinson',
         student_id=80012346,
         student_email='rob.robinson@my.uwi.edu',
-        dob = date(1998, 1, 4),
+        dob = '30/10/1978'
         image=img
     )
     
@@ -58,7 +58,7 @@ def init():
         lname='Simpson',
         student_id=80012347,
         student_email='ben.simpson@my.uwi.edu',
-        dob = date(1999, 5, 11),
+        dob = '12/5/2005',
         image=img
     )
     
