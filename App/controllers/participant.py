@@ -1,22 +1,22 @@
 from App.models import Participant, Competition
 from App.database import db
 
-def create_participant(student_id: int, competition_id: int) -> Participant:
-    new_participant = Participant(student_id, competition_id)
+def create_participant(user_id: int, competition_id: int) -> Participant:
+    new_participant = Participant(user_id, competition_id)
     db.session.add(new_participant)
     db.session.commit()
     print("Added participant:", new_participant)
     return new_participant
 
-def is_participant(student_id, competition_id) -> bool:
+def is_participant(user_id, competition_id) -> bool:
     return Participant.query.filter_by(
-        student_id = student_id,
+        user_id = user_id,
         competition_id = competition_id
     ).first() != None
 
-def update_participant_score(student_id, competition_id, score) -> bool:
+def update_participant_score(user_id, competition_id, score) -> bool:
     participant = Participant.query.filter_by(
-        student_id = student_id, 
+        user_id = user_id, 
         competition_id = competition_id
     ).first()
     if not participant: return False
@@ -33,8 +33,8 @@ def get_all_participants_json() -> list:
     if not participants: return []
     return [participant.get_json() for participant in participants]
 
-def get_participant_competitions(student_id) -> list:
-    results = Participant.query.filter_by(student_id = student_id).all()
+def get_participant_competitions(user_id) -> list:
+    results = Participant.query.filter_by(user_id = user_id).all()
     if not results: return []
     return [Competition.query.get(result.competition_id) for result in results]
 
