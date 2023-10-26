@@ -47,7 +47,7 @@ def init():
         lname='Robinson',
         student_id=80012346,
         student_email='rob.robinson@my.uwi.edu',
-        dob = '30/10/1978'
+        dob = '30/10/1978',
         image=img
     )
     
