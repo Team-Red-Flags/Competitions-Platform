@@ -12,10 +12,7 @@ def get_user_by_username(username) -> User:
     return User.query.filter_by(username=username).first()
 
 def get_user(id) -> User:
-    user = Student.query.filter_by(id=id).first()
-    if user: return user
-    user = Admin.query.filter_by(id=id).first()
-    return user if user else None
+    return User.query.get(id)
 
 def get_all_users():
     return User.query.all()
