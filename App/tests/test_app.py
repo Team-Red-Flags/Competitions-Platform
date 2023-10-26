@@ -190,7 +190,7 @@ class CompetitionUnitTests(unittest.TestCase):
     def test_get_json(self):
         competition = Competition(
             name=self.test_name,
-            description=self.test_description,
+            description="",
             start_date=self.test_start_date,
             end_date=self.test_end_date
         )
