@@ -12,6 +12,7 @@ from App.controllers import (
     update_user,
     get_all_users,
     get_all_users_json,
+    get_user_by_username,
     get_student,
     create_student,
     update_student,
@@ -345,7 +346,6 @@ class ParticipantIntegrationTests(unittest.TestCase):
             dob="1/5/2003"
         )
         new_participant = create_participant(dave.id, self.test_competition_id)
-        self.test_user_id2 = dave.id
         assert new_participant.user_id == dave.id
         
             
@@ -371,10 +371,11 @@ class ParticipantIntegrationTests(unittest.TestCase):
     def test_get_top_20_participants(self):
         participants = get_top_20_participants(self.test_competition_id)
         assert len(participants) == 2
-        assert participants[0].score > participants[1].score
+        assert participants[0]['score'] > participants[1]['score']
         
     def test_update_participant_score(self):
         scores = [65, 42]
+        self.test_user_id2 = get_user_by_username("dave").id
         
         update_participant_score(self.test_user_id1, self.test_competition_id, scores[0])
         participant = get_participant(self.test_user_id1, self.test_competition_id)
