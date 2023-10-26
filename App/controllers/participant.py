@@ -14,6 +14,12 @@ def is_participant(user_id, competition_id) -> bool:
         competition_id = competition_id
     ).first() != None
 
+def get_participant(user_id, competition_id) -> Participant:
+    return Participant.query.filter_by(
+        user_id = user_id,
+        competition_id = competition_id
+    ).first()
+
 def update_participant_score(user_id, competition_id, score) -> bool:
     participant = Participant.query.filter_by(
         user_id = user_id, 
