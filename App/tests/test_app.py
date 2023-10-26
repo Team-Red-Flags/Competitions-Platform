@@ -30,6 +30,7 @@ from App.controllers import (
     get_all_competitions,
     get_all_competitions_json,
     is_participant,
+    get_participant,
     create_participant,
     get_top_20_participants,
     update_participant_score,
@@ -326,7 +327,8 @@ class ParticipantIntegrationTests(unittest.TestCase):
         pass
     
     def test_get_participant(self):
-        pass
+        participant = get_participant(self.test_user_id, self.test_competition_id)
+        assert participant.id == self.test_user_id
     
     def test_get_participant_json(self):
         pass
