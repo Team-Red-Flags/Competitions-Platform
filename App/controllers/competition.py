@@ -1,6 +1,6 @@
+from App.utils import get_date_from_string
 from App.models import Competition
 from App.database import db
-from App.controllers import get_date_from_string
 
 def create_competition(name: str, description: str, start_date: str = None, end_date: str = None) -> Competition:
     new_competition = Competition(

@@ -1,6 +1,6 @@
+from App.utils import get_date_from_string
 from App.models import Student
 from App.database import db
-from App.controllers import get_date_from_string
 
 def create_student(
         username: str, 
