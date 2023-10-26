@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User, Student, Admin, Competition, Participant
+from App.models import User, Student, Admin, Competition
 from App.controllers import (
     get_date_from_string,
     authenticate_user,
