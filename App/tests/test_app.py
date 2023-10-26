@@ -322,7 +322,8 @@ class CompetitionIntegrationTests(unittest.TestCase):
 
 class ParticipantIntegrationTests(unittest.TestCase):
     
-    test_user_id = 1
+    test_user_id1 = 1
+    test_user_id2 = None
     test_competition_id = 1
     
     def test_create_participant(self):
@@ -333,6 +334,21 @@ class ParticipantIntegrationTests(unittest.TestCase):
         user = get_user(participant.user_id)
         assert user.username == "ronnie"
         
+        # New student participant
+        dave: Student = create_student(
+            username="dave",
+            password="davepass",
+            fname="David",
+            lname="George",
+            student_id=80012349,
+            student_email="david.george@my.uwi.edu",
+            dob="1/5/2003"
+        )
+        new_participant = create_participant(dave.id, self.test_competition_id)
+        self.test_user_id2 = dave.id
+        assert new_participant.user_id == dave.id
+        
+            
     def test_get_participant(self):
         participant = get_participant(self.test_user_id, self.test_competition_id)
         assert participant.id == self.test_user_id
@@ -351,32 +367,20 @@ class ParticipantIntegrationTests(unittest.TestCase):
         assert type(all_participants_json) == list
         assert type(all_participants_json[0]) == dict
         self.assertDictContainsSubset(participant_json, dict(all_participants_json[0]))
-        
-    def test_update_participant_score(self):
-        scores = [65, 42]
-        
-        # Existing participant
-        update_participant_score(self.test_user_id, self.test_competition_id, scores[0])
-        participant = get_participant(self.test_user_id, self.test_competition_id)
-        assert participant.score == scores[0]
-        
-        # New participant
-        dave: Student = create_student(
-            username="dave",
-            password="davepass",
-            fname="David",
-            lname="George",
-            student_id=80012349,
-            student_email="david.george@my.uwi.edu",
-            dob="1/5/2003"
-        )
-        create_participant(dave.id, self.test_competition_id)
-        update_participant_score(dave.id, self.test_competition_id, scores[1])
-        participant = get_participant(dave.id, self.test_competition_id)
-        assert participant.score == scores[1]
     
     def test_get_top_20_participants(self):
         participants = get_top_20_participants(self.test_competition_id)
         assert len(participants) == 2
         assert participants[0].score > participants[1].score
+        
+    def test_update_participant_score(self):
+        scores = [65, 42]
+        
+        update_participant_score(self.test_user_id1, self.test_competition_id, scores[0])
+        participant = get_participant(self.test_user_id1, self.test_competition_id)
+        assert participant.score == scores[0]
+
+        update_participant_score(self.test_user_id2, self.test_competition_id, scores[1])
+        participant = get_participant(self.test_user_id2, self.test_competition_id)
+        assert participant.score == scores[1]
     
