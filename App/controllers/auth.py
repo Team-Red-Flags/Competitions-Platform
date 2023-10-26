@@ -20,6 +20,7 @@ def authenticate_user(username, password) -> User:
     student, admin = Student.query.get(user.id), Admin.query.get(user.id)
     if student: return student
     if admin: return admin
+    return user
 
 def jwt_authenticate(username, password):
     user = authenticate_user(username, password)
