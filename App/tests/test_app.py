@@ -177,7 +177,6 @@ class AdminUnitTests(unittest.TestCase):
         assert admin.is_admin() == True
     
     def test_check_password(self): 
-        password = "adepass"
         admin= Admin(
             username = self.test_username,
             password = self.test_password,
@@ -223,20 +222,41 @@ class UsersIntegrationTests(unittest.TestCase):
         user = create_user("rick", "rickpass")
         assert user.username == "rick"
         
-    def test_create_competition(self):
-        competition = create_competition("test", "test", "1 January, 2020", "10 January, 2020")
-        assert competition.name == "test"
-        
-    def test_get_all_students_json(self):
-        students_json = get_all_students_json()
-        self.assertListEqual([{"id":1, "username":"bob"}, {"id":2, "username":"rick"}], users_json)
+    def test_get_all_users_json(self):
+        users_json = get_all_students_json()
+        self.assertListEqual(users_json, [
+            {"id":1, "username":"bob"}, 
+            {"id":2, "username":"rick"}
+        ])
 
-    # Tests data changes in the database
     def test_update_user(self):
         update_user(1, "ronnie")
         user = get_user(1)
         assert user.username == "ronnie"
 
+
+class StudentIntegrationTests(unittest.TestCase):
+    
+    def test_create_student(self):
+        pass
+
+
+class AdminIntegrationTests(unittest.TestCase):
+    
+    def test_create_admin(self):
+        pass
+
+
+class CompetitionIntegrationTests(unittest.TestCase):
+    def test_create_competition(self):
+        competition = create_competition(
+            name='Test Competition',
+            description='This is a test competition',
+            start_date='1 January, 2020',
+            end_date='10 January, 2020'
+        )
+        assert competition.name == "Test Competition"
+    
     def test_get_competition(self):
         competition = get_competition(1)
         assert competition.id == 1
@@ -246,17 +266,7 @@ class UsersIntegrationTests(unittest.TestCase):
         for competition in competitions:
             assert competition.name == "test"
 
-class StudentIntegrationTests(unittest.TestCase):
-    def test_create_student(self):
-        pass
-class AdminIntegrationTests(unittest.TestCase):
-    def test_create_admin(self):
-        pass
-    
-class CompetitionIntegrationTests(unittest.TestCase):
-    def test_create_competition(self):
-        pass
-
 class ParticipantIntegrationTests(unittest.TestCase):
+    
     def test_create_participant(self):        
         pass
