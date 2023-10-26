@@ -369,12 +369,14 @@ class ParticipantIntegrationTests(unittest.TestCase):
         self.assertDictContainsSubset(participant_json, dict(all_participants_json[0]))
     
     def test_get_top_20_participants(self):
+        update_participant_score(self.test_user_id1, self.test_competition_id, 40)
+        update_participant_score(self.test_user_id2, self.test_competition_id, 90)
         participants = get_top_20_participants(self.test_competition_id)
         assert len(participants) == 2
         assert participants[0]['score'] > participants[1]['score']
         
     def test_update_participant_score(self):
-        scores = [65, 42]
+        scores = [70, 65]
         self.test_user_id2 = get_user_by_username("dave").id
         
         update_participant_score(self.test_user_id1, self.test_competition_id, scores[0])
