@@ -15,11 +15,11 @@ def authenticate_admin(username, password) -> Admin:
     return admin
 
 def authenticate_user(username, password) -> User:
-    user = authenticate_admin(username, password)
-    if not user or not user.check_password(password):
-        user = authenticate_student(username, password)
-        if not user or not user.check_password(password): return None
-    return user
+    user: User = User.query.filter_by(username=username).first()
+    if not user or not user.check_password(password): return None
+    student, admin = Student.query.get(user.id), Admin.query.get(user.id)
+    if student: return student
+    if admin: return admin
 
 def jwt_authenticate(username, password):
     user = authenticate_user(username, password)
