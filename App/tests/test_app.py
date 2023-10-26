@@ -5,18 +5,36 @@ from App.main import create_app
 from App.database import db, create_db
 from App.models import User, Student, Admin, Competition, Participant
 from App.controllers import (
-    get_all_students_json,
     authenticate_user,
     get_user,
     create_user,
+    update_user,
     get_all_users,
     get_all_users_json,
-    get_admin,
     get_student,
-    update_user,
-    create_competition,
+    create_student,
+    update_student,
+    get_all_students,
+    get_all_students_json,
+    get_student_by_username,
+    get_admin,
+    create_admin,
+    update_admin,
+    get_all_admins,
+    get_all_admins_json,
+    get_admin_by_username,
     get_competition,
-    get_all_competitions
+    create_competition,
+    update_competition,
+    get_all_competitions,
+    get_all_competitions_json,
+    is_participant,
+    create_participant,
+    get_top_20_participants,
+    update_participant_score,
+    get_competition_rankings,
+    get_all_participants_json,
+    get_participant_competitions
 )
 
 
@@ -177,6 +195,10 @@ class UsersIntegrationTests(unittest.TestCase):
         user = create_user("rick", "rickpass")
         assert user.username == "rick"
     
+    def test_get_user(self):
+        user = get_user(1)
+        assert user.username == "bob"
+    
     def test_get_user_json(self):
         user = get_user(1)
         self.assertDictEqual(user.get_json(), {
@@ -201,15 +223,46 @@ class StudentIntegrationTests(unittest.TestCase):
     
     def test_create_student(self):
         pass
+    
+    def test_get_student(self):
+        pass
+    
+    def test_get_student_json(self):
+        pass
+    
+    def test_get_all_students_json(self):
+        pass
+
+    def test_get_student_by_username(self):
+        pass
+    
+    def test_update_student(self):
+        pass
 
 
 class AdminIntegrationTests(unittest.TestCase):
     
     def test_create_admin(self):
         pass
+    
+    def test_get_admin(self):
+        pass
+    
+    def test_get_admin_json(self):
+        pass
+    
+    def test_get_all_admins_json(self):
+        pass
+    
+    def test_get_admin_by_username(self):
+        pass
+    
+    def test_update_admin(self):
+        pass
 
 
 class CompetitionIntegrationTests(unittest.TestCase):
+    
     def test_create_competition(self):
         competition = create_competition(
             name='Test Competition',
@@ -223,10 +276,48 @@ class CompetitionIntegrationTests(unittest.TestCase):
         competition = get_competition(1)
         assert competition.id == 1
 
-    def test_get_all_competitions(self):
+    def test_get_competition_json(self):
+        competition = get_competition(1)
+        self.assertDictEqual(competition.get_json(), {
+            "id": 1, 
+            "name": "Test Competition", 
+            "description": "This is a test competition", 
+            "start_date": "1 January, 2020", 
+            "end_date": "10 January, 2020"
+        })
+    
+    def test_get_all_competitions_json(self):
+        pass
+    
+    def test_update_competition(self):
         pass
 
 class ParticipantIntegrationTests(unittest.TestCase):
     
     def test_create_participant(self):        
         pass
+    
+    def test_get_participant(self):
+        pass
+    
+    def test_get_participant_json(self):
+        pass
+    
+    def test_get_all_participants_json(self):
+        pass
+    
+    def test_get_top_20_participants(self):
+        pass
+
+    def test_update_participant_score(self):
+        pass
+
+    def test_get_competition_rankings(self):
+        pass
+
+    def test_get_all_participants_json(self):
+        pass
+
+    def test_get_participant_competitions(self):
+        pass
+    
