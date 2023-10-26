@@ -222,7 +222,7 @@ def empty_db():
 def test_authenticate():
     user = create_user("bob", "bobpass")
     assert authenticate_user("bob", "bobpass") != None
-
+    
 
 class UsersIntegrationTests(unittest.TestCase):
 
@@ -254,25 +254,46 @@ class UsersIntegrationTests(unittest.TestCase):
         assert user.username == "ronnie"
 
 
+
 class StudentIntegrationTests(unittest.TestCase):
     
+
     def test_create_student(self):
-        pass
+        Student= create_student("rick", "rickpass")
+        assert Student.username == "rick"
     
+
     def test_get_student(self):
-        pass
+        Student = get_student(1)
+        assert Student.username == "bob"  
     
+
     def test_get_student_json(self):
-        pass
-    
+        Student = get_student(1)
+        self.assertDictEqual(Student.get_json(), {
+            "id": 1, 
+            "username": "bob"
+        })
+        
+
     def test_get_all_students_json(self):
-        pass
+        Student_json = get_all_students_json()
+        self.assertListEqual(Student_json, [
+            {"id":1, "username":"bob"}, 
+            {"id":2, "username":"rick"}
+        ])
+        
 
     def test_get_student_by_username(self):
-        pass
-    
+        Student = get_student_by_username("bob")
+        assert Student.username == "bob"
+          
+
     def test_update_student(self):
-        pass
+        update_student(1, "ronnie")
+        Student = get_student(1)
+        assert Student.username == "ronnie"
+        
 
 
 class AdminIntegrationTests(unittest.TestCase):
