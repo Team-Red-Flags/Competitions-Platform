@@ -344,8 +344,8 @@ class ParticipantIntegrationTests(unittest.TestCase):
         assert type(participant[0]) == Competition
         self.assertDictEqual(participant[0].get_json(), {
             "id": 1, 
-            "user_id": 1, 
-            "competition_id": 1
+            "user_id": self.test_user_id, 
+            "competition_id": self.test_competition_id
         })
     
     def test_get_all_participants_json(self):
