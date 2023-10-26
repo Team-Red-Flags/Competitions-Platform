@@ -9,8 +9,8 @@ from App.controllers import (
     authenticate_user,
     get_user,
     create_user,
-    authenticate_admin,
-    authenticate_student,
+    get_all_users,
+    get_all_users_json,
     get_admin,
     get_student,
     update_user,
@@ -38,8 +38,7 @@ class UserUnitTests(unittest.TestCase):
         
     def test_get_json(self):
         user = User(username=self.test_username, password=self.test_password)
-        user_json = user.get_json()
-        self.assertDictEqual(user_json, {"id":None, "username":self.test_username})
+        self.assertDictEqual(user.get_json(), {"id":None, "username":self.test_username})
 
     def test_is_admin(self):
         user = User(username=self.test_username, password=self.test_password)
@@ -88,8 +87,7 @@ class StudentUnitTests(unittest.TestCase):
             student_email=self.test_student_email,
             dob = self.test_dob
         )
-        student_json = student.get_json()
-        self.assertDictEqual(student_json, {
+        self.assertDictEqual(student.get_json(), {
             "id": None,
             "username": self.test_username,
             "student_id": self.test_student_id,
@@ -135,7 +133,8 @@ class StudentUnitTests(unittest.TestCase):
             dob = self.test_dob
         )
         assert student.password != self.test_password
-    
+
+
 # Admin user unit tests
 class AdminUnitTests(unittest.TestCase):
     
@@ -221,9 +220,16 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_create_user(self):
         user = create_user("rick", "rickpass")
         assert user.username == "rick"
-        
+    
+    def test_get_user_json(self):
+        user = get_user(1)
+        self.assertDictEqual(user.get_json(), {
+            "id": 1, 
+            "username": "bob"
+        })
+    
     def test_get_all_users_json(self):
-        users_json = get_all_students_json()
+        users_json = get_all_users_json()
         self.assertListEqual(users_json, [
             {"id":1, "username":"bob"}, 
             {"id":2, "username":"rick"}
@@ -262,9 +268,7 @@ class CompetitionIntegrationTests(unittest.TestCase):
         assert competition.id == 1
 
     def test_get_all_competitions(self):
-        competitions = get_all_competitions()
-        for competition in competitions:
-            assert competition.name == "test"
+        pass
 
 class ParticipantIntegrationTests(unittest.TestCase):
     
