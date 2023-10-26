@@ -354,19 +354,32 @@ class ParticipantIntegrationTests(unittest.TestCase):
         assert type(all_participants_json) == list
         assert type(all_participants_json[0]) == dict
         self.assertDictContainsSubset(participant_json, dict(all_participants_json[0]))
+        
+    def test_update_participant_score(self):
+        scores = [65, 42]
+        
+        # Existing participant
+        update_participant_score(self.test_user_id, self.test_competition_id, scores[0])
+        participant = get_participant(self.test_user_id, self.test_competition_id)
+        assert participant.score == scores[0]
+        
+        # New participant
+        dave: Student = create_student(
+            username="dave",
+            password="davepass",
+            first_name="David",
+            lname="George",
+            student_id=80012349,
+            student_email="david.george@my.uwi.edu",
+            dob="1/5/2003"
+        )
+        create_participant(dave.id, self.test_competition_id)
+        update_participant_score(dave.id, self.test_competition_id, scores[1])
+        participant = get_participant(dave.id, self.test_competition_id)
+        assert participant.score == scores[1]
     
     def test_get_top_20_participants(self):
-        pass
-
-    def test_update_participant_score(self):
-        pass
-
-    def test_get_competition_rankings(self):
-        pass
-
-    def test_get_all_participants_json(self):
-        pass
-
-    def test_get_participant_competitions(self):
-        pass
+        participants = get_top_20_participants(self.test_competition_id)
+        assert len(participants) == 2
+        assert participants[0].score > participants[1].score
     
