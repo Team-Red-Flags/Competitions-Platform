@@ -310,16 +310,38 @@ class CompetitionIntegrationTests(unittest.TestCase):
     def test_get_competition(self):
         competition = get_competition(1)
         assert competition.id == 1
-
+    
     def test_get_competition_json(self):
-        pass
-    
-    def test_get_all_competitions_json(self):
-        pass
-    
-    def test_update_competition(self):
-        pass
+        competition = Competition(
+            name=self.test_name,
+            description="",
+            start_date=self.test_start_date,
+            end_date=self.test_end_date
+        )
+        self.assertDictEqual(competition.get_json(), {
+            "id": None,
+            "name": self.test_name,
+            "description": "A new competition!",
+            "start_date": self.test_start_date,
+            "end_date": self.test_end_date
+        })
 
+    def test_get_all_competitions_json(self):
+        competiton = get_all_competitions_json(self.test_name, self.test_start_date, self.test_end_date)
+        all_competitions_json = get_all_participants_json()
+        assert type(all_competitions_json) == list
+        assert type(all_competitions_json[0]) ==dict
+        self.assertDictContainsSubset(competition_json, dict(all_competitions_json[0]))
+
+    def test_update_user(self):
+        update_user(1, "ronnie")
+        user = get_user(1)
+        assert user.username == "ronnie"
+
+    def test_update_competition(self):
+        update_competition(1, "New Competition")
+        competition = get_competition(1)
+        assert competition == "New Competition"
 
 class ParticipantIntegrationTests(unittest.TestCase):
     
