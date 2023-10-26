@@ -139,56 +139,62 @@ class StudentUnitTests(unittest.TestCase):
 # Admin user unit tests
 class AdminUnitTests(unittest.TestCase):
     
+    test_username = 'ade'
+    test_password = 'adepass'
+    test_fname = 'Ade'
+    test_lname = 'B'
+    
     def test_new_admin(self):
         admin= Admin(
-            username = 'ade',
-            password = 'adepass',
-            fname = 'ade',
-            lname = 'b' 
+            username = self.test_username,
+            password = self.test_password,
+            fname = self.test_fname,
+            lname = self.test_lname 
         )
-        assert admin.username == 'ade'
+        assert admin.username == self.test_username
 
     def test_get_json(self):
         admin = Admin(
-            username = 'ade',
-            password = 'adepass',
-            fname = 'ade',
-            lname = 'b'   
+            username = self.test_username,
+            password = self.test_password,
+            fname = self.test_fname,
+            lname = self.test_lname
         )
-        admin_json= admin.get_json()
-        self.assertDictEqual(admin_json, {"id":None, "username":"ade", "fname":"ade", "lname":"b"})
+        self.assertDictEqual(admin.get_json(), {
+            "id": None, 
+            "username": self.test_username, 
+            "fname": self.test_fname, 
+            "lname": self.test_lname
+        })
 
     def test_is_admin(self):
         admin= Admin(
-            username = 'ade',
-            password = 'adepass',
-            fname = 'ade',
-            lname = 'b'
-            
+            username = self.test_username,
+            password = self.test_password,
+            fname = self.test_fname,
+            lname = self.test_lname
         )
         assert admin.is_admin() == True
     
     def test_check_password(self): 
         password = "adepass"
         admin= Admin(
-            username = 'ade',
-            password = 'adepass',
-            fname = 'ade',
-            lname = 'b'
+            username = self.test_username,
+            password = self.test_password,
+            fname = self.test_fname,
+            lname = self.test_lname
         )
-        assert admin.check_password(password)
+        assert admin.check_password(self.test_password)
     
-    def test_hashed_password(self): 
-        password = "adepass"
-        hashed = generate_password_hash(password, method='sha256')
+    def test_hashed_password(self):
+        hashed = generate_password_hash(self.test_password, method='sha256')
         admin= Admin(
-            username = 'ade',
-            password = password,
-            fname = 'ade',
-            lname = 'b',
+            username = self.test_username,
+            password = self.test_password,
+            fname = self.test_fname,
+            lname = self.test_lname
         )
-        assert admin.password != password
-    
+        assert admin.password != self.test_password
 
 
 
@@ -210,12 +216,13 @@ def test_authenticate():
     user = create_user("bob", "bobpass")
     assert authenticate_user("bob", "bobpass") != None
 
+
 class UsersIntegrationTests(unittest.TestCase):
 
     def test_create_user(self):
         user = create_user("rick", "rickpass")
         assert user.username == "rick"
-    
+        
     def test_create_competition(self):
         competition = create_competition("test", "test", "1 January, 2020", "10 January, 2020")
         assert competition.name == "test"
