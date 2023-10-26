@@ -1,11 +1,14 @@
 from App.database import db
 from App.models import Competition
-from datetime import datetime
+from datetime import date
 
 def create_competition(name: str, description: str, start_date: str = None, end_date: str = None) -> Competition:
-    start_date = datetime.strptime(start_date, '%d %B, %Y') if start_date else None
-    end_date = datetime.strptime(end_date, '%d %B, %Y') if end_date else None
-    new_competition = Competition(name, description, start_date, end_date)
+    new_competition = Competition(
+        name=name, 
+        description=description, 
+        start_date=get_date_from_string(start_date), 
+        end_date=get_date_from_string(end_date)
+    )
     db.session.add(new_competition)
     db.session.commit()
     print("Created competition:", new_competition)
