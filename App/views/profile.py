@@ -9,8 +9,9 @@ from App.controllers import (
     get_user,
     get_admin,
     get_student,
-    update_student,
-    update_admin
+    update_user,
+    update_admin,
+    update_student
 )
 
 profile_views = Blueprint('profile_views', __name__, template_folder='../templates')
@@ -32,21 +33,30 @@ def view_profile():
 def edit_profile():
     form_data = request.form if request.form else None
     data  = request.json if not form_data else form_data
-    if get_admin(current_user.id):
-        update_admin(
-            id=current_user.id,
-            password=data['password'],
-            fname=data['fname'],
-            lname=data['lname'],
-            image=data['image']
-        )
-    else: 
-        update_student(
-            id=current_user.id,
-            password=data['password'],
-            fname=data['fname'],
-            lname=data['lname'],
-            dob=data['dob'],
-            image=data['image']
-        )
+    
+    if not update_user(current_user, data['username']):
+        return jsonify(error="Username already exists"), 400
+    
+    try:
+        if get_admin(current_user.id):
+            update_admin(
+                id=current_user.id,
+                password=data['password'],
+                fname=data['fname'],
+                lname=data['lname'],
+                image=data['image']
+            )
+        else: 
+            update_student(
+                id=current_user.id,
+                password=data['password'],
+                fname=data['fname'],
+                lname=data['lname'],
+                dob=data['dob'],
+                image=data['image']
+            )
+    
+    except Exception as e:
+        return jsonify(error=str(e)), 400
+    
     return jsonify(message='Profile updated'), 200
