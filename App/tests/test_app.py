@@ -278,7 +278,7 @@ class StudentIntegrationTests(unittest.TestCase):
 
 
     def test_get_all_students_json(self):
-        Student_json = get_all_students_json
+        Student_json = get_all_students_json()
         self.assertListEqual(Student_json, [
             {"id":80012346, "username":"rob", "fname": "Rob", "lname": "Robinson"}
         ])
