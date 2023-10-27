@@ -25,7 +25,7 @@ def view_profile():
     if get_student(current_user.id): profile_data['user'] = get_student(current_user.id).get_json()
     elif get_admin(current_user.id): profile_data['user'] = get_admin(current_user.id).get_json()
     else: profile_data['user'] = get_user(current_user.id).get_json()
-    profile_data['competitions'] = get_participant_competitions(current_user.id)
+    profile_data['competitions'] = get_participant_competition_scores(current_user.id)
     return jsonify(profile_data), 200
 
 
