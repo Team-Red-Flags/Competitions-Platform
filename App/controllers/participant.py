@@ -39,10 +39,10 @@ def get_all_participants_json() -> list:
     if not participants: return []
     return [participant.get_json() for participant in participants]
 
-def get_participant_competitions(user_id) -> list:
+def get_participant_competitions(user_id) -> dict:
     results = Participant.query.filter_by(user_id = user_id).all()
-    if not results: return []
-    return [Competition.query.get(result.competition_id) for result in results]
+    if not results: return {}
+    return {Competition.query.get(result.competition_id) for result in results}
 
 def get_competition_rankings(competition_id) -> list:
     records = Participant.query.filter_by(competition_id = competition_id).all()
