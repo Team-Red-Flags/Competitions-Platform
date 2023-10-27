@@ -299,10 +299,10 @@ class StudentIntegrationTests(unittest.TestCase):
           
 
     def test_update_student(self):
-        update_student(1, "ronnie")
-        Student = get_student(1)
-        if Student is None:
-            return "Student not found"
+        Student = get_student(80012346)
+        update_student(80012346, "Paul")
+        
+        
         
 
 
