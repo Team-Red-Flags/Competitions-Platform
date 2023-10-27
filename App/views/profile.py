@@ -6,6 +6,7 @@ from .index import index_views
 
 from App.controllers import (
     get_participant_competitions,
+    get_participant_competition_scores,
     get_user,
     get_admin,
     get_student,
