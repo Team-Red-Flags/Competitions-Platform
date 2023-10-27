@@ -320,10 +320,12 @@ class AdminIntegrationTests(unittest.TestCase):
         assert admin.username == "ade"
     
     def test_get_admin_json(self):
-        admin = get_admin(1)
-        self.assertDictEqual(admin.get_json(), {
-            "id": 1, 
-            "username": "ade"
+        admin = get_admin_by_username("ade")
+        self.assertDictEqual(admin.get_json(),{
+            "id": 3, 
+            "username": "ade",
+            'fname' : "Ade",
+            'lname' : "B"
         })
     
     def test_get_all_admins_json(self):
