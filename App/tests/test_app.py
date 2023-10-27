@@ -355,13 +355,13 @@ class CompetitionIntegrationTests(unittest.TestCase):
         assert competition.name == self.test_name
     
     def test_get_competition_json(self):
-        competition_json = get_competition_by_name(self.test_name).get_json()
-        self.assertDictEqual(competition_json, {
-            "id": None,
+        competition = get_competition_by_name(self.test_name)
+        self.assertDictEqual(competition.get_json(), {
+            "id": f"{competition.id}",
             "name": self.test_name,
             "description": "A new competition!",
-            "start_date": self.test_start_date,
-            "end_date": self.test_end_date
+            "start_date": get_date_from_string(self.test_start_date),
+            "end_date": get_date_from_string(self.test_end_date)
         })
     
     def test_get_all_competitions_json(self):
