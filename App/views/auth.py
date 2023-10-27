@@ -10,7 +10,8 @@ from.index import index_views
 from App.controllers import (
     jwt_authenticate,
     authenticate_user,
-    create_student
+    create_student,
+    get_user_by_username
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -33,8 +34,11 @@ def register_action():
     form_data = request.form if request.form else None
     data = request.json if not form_data else form_data
     print("Registration received")
-    img =  b64encode(request.files['image'].read()) if request.files['image'] else None
+    img = None
+    if request.files: img = request.files['image']
     if not img: img = b64encode(open(path.join(path.dirname(__file__).split('App')[0] + 'images/user.png'), 'rb').read())
+    if get_user_by_username(data['username']):
+        return jsonify(error=f"User with username '{data['username']}' already exists"), 400
     new_user = create_student(
         username=data['username'],
         password=data['password'],
