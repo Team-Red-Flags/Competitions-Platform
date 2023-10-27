@@ -263,45 +263,37 @@ class StudentIntegrationTests(unittest.TestCase):
 
 
     def test_get_student(self):
-        Student = get_student(1)
-        if Student is None:
-          return "Student not found"
-        return Student
+        Student = get_student_by_username("rickpass")
+        assert Student.username == "rickpass"
     
 
     def test_get_student_json(self):
-        Student = get_student(1)
-        expected_data = {
-        "id": 1,
-        "username": "bob"
-    }
-        if Student is None:
-         return None
-        self.assertDictEqual(Student.get_json, expected_data)
-        
+        Student = get_student_by_username("rickpass")
+        self.assertDictEqual(Student.get_json(),{
+            "id": 816031548, 
+            "username": "rickpass",
+            'fname' : "rick",
+            'lname' : "Doe"
+        })
+
 
     def test_get_all_students_json(self):
         Student_json = get_all_students_json
         self.assertListEqual(Student_json, [
             {"id":80012346, "username":"rob", "fname": "Rob", "lname": "Robinson"}
         ])
-    
         
 
     def test_get_student_by_username(self):
-        Student = get_student_by_username("bob")
-        if Student is None:
-         return "Student with username not found"
-        return Student
-        
-          
+        Student = get_student_by_username("rickpass")
+        assert Student.username == "rickpass"
+    
 
     def test_update_student(self):
+        update_student(80012346, "Paul")
         Student = get_student(80012346)
-        if Student is not None:
-         update_student(80012346, "Paul")
-        else:
-            return "Student not found"
+        assert Student.username == "Paul"
+
         
         
         
