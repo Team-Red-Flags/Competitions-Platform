@@ -311,7 +311,7 @@ class AdminIntegrationTests(unittest.TestCase):
     
     def test_get_admin(self):
         admin = get_admin(1)
-        assert admin.username == "ade" 
+        assert admin.fname == "Ade" 
     
     def test_get_admin_json(self):
         admin = get_admin(1)
@@ -332,7 +332,7 @@ class AdminIntegrationTests(unittest.TestCase):
         assert admin.username == "ade"
     
     def test_update_admin(self):
-        update_admin(1, "ava")
+        update_admin(1, "ava", None, )
         admin = get_admin(1)
         assert admin.username == "ava"
 
