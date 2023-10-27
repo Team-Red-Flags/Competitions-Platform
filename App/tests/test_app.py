@@ -319,7 +319,7 @@ class AdminIntegrationTests(unittest.TestCase):
     def test_get_admin_json(self):
         admin = get_admin_by_username("ade")
         self.assertDictEqual(admin.get_json(),{
-            "id": 1, 
+            "id": 4, 
             "username": "ade",
             'fname' : "Ade",
             'lname' : "B"
@@ -328,8 +328,8 @@ class AdminIntegrationTests(unittest.TestCase):
     def test_get_all_admins_json(self):
         admins_json = get_all_admins_json()
         self.assertListEqual(admins_json, [
-            {"id":1, "username":"ade", "fname": "Ade", "lname": "B"}, 
-            {"id":2, "username":"kim","fname": "Kim", "lname": "L"}
+            {"id":4, "username":"ade", "fname": "Ade", "lname": "B"}, 
+            {"id":5, "username":"kim","fname": "Kim", "lname": "L"}
         ])
     
     def test_get_admin_by_username(self):
