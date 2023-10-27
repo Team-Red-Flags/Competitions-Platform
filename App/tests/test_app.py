@@ -321,7 +321,7 @@ class AdminIntegrationTests(unittest.TestCase):
         admins_json = get_all_admins_json()
         admin = get_admin_by_username("ade")
         assert len(admins_json) >= 1
-        self.assertDictContainsSubset(admin.get_json(), dict(admins_json))
+        self.assertDictContainsSubset(admin.get_json(), admins_json)
     
     def test_get_admin_by_username(self):
         admin = get_admin_by_username("ade")
@@ -369,8 +369,9 @@ class CompetitionIntegrationTests(unittest.TestCase):
         })
     
     def test_get_all_competitions_json(self):
-        competition_json = get_competition(1)
-        all_competitions_json = get_all_participants_json()
+        competition_json = get_competition(1).get_json()
+        all_competitions_json = get_all_competitions_json()
+        assert len(all_competitions_json) >= 1
         assert type(all_competitions_json) == list
         assert type(all_competitions_json[0]) == dict
         self.assertDictContainsSubset(competition_json, dict(all_competitions_json[0]))
