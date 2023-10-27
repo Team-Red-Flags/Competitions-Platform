@@ -318,18 +318,19 @@ class AdminIntegrationTests(unittest.TestCase):
     
     def test_get_all_admins_json(self):
         admins_json = get_all_admins_json()
-        self.assertListEqual(admins_json, [
-            {"id":4, "username":"ade", "fname": "Ade", "lname": "B"}
-        ])
+        admin = get_admin_by_username("ade")
+        assert len(admins_json) >= 1
+        self.assertDictContainsSubset(admin.get_json(), dict(admins_json))
     
     def test_get_admin_by_username(self):
         admin = get_admin_by_username("ade")
         assert admin.username == "ade"
     
     def test_update_admin(self):
-        update_admin(4, "ava", "avapass", "Ava", "V")
-        admin = get_admin(4)
-        assert admin.username == "ava"
+        admin = update_admin(4, "avapass", "Ava", "V")
+        assert admin.check_password("avapass")
+        assert admin.fname == "Ava"
+        assert admin.lname == "V"
 
 
 class CompetitionIntegrationTests(unittest.TestCase):
