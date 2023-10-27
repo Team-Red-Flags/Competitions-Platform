@@ -4,8 +4,8 @@ from sqlalchemy.orm import relationship
 
 class Participant(db.Model):
     __tablename__  = "participant"
-    user           = relationship('User')
-    competition    = relationship('Competition')
+    user           = relationship('User', cascade="all, delete-orphan")
+    competition    = relationship('Competition', cascade="all, delete-orphan")
     id             = Column(Integer, primary_key=True)
     user_id        = Column(Integer, ForeignKey('user.id'), nullable=False)
     competition_id = Column(Integer, ForeignKey('competition.id'), nullable=False)
