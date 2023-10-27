@@ -10,6 +10,7 @@ from App.controllers import (
     create_competition,
     get_all_competitions,
     get_user,
+    get_admin,
     update_participant_score,
     is_participant
 )
@@ -21,7 +22,7 @@ competition_views = Blueprint('competition_views', __name__, template_folder='..
 def create_competition_action():
     
     # Authenticate admin
-    if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
+    if not get_admin(current_user.id): return jsonify(error='Not an admin'), 403
     
     # Get data from the request
     form_data = request.form if request.form else None
@@ -45,7 +46,7 @@ def create_competition_action():
 def add_results_action():
     
     # Authenticate admin
-    if not current_user.is_admin(): return jsonify(error='Not an admin'), 403
+    if not get_admin(current_user.id): return jsonify(error='Not an admin'), 403
     
     # Get data from the request
     form_data = request.form if request.form else None
