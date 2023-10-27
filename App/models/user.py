@@ -2,9 +2,13 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
 from App.database import db
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 
 class User(db.Model, UserMixin):
     __tablename__ = "user"
+    student     = relationship('Student', cascade='all, delete-orphan')
+    admin       = relationship('Admin', cascade='all, delete-orphan')
+    participant = relationship('Participant', cascade='all, delete-orphan')
     id       = Column(Integer, primary_key=True)
     username = Column(String, nullable=False, unique=True)
     password = Column(String(120), nullable=False)
