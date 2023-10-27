@@ -270,10 +270,8 @@ class StudentIntegrationTests(unittest.TestCase):
     def test_get_student_json(self):
         Student = get_student_by_username("rob")
         self.assertDictEqual(Student.get_json(),{
-            "id": 80012346, 
-            "username": "rob",
-            "fname" : "Rob",
-            "lname" : "Robinson",
+            "id": 3, 
+            "username": "rob"
         })
 
 
