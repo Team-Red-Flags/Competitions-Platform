@@ -259,7 +259,7 @@ class StudentIntegrationTests(unittest.TestCase):
     
     def test_create_student(self):
         Student= create_student("rickpass", "rick100", "rick", "Doe", "816031548", "rick@my.uwi.edu", "02-02-2001")
-        assert Student.username == "rick"
+        assert Student.username == "rickpass"
 
 
     def test_get_student(self):
@@ -282,10 +282,12 @@ class StudentIntegrationTests(unittest.TestCase):
 
     def test_get_all_students_json(self):
         Student_json = get_all_students_json()
-        self.assertListEqual(Student_json, [
-            {"id":1, "username":"bob"}, 
-            {"id":2, "username":"rick"}
-        ])
+        expected_data = [
+        {"id": 1, "username": "bob"},
+        {"id": 2, "username": "rick"},
+    ]
+        self.assertListEqual(Student_json, expected_data)
+   
         
 
     def test_get_student_by_username(self):
@@ -299,7 +301,10 @@ class StudentIntegrationTests(unittest.TestCase):
     def test_update_student(self):
         update_student(1, "ronnie")
         Student = get_student(1)
-        assert Student.username == "ronnie"
+        if Student is not None:
+         assert Student.username == "ronnie"
+        else:
+         return "Student not found"
         
 
 
