@@ -28,9 +28,8 @@ def get_all_admins_json() -> list:
     if not admins: return []
     return [admin.get_json() for admin in admins]
 
-def update_admin(id, username, password = None, fname = None, lname = None, image = None) -> Admin:
+def update_admin(id, password = None, fname = None, lname = None, image = None) -> Admin:
     admin = get_admin(id)
-    admin.username = username
     admin.fname = fname if fname else admin.fname
     admin.lname = lname if lname else admin.lname
     admin.image = image if image else admin.image

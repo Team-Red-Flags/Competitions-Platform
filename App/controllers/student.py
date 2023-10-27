@@ -43,17 +43,15 @@ def get_all_students_json() -> list:
     return [student.get_json() for student in students]
 
 def update_student(
-    id, 
-    username, 
-    password = None, 
-    fname = None, 
-    lname = None,
-    dob = None,
-    image = None
+        id,
+        password = None, 
+        fname = None, 
+        lname = None,
+        dob = None,
+        image = None
     ) -> Student:
     
     student = get_student(id)
-    student.username = username
     student.fname = fname if fname else student.fname
     student.lname = lname if lname else student.lname
     student.dob = dob if dob else student.dob
