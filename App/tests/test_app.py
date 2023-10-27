@@ -291,8 +291,8 @@ class StudentIntegrationTests(unittest.TestCase):
           
 
     def test_update_student(self):
-        update_student(816031548, "Paul")
-        Student = get_student(816031548)
+        update_student(2, "Paul")
+        Student = get_student(2)
         assert Student.username ==  "Paul"
 
 
