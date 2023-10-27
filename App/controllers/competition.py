@@ -29,8 +29,8 @@ def get_competition_by_name(name) -> Competition:
 def get_all_competitions() -> list:
     return Competition.query.all()
 
-def get_all_competitions_json() -> list:
-    return [competition.get_json() for competition in get_all_competitions()]
+def get_all_competitions_json() -> dict:
+    return {competition.get_json() for competition in get_all_competitions()}
 
 def update_competition(
         id: int,
