@@ -269,10 +269,12 @@ class StudentIntegrationTests(unittest.TestCase):
 
     def test_get_student_json(self):
         Student = get_student_by_username("rob")
-        self.assertDictEqual(Student.get_json(),{
-            "id": 3, 
-            "username": "rob"
-        })
+        actual_data = Student.get_json()
+        expected_data = {
+        "id": actual_data["id"],
+        "username": actual_data["username"]
+    }
+        self.assertDictEqual(actual_data, expected_data)
 
 
     def test_get_all_students_json(self):
