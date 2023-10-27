@@ -9,6 +9,7 @@ from App.controllers import (
     get_competition_rankings,
     create_competition,
     get_all_competitions,
+    get_all_competitions_json,
     get_user,
     get_admin,
     update_participant_score,
@@ -18,7 +19,12 @@ from App.controllers import (
 
 competition_views = Blueprint('competition_views', __name__, template_folder='../templates')
 
-@competition_views.route('/competition/create', methods=['POST'])
+@competition_views.route('/competitions/', methods=['GET'])
+def view_all_competitions():
+    return jsonify(get_all_competitions_json()), 200
+
+
+@competition_views.route('/competitions/create', methods=['POST'])
 @login_required
 def create_competition_action():
     
@@ -42,7 +48,7 @@ def create_competition_action():
     return jsonify(competition.get_json()), 200
     
 
-@competition_views.route('/competition/add-result', methods=['POST'])
+@competition_views.route('/competitions/add-result', methods=['POST'])
 @login_required
 def add_results_action():
     
@@ -76,7 +82,7 @@ def add_results_action():
     print("Could not add result")
     return jsonify(error='Could not add result'), 400
 
-@competition_views.route('/competition/<int:competition_id>', methods=['GET'])
+@competition_views.route('/competitions/<int:competition_id>', methods=['GET'])
 def view_details(competition_id):
     if not get_competition(competition_id):
         return jsonify(error=f'Competition with id {competition_id} not found'), 404
@@ -84,14 +90,14 @@ def view_details(competition_id):
     return jsonify(get_competition(competition_id).get_json()), 200
 
 
-@competition_views.route('/competition/<int:competition_id>/rankings', methods=['GET'])
+@competition_views.route('/competitions/<int:competition_id>/rankings', methods=['GET'])
 def view_rankings(competition_id):
     if not get_competition(competition_id):
         return jsonify(error=f'Competition with id {competition_id} not found'), 404
     return jsonify(get_competition_rankings(competition_id)), 200
 
 
-@competition_views.route('/competition/delete/<int:competition_id>', methods=['DELETE'])
+@competition_views.route('/competitions/delete/<int:competition_id>', methods=['DELETE'])
 @login_required
 def delete_competition_action(competition_id):
     
