@@ -9,10 +9,16 @@ def create_competition(name: str, description: str, start_date: str = None, end_
         start_date=get_date_from_string(start_date), 
         end_date=get_date_from_string(end_date)
     )
-    db.session.add(new_competition)
-    db.session.commit()
-    print("Created competition:", new_competition)
-    return new_competition
+    
+    try:
+        db.session.add(new_competition)
+        db.session.commit()
+        print("Created competition:", new_competition)
+        return new_competition
+    
+    except Exception as e:
+        print(e)
+        return None
 
 def get_competition(id) -> Competition:
     return Competition.query.get(id)
