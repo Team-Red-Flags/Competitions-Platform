@@ -34,8 +34,8 @@ def enroll_participant(user_id, competition_id):
     
     # Verify user is not already enrolled
     competitions = get_participant_competitions(user_id)
-    for competition in competitions:
-        if competition.id == competition_id: 
+    for k, v in competitions.items():
+        if k == competition_id:
             return jsonify(error=f'User {user_id} already enrolled in this competition'), 400
         
     # Enroll user to competition
