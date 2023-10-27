@@ -246,7 +246,7 @@ class UsersIntegrationTests(unittest.TestCase):
         users_json = get_all_users_json()
         assert len(users_json) >= 1
         assert type(users_json) == dict
-        self.assertDictContainsSubset(get_user(1).get_json(), users_json)
+        self.assertDictEqual(get_user(1).get_json(), users_json[1])
 
     def test_update_user(self):
         update_user(1, "ronnie")
