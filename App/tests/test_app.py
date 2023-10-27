@@ -348,12 +348,19 @@ class CompetitionIntegrationTests(unittest.TestCase):
             "start_date": self.test_start_date,
             "end_date": self.test_end_date
         })
+    
+    def test_get_all_participants_json(self):
+        participant_json = get_participant(self.test_user_id1, self.test_competition_id).get_json()
+        all_participants_json = get_all_participants_json()
+        assert type(all_participants_json) == list
+        assert type(all_participants_json[0]) == dict
+        self.assertDictContainsSubset(participant_json, dict(all_participants_json[0]))
 
     def test_get_all_competitions_json(self):
-        competiton = get_all_competitions_json(self.test_name, self.test_start_date, self.test_end_date)
+        competition_json = get_competition(1)
         all_competitions_json = get_all_participants_json()
         assert type(all_competitions_json) == list
-        assert type(all_competitions_json[0]) ==dict
+        assert type(all_competitions_json[0]) == dict
         self.assertDictContainsSubset(competition_json, dict(all_competitions_json[0]))
 
     def test_update_user(self):
