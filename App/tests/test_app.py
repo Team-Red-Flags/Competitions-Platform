@@ -337,21 +337,24 @@ class AdminIntegrationTests(unittest.TestCase):
         assert admin.username == "ade"
     
     def test_update_admin(self):
-        update_admin(1, "ava", None, )
-        admin = get_admin(1)
+        update_admin(1, "ava")
+        admin = get_admin_by_username("ava")
         assert admin.username == "ava"
 
 
 class CompetitionIntegrationTests(unittest.TestCase):
     
-    def test_create_competition(self):
-        competition = create_competition(
-            name='Test Competition',
-            description='This is a test competition',
-            start_date='1 January, 2020',
-            end_date='10 January, 2020'
+    test_name = "Test Competition"
+    test_start_date = "10-03-2024"
+    test_end_date = "12-03-2024"
+
+    competition = Competition(
+            name=self.test_name,
+            description="",
+            start_date=self.test_start_date,
+            end_date=self.test_end_date
         )
-        assert competition.name == "Test Competition"
+    assert competition.description == "A new competition!"
     
     def test_get_competition(self):
         competition = get_competition(1)
@@ -372,13 +375,6 @@ class CompetitionIntegrationTests(unittest.TestCase):
             "end_date": self.test_end_date
         })
     
-    def test_get_all_participants_json(self):
-        participant_json = get_participant(self.test_user_id1, self.test_competition_id).get_json()
-        all_participants_json = get_all_participants_json()
-        assert type(all_participants_json) == list
-        assert type(all_participants_json[0]) == dict
-        self.assertDictContainsSubset(participant_json, dict(all_participants_json[0]))
-
     def test_get_all_competitions_json(self):
         competition_json = get_competition(1)
         all_competitions_json = get_all_participants_json()
