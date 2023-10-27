@@ -20,6 +20,7 @@ class Participant(db.Model):
 
     def get_json(self):
         return {
+            'id' : self.id,
             'user_id': self.user_id,
             'competition_id': self.competition_id,
             'score': self.score
