@@ -54,3 +54,14 @@ def get_competition_rankings(competition_id) -> list:
 
 def get_top_20_participants(competition_id) -> list:
     return get_competition_rankings(competition_id)[:20]
+
+def delete_participant(user_id, competition_id) -> bool:
+    try:
+        participant = get_participant(user_id, competition_id)
+        db.session.delete(participant)
+        db.session.commit()
+        return True
+    
+    except Exception as e:
+        print(e)
+        return False

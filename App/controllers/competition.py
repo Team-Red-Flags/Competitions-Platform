@@ -37,3 +37,14 @@ def update_competition(
     if end_date: competition.end_date = get_date_from_string(end_date)
     db.session.commit()
     return competition
+
+def delete_competition(id) -> bool:
+    try:
+        competition = get_competition(id)
+        db.session.delete(competition)
+        db.session.commit()
+        return True
+    
+    except Exception as e:
+        print(e)
+        return False

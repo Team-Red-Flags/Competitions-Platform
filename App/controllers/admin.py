@@ -38,3 +38,14 @@ def update_admin(id, username, password = None, fname = None, lname = None, imag
     db.session.add(admin)
     db.session.commit()
     return admin
+
+def delete_admin(id) -> bool:
+    try:
+        admin = get_admin(id)
+        db.session.delete(admin)
+        db.session.commit()
+        return True
+    
+    except Exception as e:
+        print(e)
+        return False

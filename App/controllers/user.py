@@ -28,3 +28,14 @@ def update_user(id, username) -> User:
     db.session.add(user)
     db.session.commit()
     return user
+
+def delete_user(id) -> bool:
+    try:
+        user = get_user(id)
+        db.session.delete(user)
+        db.session.commit()
+        return True
+    
+    except Exception as e:
+        print(e)
+        return False

@@ -62,3 +62,14 @@ def update_student(
     db.session.add(student)
     db.session.commit()
     return student
+
+def delete_student(id) -> bool:
+    try:
+        student = get_student(id)
+        db.session.delete(student)
+        db.session.commit()
+        return True
+    
+    except Exception as e:
+        print(e)
+        return False
