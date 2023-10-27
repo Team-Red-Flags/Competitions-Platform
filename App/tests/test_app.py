@@ -259,9 +259,11 @@ class StudentIntegrationTests(unittest.TestCase):
     
 
     def test_create_student(self):
-        Student= create_student("rick", "rickpass")
+     with open('johndoe.png', 'rb') as image_file:
+        image_file = image_file.read()
+        Student= create_student("rickpass", "rick100", "rick", "Doe", "816031548", "rick@my.uwi.edu", "02-02-2001", image_file)
         assert Student.username == "rick"
-    
+
 
     def test_get_student(self):
         Student = get_student(1)
