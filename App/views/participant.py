@@ -62,10 +62,10 @@ def unenroll_participant(user_id, competition_id):
     
     # Verify user is already enrolled
     if not is_participant(user_id, competition_id):
-        return jsonify(error=f'User {user_id} not enrolled in this competition'), 400
+        return jsonify(error=f'User not enrolled in this competition'), 400
     
     # Unenroll user from competition
     if delete_participant(user_id, competition_id):
-        return jsonify(message=f"Unenrolled user {user_id} from {competition_id}"), 200
+        return jsonify(message=f"Unenrolled user successfully"), 200
     
-    return jsonify(error=f"Failed to unenroll user {user_id} from {competition_id}"), 400
+    return jsonify(error=f"Failed to unenroll user"), 400
