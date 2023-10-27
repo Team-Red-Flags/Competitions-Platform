@@ -12,7 +12,8 @@ from App.controllers import (
     get_user,
     get_admin,
     update_participant_score,
-    is_participant
+    is_participant,
+    delete_competition
 )
 
 competition_views = Blueprint('competition_views', __name__, template_folder='../templates')
@@ -88,3 +89,19 @@ def view_rankings(competition_id):
     if not get_competition(competition_id):
         return jsonify(error=f'Competition with id {competition_id} not found'), 404
     return jsonify(get_competition_rankings(competition_id)), 200
+
+
+@competition_views.route('/competition/delete/<int:competition_id>', methods=['POST'])
+@login_required
+def delete_competition_action(competition_id):
+    
+    # Authenticate admin
+    if not get_admin(current_user.id): return jsonify(error='Not an admin'), 403
+    
+    if not get_competition(competition_id):
+        return jsonify(error=f'Competition with id {competition_id} not found'), 404
+    
+    if not delete_competition(competition_id):
+        return jsonify(error='Failed to delete competition'), 400
+    
+    return jsonify(message='Competition successfully deleted'), 200
