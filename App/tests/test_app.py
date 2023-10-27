@@ -329,7 +329,7 @@ class AdminIntegrationTests(unittest.TestCase):
         admins_json = get_all_admins_json()
         admin = get_admin_by_username("ade")
         assert len(admins_json) >= 1
-        self.assertDictEqual(admin.get_json(), admins_json[0])
+        self.assertDictEqual(admin.get_json(), admins_json[admin.id])
     
     def test_get_admin_by_username(self):
         admin = get_admin_by_username("ade")
@@ -372,12 +372,12 @@ class CompetitionIntegrationTests(unittest.TestCase):
         })
     
     def test_get_all_competitions_json(self):
-        competition_json = get_competition(1).get_json()
+        competition = get_competition(1)
         all_competitions_json = get_all_competitions_json()
         assert len(all_competitions_json) >= 1
-        assert type(all_competitions_json) == list
+        assert type(all_competitions_json) == dict
         assert type(all_competitions_json[0]) == dict
-        self.assertDictContainsSubset(competition_json, dict(all_competitions_json[0]))
+        self.assertDictContainsSubset(competition.get_json(), all_competitions_json[competition.id])
 
     def test_update_competition(self):
         competition = get_competition_by_name(self.test_name)
@@ -428,11 +428,11 @@ class ParticipantIntegrationTests(unittest.TestCase):
         self.assertDictContainsSubset(competition.get_json(), competitions)
     
     def test_get_all_participants_json(self):
-        participant_json = get_participant(self.test_user_id1, self.test_competition_id).get_json()
         all_participants_json = get_all_participants_json()
+        participant = get_participant(self.test_user_id1, self.test_competition_id)
         assert type(all_participants_json) == list
         assert type(all_participants_json[0]) == dict
-        self.assertDictContainsSubset(participant_json, dict(all_participants_json[0]))
+        self.assertDictContainsSubset(participant.get_json(), all_participants_json[participant.id])
     
     def test_get_top_20_participants(self):
         update_participant_score(self.test_user_id1, self.test_competition_id, 40)
