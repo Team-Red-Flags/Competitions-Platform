@@ -258,7 +258,7 @@ class UsersIntegrationTests(unittest.TestCase):
 class StudentIntegrationTests(unittest.TestCase):
     
     def test_create_student(self):
-        Student= create_student("rob", "robpass", "Rob", "Robinson", "80012346", "rob.robinson@my.uwi.edu'", "1998-1-4")
+        Student= create_student("rob", "robpass", "Rob", "Robinson", "80012346", "rob.robinson@my.uwi.edu", "4-1-1998")
         assert Student.username == "rickpass"
 
 
