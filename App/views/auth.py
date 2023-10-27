@@ -38,7 +38,7 @@ def register_action():
     if request.files: img = request.files['image']
     if not img: img = b64encode(open(path.join(path.dirname(__file__).split('App')[0] + 'images/user.png'), 'rb').read())
     if get_user_by_username(data['username']):
-        return jsonify(error=f"User with username '{data['username']}' already exists"), 400
+        return jsonify(error=f"Username already exists"), 400
     new_user = create_student(
         username=data['username'],
         password=data['password'],
