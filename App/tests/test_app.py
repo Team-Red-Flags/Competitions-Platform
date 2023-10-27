@@ -286,7 +286,7 @@ class StudentIntegrationTests(unittest.TestCase):
         {"id": 1, "username": "bob"},
         {"id": 2, "username": "rick"},
     ]
-        self.assertListEqual(Student_json, expected_data)
+        self.assertListEqual([{'id': 1, 'username': 'bob'}, {'id': 2, 'username': 'rick'}])
    
         
 
@@ -304,7 +304,7 @@ class StudentIntegrationTests(unittest.TestCase):
         if Student is not None:
          assert Student.username == "ronnie"
         else:
-         return "Student not found"
+         self.fail("Student not found")
         
 
 
