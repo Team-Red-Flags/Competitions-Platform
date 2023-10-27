@@ -426,14 +426,15 @@ class ParticipantIntegrationTests(unittest.TestCase):
         competition = get_competition(self.test_competition_id)
         assert competitions != None
         assert type(competitions) == dict
-        assert type(competitions.pop('competitions')) == Competition
-        self.assertDictContainsSubset(competition.get_json(), competitions)
+        assert type(competitions[competition.id]) == dict
+        self.assertDictContainsSubset(competition.get_json(), competitions[competition.id])
     
     def test_get_all_participants_json(self):
         all_participants_json = get_all_participants_json()
         participant = get_participant(self.test_user_id1, self.test_competition_id)
-        assert type(all_participants_json) == list
-        assert type(all_participants_json[0]) == dict
+        assert len(all_participants_json) >= 1
+        assert type(all_participants_json) == dict
+        assert type(all_participants_json[participant.id]) == dict
         self.assertDictContainsSubset(participant.get_json(), all_participants_json[participant.id])
     
     def test_get_top_20_participants(self):
