@@ -29,6 +29,7 @@ from App.controllers import (
     create_competition,
     update_competition,
     get_all_competitions,
+    get_competition_by_name,
     get_all_competitions_json,
     is_participant,
     get_participant,
@@ -350,17 +351,12 @@ class CompetitionIntegrationTests(unittest.TestCase):
         assert competition.description == "A new competition!"
     
     def test_get_competition(self):
-        competition = get_competition(1)
-        assert competition.id == 1
+        competition = get_competition_by_name(self.test_name)
+        assert competition.name == self.test_name
     
     def test_get_competition_json(self):
-        competition = Competition(
-            name=self.test_name,
-            description="",
-            start_date=self.test_start_date,
-            end_date=self.test_end_date
-        )
-        self.assertDictEqual(competition.get_json(), {
+        competition_json = get_competition_by_name(self.test_name).get_json()
+        self.assertDictEqual(competition_json, {
             "id": None,
             "name": self.test_name,
             "description": "A new competition!",
@@ -377,9 +373,10 @@ class CompetitionIntegrationTests(unittest.TestCase):
         self.assertDictContainsSubset(competition_json, dict(all_competitions_json[0]))
 
     def test_update_competition(self):
-        update_competition(1, "New Competition")
-        competition = get_competition(1)
-        assert competition == "New Competition"
+        competition = get_competition_by_name(self.test_name)
+        update_competition(competition.id, "Updated Competition")
+        competition = get_competition(competition.id)
+        assert competition.name == "Updated Competition"
 
 class ParticipantIntegrationTests(unittest.TestCase):
     
