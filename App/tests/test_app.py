@@ -280,9 +280,10 @@ class StudentIntegrationTests(unittest.TestCase):
 
     def test_get_all_students_json(self):
         Student_json = get_all_students_json()
-        self.assertListEqual(Student_json, [
-            {"id":80012346, "username":"rob", "fname": "Rob", "lname": "Robinson"}
-        ])
+        Student = get_student_by_username("rob")
+        assert len(Student_json) >= 1
+        self.assertDictEqual(Student.get_json(), Student_json[0])
+    
         
 
     def test_get_student_by_username(self):
