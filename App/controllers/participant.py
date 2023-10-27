@@ -46,7 +46,6 @@ def get_participant_competitions(user_id) -> dict:
     results = Participant.query.filter_by(user_id = user_id).all()
     if not results: return {}
     comps_list = [comp.get_json() for comp in results]
-    if not comps_list: return {}
     for comp in comps_list: comps[comp['id']] = comp
     return comps
 
