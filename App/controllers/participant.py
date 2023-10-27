@@ -42,9 +42,13 @@ def get_all_participants_json() -> dict:
     return parts
 
 def get_participant_competitions(user_id) -> dict:
+    comps = {}
     results = Participant.query.filter_by(user_id = user_id).all()
     if not results: return {}
-    return {Competition.query.get(result.competition_id) for result in results}
+    comps_list = [comp.get_json() for comp in results]
+    if not comps_list: return {}
+    for comp in comps_list: comps[comp['id']] = comp
+    return comps
 
 def get_competition_rankings(competition_id) -> list:
     records = Participant.query.filter_by(competition_id = competition_id).all()
