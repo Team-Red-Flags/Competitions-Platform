@@ -40,9 +40,9 @@ def enroll_participant(user_id, competition_id):
         
     # Enroll user to competition
     if create_participant(user_id, competition_id):
-        return jsonify(message=f"Enrolled user {user_id} to competition {competition_id}"), 200
+        return jsonify(message=f"Enrolled user successfully"), 200
     
-    return jsonify(error=f"Failed to enroll user {user_id} to competition {competition_id}"), 400
+    return jsonify(error=f"Failed to enroll user"), 400
 
 
 @participant_views.route('/unenroll/<int:user_id>/<int:competition_id>', methods=['POST'])
