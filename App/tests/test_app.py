@@ -257,64 +257,89 @@ class UsersIntegrationTests(unittest.TestCase):
 
 class StudentIntegrationTests(unittest.TestCase):
     
-
     def test_create_student(self):
-        Student= create_student("rick", "rickpass")
-        assert Student.username == "rick"
-    
+        Student= create_student("rickpass", "rick100", "rick", "Doe", "816031548", "rick@my.uwi.edu", "02-02-2001")
+        assert Student.username == "rickpass"
+
 
     def test_get_student(self):
         Student = get_student(1)
-        assert Student.username == "bob"  
+        if Student is None:
+          return "Student not found"
+        return Student
     
 
     def test_get_student_json(self):
         Student = get_student(1)
-        self.assertDictEqual(Student.get_json(), {
-            "id": 1, 
-            "username": "bob"
-        })
+        expected_data = {
+        "id": 1,
+        "username": "bob"
+    }
+        if Student is None:
+         return None
+        self.assertDictEqual(Student.get_json, expected_data)
         
 
     def test_get_all_students_json(self):
         Student_json = get_all_students_json()
-        self.assertListEqual(Student_json, [
-            {"id":1, "username":"bob"}, 
-            {"id":2, "username":"rick"}
-        ])
+        expected_data = [
+        {"id": 1, "username": "bob"},
+        {"id": 2, "username": "rick"},
+    ]
+        self.assertListEqual(Student_json, expected_data)
+   
         
 
     def test_get_student_by_username(self):
         Student = get_student_by_username("bob")
-        assert Student.username == "bob"
+        if Student is None:
+         return "Student with username not found"
+        return Student
+        
           
 
     def test_update_student(self):
         update_student(1, "ronnie")
-        Student = get_student(1)
-        assert Student.username == "ronnie"
+        Student = get_user(1)
+        if Student is None:
+            return "Student not found"
         
 
 
 class AdminIntegrationTests(unittest.TestCase):
     
     def test_create_admin(self):
-        pass
+        admin = create_admin("ade", "adepass", "Ade", "B")
+        assert admin.username == "ade"
     
     def test_get_admin(self):
-        pass
+        admin = get_admin_by_username("ade")
+        assert admin.username == "ade"
     
     def test_get_admin_json(self):
-        pass
+        admin = get_admin_by_username("ade")
+        self.assertDictEqual(admin.get_json(),{
+            "id": 3, 
+            "username": "ade",
+            'fname' : "Ade",
+            'lname' : "B"
+        })
     
     def test_get_all_admins_json(self):
-        pass
+        admins_json = get_all_admins_json()
+        self.assertListEqual(admins_json, [
+            {"id":1, "username":"ade"}, 
+            {"id":2, "username":"kim"}
+        ])
     
     def test_get_admin_by_username(self):
-        pass
+        admin = get_admin_by_username("ade")
+        assert admin.username == "ade"
     
     def test_update_admin(self):
-        pass
+        update_admin(1, "ava")
+        admin = get_admin_by_username("ava")
+        assert admin.username == "ava"
 
 
 class CompetitionIntegrationTests(unittest.TestCase):

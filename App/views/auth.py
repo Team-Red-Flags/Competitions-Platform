@@ -35,7 +35,7 @@ def register_action():
     print("Registration received")
     img =  b64encode(request.files['image'].read()) if request.files['image'] else None
     if not img: img = b64encode(open(path.join(path.dirname(__file__).split('App')[0] + 'images/user.png'), 'rb').read())
-    if create_student(
+    new_user = create_student(
         username=data['username'],
         password=data['password'],
         fname=data['fname'],
@@ -44,7 +44,10 @@ def register_action():
         student_email=data['student_email'],
         dob=data['dob'],
         image=img
-    ): return jsonify(message=f'Student account for {data["fname"]} {data["lname"]} created'), 200
+    )
+    if new_user: 
+        return jsonify(new_user.get_json()), 200
+        # return jsonify(message=f'Student account for {data["fname"]} {data["lname"]} created'), 200
     return jsonify(message='Failed to register student account'), 400
 
 
