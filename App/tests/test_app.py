@@ -299,10 +299,13 @@ class StudentIntegrationTests(unittest.TestCase):
         assert Student.username == "rob"
 
     def test_update_student(self):
-        Student = update_student(2, "rickpass")
-        assert Student.check_password("rickpass")
-        assert Student.fname == "Rick"
-        assert Student.lname == "Rickard"
+        student = get_student_by_username("rob")
+        update_student(student.id, password="rickpass")
+        update_student(student.id, fname="Rick")
+        student = update_student(student.id, lname="Rickard")
+        assert student.check_password("rickpass")
+        assert student.fname == "Rick"
+        assert student.lname == "Rickard"
 
 
 
