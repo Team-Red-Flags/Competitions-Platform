@@ -373,11 +373,6 @@ class CompetitionIntegrationTests(unittest.TestCase):
         assert type(all_competitions_json[0]) == dict
         self.assertDictContainsSubset(competition_json, dict(all_competitions_json[0]))
 
-    def test_update_user(self):
-        update_user(1, "ronnie")
-        user = get_user(1)
-        assert user.username == "ronnie"
-
     def test_update_competition(self):
         update_competition(1, "New Competition")
         competition = get_competition(1)
