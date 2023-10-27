@@ -257,7 +257,6 @@ class UsersIntegrationTests(unittest.TestCase):
 
 class StudentIntegrationTests(unittest.TestCase):
     
-
     def test_create_student(self):
         Student= create_student("rickpass", "rick100", "rick", "Doe", "816031548", "rick@my.uwi.edu", "02-02-2001")
         assert Student.username == "rick"
@@ -300,22 +299,35 @@ class StudentIntegrationTests(unittest.TestCase):
 class AdminIntegrationTests(unittest.TestCase):
     
     def test_create_admin(self):
-        pass
+        admin = create_admin("ade", "adepass", "Ade", "B")
+        assert admin.username == "ade"
     
     def test_get_admin(self):
-        pass
+        admin = get_admin(1)
+        assert admin.username == "ade" 
     
     def test_get_admin_json(self):
-        pass
+        admin = get_admin(1)
+        self.assertDictEqual(admin.get_json(), {
+            "id": 1, 
+            "username": "ade"
+        })
     
     def test_get_all_admins_json(self):
-        pass
+        admins_json = get_all_admins_json()
+        self.assertListEqual(admins_json, [
+            {"id":1, "username":"ade"}, 
+            {"id":2, "username":"kim"}
+        ])
     
     def test_get_admin_by_username(self):
-        pass
+        admin = get_admin_by_username("ade")
+        assert admin.username == "ade"
     
     def test_update_admin(self):
-        pass
+        update_admin(1, "ava")
+        admin = get_admin(1)
+        assert admin.username == "ava"
 
 
 class CompetitionIntegrationTests(unittest.TestCase):
