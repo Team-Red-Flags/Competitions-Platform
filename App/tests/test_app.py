@@ -337,7 +337,7 @@ class AdminIntegrationTests(unittest.TestCase):
         assert admin.username == "ade"
     
     def test_update_admin(self):
-        update_admin(1, "ava")
+        update_admin(1, "ava", "avapass", "Ava", "V")
         admin = get_admin_by_username("ava")
         assert admin.username == "ava"
 
