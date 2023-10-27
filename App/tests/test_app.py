@@ -259,15 +259,13 @@ class StudentIntegrationTests(unittest.TestCase):
     
 
     def test_create_student(self):
-     with open('johndoe.png', 'rb') as image_file:
-        image_file = image_file.read()
-        Student= create_student("rickpass", "rick100", "rick", "Doe", "816031548", "rick@my.uwi.edu", "02-02-2001", image_file)
+        Student= create_student("rickpass", "rick100", "rick", "Doe", "816031548", "rick@my.uwi.edu", "02-02-2001")
         assert Student.username == "rick"
 
 
     def test_get_student(self):
         Student = get_student(1)
-        assert Student.username == "bob"  
+        assert Student.fname == "bob"  
     
 
     def test_get_student_json(self):
@@ -289,7 +287,7 @@ class StudentIntegrationTests(unittest.TestCase):
 
     def test_get_student_by_username(self):
         Student = get_student_by_username("bob")
-        assert Student.username == "bob"
+        assert Student.fname == "bob"
           
 
     def test_update_student(self):
