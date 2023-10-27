@@ -263,8 +263,8 @@ class StudentIntegrationTests(unittest.TestCase):
 
 
     def test_get_student(self):
-        Student = get_student_by_username("robpass")
-        assert Student.username == "robpass"
+        Student = get_student_by_username("rob")
+        assert Student.username == "rob"
     
 
     def test_get_student_json(self):
@@ -285,9 +285,8 @@ class StudentIntegrationTests(unittest.TestCase):
         
 
     def test_get_student_by_username(self):
-        Student = get_student_by_username("rickpass")
-        assert Student is not None, "Student with username not found"
-        return Student
+        Student = get_student_by_username("rob")
+        assert Student.username == "rob"
         
           
 
