@@ -291,9 +291,10 @@ class StudentIntegrationTests(unittest.TestCase):
           
 
     def test_update_student(self):
-        Student = get_student(80012346)
-        assert Student is not None, "Student not found"
-        update_student(80012346, "Paul")
+        Student = update_student(80012346, "robpass")
+        assert Student.check_password("robpass")
+        assert Student.fname == "Rick"
+        assert Student.lname == "Rickard"
 
 
 
