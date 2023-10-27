@@ -321,7 +321,7 @@ class AdminIntegrationTests(unittest.TestCase):
         admins_json = get_all_admins_json()
         admin = get_admin_by_username("ade")
         assert len(admins_json) >= 1
-        self.assertDictContainsSubset(admin.get_json(), admins_json)
+        self.assertDictEqual(admin.get_json(), admins_json[0])
     
     def test_get_admin_by_username(self):
         admin = get_admin_by_username("ade")
