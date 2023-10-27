@@ -259,12 +259,12 @@ class StudentIntegrationTests(unittest.TestCase):
     
     def test_create_student(self):
         Student= create_student("rob", "robpass", "Rob", "Robinson", "80012346", "rob.robinson@my.uwi.edu", "4-1-1998")
-        assert Student.username == "rickpass"
+        assert Student.username == "robpass"
 
 
     def test_get_student(self):
-        Student = get_student_by_username("rickpass")
-        assert Student.username == "rickpass"
+        Student = get_student_by_username("robpass")
+        assert Student.username == "robpass"
     
 
     def test_get_student_json(self):
