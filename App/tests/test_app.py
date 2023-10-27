@@ -255,7 +255,7 @@ class StudentIntegrationTests(unittest.TestCase):
     test_password = "robpass"
     test_fname = "Rob"
     test_lname = "Robinson"
-    test_student_id = "80012346"
+    test_student_id = 80012346
     test_student_email = "rob.robinson@my.uwi.edu"
     test_dob = "4-1-1998"
     
