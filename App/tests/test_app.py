@@ -316,8 +316,8 @@ class AdminIntegrationTests(unittest.TestCase):
         assert admin.username == "ade"
     
     def test_get_admin(self):
-        admin = get_admin(1)
-        assert admin.id == 1 
+        admin = get_admin_by_username("ade")
+        assert admin.username == "ade"
     
     def test_get_admin_json(self):
         admin = get_admin(1)
