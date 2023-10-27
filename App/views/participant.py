@@ -30,19 +30,19 @@ def enroll_participant(user_id, competition_id):
     
     # Verify existing competition
     if not get_competition(competition_id):
-        return jsonify(error=f'Competition id {competition_id} does not exist'), 400
+        return jsonify(error=f'Competition {competition_id} does not exist'), 400
     
     # Verify user is not already enrolled
     competitions = get_participant_competitions(user_id)
     for k, v in competitions.items():
         if k == competition_id:
-            return jsonify(error=f'User {user_id} already enrolled in this competition'), 400
+            return jsonify(error=f'User {user_id} already enrolled into competition {competition_id}'), 400
         
     # Enroll user to competition
     if create_participant(user_id, competition_id):
-        return jsonify(message=f"Enrolled user {user_id} to {get_competition(competition_id).name}"), 200
+        return jsonify(message=f"Enrolled user {user_id} to competition {competition_id}"), 200
     
-    return jsonify(error=f"Failed to enroll user {user_id} to {get_competition(competition_id).name}"), 400
+    return jsonify(error=f"Failed to enroll user {user_id} to competition {competition_id}"), 400
 
 
 @participant_views.route('/unenroll/<int:user_id>/<int:competition_id>', methods=['POST'])
