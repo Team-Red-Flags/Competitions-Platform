@@ -414,8 +414,8 @@ class ParticipantIntegrationTests(unittest.TestCase):
         competitions = get_participant_competitions(self.test_user_id1)
         competition = get_competition(self.test_competition_id)
         assert competitions != None
-        assert type(competitions) == list
-        assert type(competitions[0]) == Competition
+        assert type(competitions) == dict
+        assert type(competitions.pop(competition.name)) == Competition
         self.assertDictContainsSubset(competition.get_json(), competitions)
     
     def test_get_all_participants_json(self):
