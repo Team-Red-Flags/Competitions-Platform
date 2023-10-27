@@ -91,7 +91,7 @@ def view_rankings(competition_id):
     return jsonify(get_competition_rankings(competition_id)), 200
 
 
-@competition_views.route('/competition/delete/<int:competition_id>', methods=['POST'])
+@competition_views.route('/competition/delete/<int:competition_id>', methods=['DELETE'])
 @login_required
 def delete_competition_action(competition_id):
     
