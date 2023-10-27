@@ -328,8 +328,7 @@ class AdminIntegrationTests(unittest.TestCase):
     def test_get_all_admins_json(self):
         admins_json = get_all_admins_json()
         self.assertListEqual(admins_json, [
-            {"id":4, "username":"ade", "fname": "Ade", "lname": "B"}, 
-            {"id":5, "username":"kim","fname": "Kim", "lname": "L"}
+            {"id":4, "username":"ade", "fname": "Ade", "lname": "B"}
         ])
     
     def test_get_admin_by_username(self):
@@ -337,8 +336,8 @@ class AdminIntegrationTests(unittest.TestCase):
         assert admin.username == "ade"
     
     def test_update_admin(self):
-        update_admin(1, "ava", "avapass", "Ava", "V")
-        admin = get_admin(1)
+        update_admin(4, "ava", "avapass", "Ava", "V")
+        admin = get_admin(4)
         assert admin.username == "ava"
 
 
