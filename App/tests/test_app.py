@@ -281,13 +281,11 @@ class StudentIntegrationTests(unittest.TestCase):
         
 
     def test_get_all_students_json(self):
-        Student_json = get_all_students_json()
-        expected_data = [
-        {"id": 1, "username": "bob"},
-        {"id": 2, "username": "rick"},
-    ]
-        self.assertListEqual(Student_json, expected_data)
-   
+        Student_json = get_all_students_json
+        self.assertListEqual(Student_json, [
+            {"id":80012346, "username":"rob", "fname": "Rob", "lname": "Robinson"}
+        ])
+    
         
 
     def test_get_student_by_username(self):
