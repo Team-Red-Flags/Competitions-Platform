@@ -348,13 +348,14 @@ class CompetitionIntegrationTests(unittest.TestCase):
     test_start_date = "10-03-2024"
     test_end_date = "12-03-2024"
 
-    competition = Competition(
+    def test_create_competition(self):
+        competition = Competition(
             name=self.test_name,
             description="",
             start_date=self.test_start_date,
             end_date=self.test_end_date
         )
-    assert competition.description == "A new competition!"
+        assert competition.description == "A new competition!"
     
     def test_get_competition(self):
         competition = get_competition(1)
