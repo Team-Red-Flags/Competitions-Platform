@@ -7,6 +7,8 @@ from .index import index_views
 from App.controllers import (
     get_participant_competitions,
     get_user,
+    get_admin,
+    get_student,
     update_student,
     update_admin
 )
@@ -18,7 +20,9 @@ profile_views = Blueprint('profile_views', __name__, template_folder='../templat
 @login_required
 def view_profile():
     profile_data = {}
-    profile_data['user'] = current_user.get_json()
+    if get_student(current_user.id): profile_data['user'] = get_student(current_user.id).get_json()
+    elif get_admin(current_user.id): profile_data['user'] = get_admin(current_user.id).get_json()
+    else: profile_data['user'] = get_user(current_user.id).get_json()
     profile_data['competitions'] =  [comp.get_json() for comp in get_participant_competitions(current_user.id)]
     return jsonify(profile_data), 200
 
@@ -28,10 +32,9 @@ def view_profile():
 def edit_profile():
     form_data = request.form if request.form else None
     data  = request.json if not form_data else form_data
-    if get_user(current_user.id).is_admin():
+    if get_admin(current_user.id):
         update_admin(
             id=current_user.id,
-            username=data['username'],
             password=data['password'],
             fname=data['fname'],
             lname=data['lname'],
@@ -40,7 +43,6 @@ def edit_profile():
     else: 
         update_student(
             id=current_user.id,
-            username=data['username'],
             password=data['password'],
             fname=data['fname'],
             lname=data['lname'],
