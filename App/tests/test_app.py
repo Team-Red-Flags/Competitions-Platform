@@ -10,25 +10,21 @@ from App.controllers import (
     get_user,
     create_user,
     update_user,
-    get_all_users,
     get_all_users_json,
     get_user_by_username,
     get_student,
     create_student,
     update_student,
-    get_all_students,
     get_all_students_json,
     get_student_by_username,
     get_admin,
     create_admin,
     update_admin,
-    get_all_admins,
     get_all_admins_json,
     get_admin_by_username,
     get_competition,
     create_competition,
     update_competition,
-    get_all_competitions,
     get_competition_by_name,
     get_all_competitions_json,
     is_participant,
@@ -36,7 +32,6 @@ from App.controllers import (
     create_participant,
     get_top_20_participants,
     update_participant_score,
-    get_competition_rankings,
     get_all_participants_json,
     get_participant_competitions
 )
@@ -254,42 +249,54 @@ class UsersIntegrationTests(unittest.TestCase):
         assert user.username == "ronnie"
 
 
-
 class StudentIntegrationTests(unittest.TestCase):
     
+    test_username = "rob"
+    test_password = "robpass"
+    test_fname = "Rob"
+    test_lname = "Robinson"
+    test_student_id = "80012346"
+    test_student_email = "rob.robinson@my.uwi.edu"
+    test_dob = "4-1-1998"
+    
     def test_create_student(self):
-        Student= create_student("rob", "robpass", "Rob", "Robinson", "80012346", "rob.robinson@my.uwi.edu", "4-1-1998")
-        assert Student.username == "rob"
-
+        student= create_student(
+            username=self.test_username, 
+            password=self.test_password, 
+            fname=self.test_fname, 
+            lname=self.test_lname, 
+            student_id=self.test_student_id, 
+            student_email=self.test_student_email, 
+            dob=self.test_dob
+        )
+        assert student.username == self.test_username
 
     def test_get_student(self):
-        Student = get_student_by_username("rob")
-        assert Student.username == "rob"
-    
+        student = get_student_by_username("rob")
+        assert student.username == "rob"
 
     def test_get_student_json(self):
-        Student = get_student_by_username("rob")
-        actual_data = Student.get_json()
-        expected_data = {
-        "id": actual_data["id"],
-        "username": actual_data["username"]
-    }
-        self.assertDictEqual(actual_data, expected_data)
-
+        student = get_student_by_username("rob")
+        student_json = student.get_json()
+        self.assertDictEqual(student_json, {
+            "id": student.id,
+            "username": self.test_username,
+            "student_id": self.test_student_id,
+            "fname" : self.test_fname,
+            "lname" : self.test_lname,
+            "student_email" : self.test_student_email,
+            "dob" : get_date_from_string(self.test_dob)
+        })
 
     def test_get_all_students_json(self):
-        Student_json = get_all_students_json()
-        Student = get_student_by_username("rob")
-        assert len(Student_json) >= 1
-        self.assertDictEqual(Student.get_json(), Student_json[0])
-    
+        student_json = get_all_students_json()
+        student = get_student_by_username("rob")
+        assert len(student_json) >= 1
+        self.assertDictEqual(student.get_json(), student_json[student.id])
         
-
     def test_get_student_by_username(self):
         Student = get_student_by_username("rob")
         assert Student.username == "rob"
-        
-          
 
     def test_update_student(self):
         Student = update_student(2, "rickpass")
@@ -391,6 +398,7 @@ class ParticipantIntegrationTests(unittest.TestCase):
         )
         user = get_user(participant.user_id)
         assert user.username == "ronnie"
+        assert is_participant(user.id, self.test_competition_id) == True
         
         # New student participant
         dave: Student = create_student(
@@ -404,6 +412,7 @@ class ParticipantIntegrationTests(unittest.TestCase):
         )
         new_participant = create_participant(dave.id, self.test_competition_id)
         assert new_participant.user_id == dave.id
+        assert is_participant(dave.id, self.test_competition_id) == True
         
             
     def test_get_participant(self):
