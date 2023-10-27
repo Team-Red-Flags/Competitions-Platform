@@ -37,10 +37,12 @@ def get_student(id) -> Student:
 def get_all_students() -> list:
     return Student.query.all()
 
-def get_all_students_json() -> list:
-    students = get_all_students()
-    if not students: return []
-    return [student.get_json() for student in students]
+def get_all_students_json() -> dict:
+    students = {}
+    student_list = [student.get_json() for student in get_all_students()]
+    if not student_list: return {}
+    for student in student_list: students[student['id']] = student
+    return students
 
 def update_student(
         id,

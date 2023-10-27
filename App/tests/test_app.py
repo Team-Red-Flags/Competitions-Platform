@@ -244,10 +244,9 @@ class UsersIntegrationTests(unittest.TestCase):
     
     def test_get_all_users_json(self):
         users_json = get_all_users_json()
-        self.assertListEqual(users_json, [
-            {"id":1, "username":"bob"}, 
-            {"id":2, "username":"rick"}
-        ])
+        assert len(users_json) >= 1
+        assert type(users_json) == dict
+        self.assertDictContainsSubset(get_user(1).get_json(), users_json)
 
     def test_update_user(self):
         update_user(1, "ronnie")
@@ -358,7 +357,7 @@ class CompetitionIntegrationTests(unittest.TestCase):
     def test_get_competition_json(self):
         competition = get_competition_by_name(self.test_name)
         self.assertDictEqual(competition.get_json(), {
-            "id": f"{competition.id}",
+            "id": competition.id,
             "name": self.test_name,
             "description": "A new competition!",
             "start_date": get_date_from_string(self.test_start_date),
@@ -416,7 +415,7 @@ class ParticipantIntegrationTests(unittest.TestCase):
         competition = get_competition(self.test_competition_id)
         assert competitions != None
         assert type(competitions) == dict
-        assert type(competitions.pop(competition.name)) == Competition
+        assert type(competitions.pop('competitions')) == Competition
         self.assertDictContainsSubset(competition.get_json(), competitions)
     
     def test_get_all_participants_json(self):

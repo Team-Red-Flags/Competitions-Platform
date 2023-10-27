@@ -17,10 +17,12 @@ def get_user(id) -> User:
 def get_all_users():
     return User.query.all()
 
-def get_all_users_json() -> list:
-    users = get_all_users()
-    if not users: return []
-    return [user.get_json() for user in users]
+def get_all_users_json() -> dict:
+    users = {}
+    users_list = [user.get_json() for user in get_all_users()]
+    if not users_list: return {}
+    for user in users_list: users[user['id']] = user
+    return users
 
 def update_user(id, username) -> User:
     user = get_user(id)

@@ -23,10 +23,12 @@ def get_admin(id) -> Admin:
 def get_all_admins() -> list:
     return Admin.query.all()
 
-def get_all_admins_json() -> list:
-    admins = get_all_admins()
-    if not admins: return []
-    return [admin.get_json() for admin in admins]
+def get_all_admins_json() -> dict:
+    admins = {}
+    admins_list = [admin.get_json() for admin in get_all_admins()]
+    if not admins_list: return {}
+    for admin in admins_list: admins[admin['id']] = admin
+    return admins
 
 def update_admin(id, password = None, fname = None, lname = None, image = None) -> Admin:
     admin = get_admin(id)

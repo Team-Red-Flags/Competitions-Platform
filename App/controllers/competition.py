@@ -30,7 +30,11 @@ def get_all_competitions() -> list:
     return Competition.query.all()
 
 def get_all_competitions_json() -> dict:
-    return {competition.get_json() for competition in get_all_competitions()}
+    comps = {}
+    comp_list = [competition.get_json() for competition in get_all_competitions()]
+    if not comp_list: return {}
+    for comp in comp_list: comps[comp['id']] = comp
+    return comps
 
 def update_competition(
         id: int,
