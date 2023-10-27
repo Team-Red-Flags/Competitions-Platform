@@ -308,7 +308,6 @@ class StudentIntegrationTests(unittest.TestCase):
         assert student.lname == "Rickard"
 
 
-
 class AdminIntegrationTests(unittest.TestCase):
     
     def test_create_admin(self):
@@ -387,6 +386,7 @@ class CompetitionIntegrationTests(unittest.TestCase):
         competition = get_competition(competition.id)
         assert competition.name == "Updated Competition"
 
+
 class ParticipantIntegrationTests(unittest.TestCase):
     
     test_user_id1 = 1
@@ -416,7 +416,6 @@ class ParticipantIntegrationTests(unittest.TestCase):
         assert new_participant.user_id == dave.id
         assert is_participant(dave.id, self.test_competition_id) == True
         
-            
     def test_get_participant(self):
         participant = get_participant(self.test_user_id1, self.test_competition_id)
         assert participant.id == self.test_user_id1
