@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 
 class Admin(User):
     __tablename__ = 'admin'
-    user = relationship('User')
+    user = relationship('User', back_populates='user')
     id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     fname = Column(String(80), nullable=False)
     lname = Column(String(80), nullable=False)
