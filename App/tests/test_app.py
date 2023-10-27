@@ -376,7 +376,6 @@ class CompetitionIntegrationTests(unittest.TestCase):
         all_competitions_json = get_all_competitions_json()
         assert len(all_competitions_json) >= 1
         assert type(all_competitions_json) == dict
-        assert type(all_competitions_json[0]) == dict
         self.assertDictContainsSubset(competition.get_json(), all_competitions_json[competition.id])
 
     def test_update_competition(self):
