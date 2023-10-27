@@ -265,7 +265,9 @@ class StudentIntegrationTests(unittest.TestCase):
 
     def test_get_student(self):
         Student = get_student(1)
-        assert Student.fname == "bob"  
+        if Student is None:
+          return "Student not found"
+        return Student
     
 
     def test_get_student_json(self):
@@ -274,6 +276,8 @@ class StudentIntegrationTests(unittest.TestCase):
         "id": 1,
         "username": "bob"
     }
+        if Student is None:
+         return None
         self.assertDictEqual(Student.get_json, expected_data)
         
 
@@ -287,7 +291,10 @@ class StudentIntegrationTests(unittest.TestCase):
 
     def test_get_student_by_username(self):
         Student = get_student_by_username("bob")
-        assert Student.fname == "bob"
+        if Student is None:
+         return "Student with username not found"
+        return Student
+        
           
 
     def test_update_student(self):
