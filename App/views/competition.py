@@ -38,8 +38,8 @@ def create_competition_action():
         if comp.name == name: 
             return jsonify(error='Competition name already exists'), 400
     
-    competition = create_competition(name, desc, start_date)
-    return jsonify(competition.get_json()), 200
+    create_competition(name, desc, start_date)
+    return jsonify(message='Competition created'), 200
     
 
 @competition_views.route('/competition/add-result', methods=['POST'])

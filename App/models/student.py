@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 
 class Student(User):
     __tablename__ = 'student'
-    user = relationship('User', back_populates='user')
+    user = relationship('User')
     id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     fname = Column(String(80), nullable=False)
     lname = Column(String(80), nullable=False)
